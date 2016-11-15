@@ -3,14 +3,17 @@
 buildscript {
     repositories {
         jcenter()
+//        mavenCentral();
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+
+
 
 allprojects {
     repositories {
@@ -26,5 +29,8 @@ ext {
     retrofit2_version = '2.1.0'
     support_LibraryVersion = '25.0.0'
     fresco_LibraryVersion = '0.14.1'
-    guava_LibraryVersion = '18.0'
+    guava_LibraryVersion = '20.0'
+    jsoup_LibraryVersion = '1.10.1'
+    gson_LibraryVersion = '2.4'
+    greenDAO_Version = '3.2.0'
 }

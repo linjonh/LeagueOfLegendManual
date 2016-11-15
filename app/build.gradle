@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 25
     buildToolsVersion "24.0.3"
@@ -36,4 +36,10 @@ dependencies {
     compile "com.facebook.fresco:fresco:$rootProject.fresco_LibraryVersion"
     //develop utils libs
     compile "com.google.guava:guava:$rootProject.guava_LibraryVersion"
+    // jsoup HTML parser library @ http://jsoup.org/
+    compile "org.jsoup:jsoup:$rootProject.jsoup_LibraryVersion"
+    //gson
+    compile "com.google.code.gson:gson:$rootProject.gson_LibraryVersion"
+    //ORM sqlite3 lib
+    compile "org.greenrobot:greendao:$rootProject.greenDAO_Version"
 }

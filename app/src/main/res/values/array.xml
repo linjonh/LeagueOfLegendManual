@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="duty">
+        <item>全部</item>
+        <item>近战</item>
+        <item>远程</item>
+        <item>物理</item>
+        <item>法术</item>
+        <item>坦克</item>
+        <item>辅助</item>
+        <item>打野</item>
+        <item>突进</item>
+        <item>男性</item>
+        <item>女性</item>
+    </string-array>
+</resources>
