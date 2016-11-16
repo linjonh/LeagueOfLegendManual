@@ -28,9 +28,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //support v7 action bar libs etc.
     compile "com.android.support:appcompat-v7:$rootProject.ext.support_LibraryVersion"
+    //support v4
+    compile "com.android.support:support-v4:$rootProject.support_LibraryVersion"
     //material design libs
     compile "com.android.support:design:$rootProject.ext.support_LibraryVersion"
-    //net work request libs
+    //retrofit net work request libs
     compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2_version"
     //image load libs
     compile "com.facebook.fresco:fresco:$rootProject.fresco_LibraryVersion"
@@ -42,4 +44,8 @@ dependencies {
     compile "com.google.code.gson:gson:$rootProject.gson_LibraryVersion"
     //ORM sqlite3 lib
     compile "org.greenrobot:greendao:$rootProject.greenDAO_Version"
+    //RxJava 1.x
+    compile 'io.reactivex:rxjava:1.2.2'
+    compile 'com.google.dagger:dagger:2.7'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
 }

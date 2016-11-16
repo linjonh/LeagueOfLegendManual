@@ -2,7 +2,9 @@ package com.jaysen.leagueoflegendmanual;
 
 import com.google.common.io.Files;
 import com.google.gson.Gson;
-import com.jaysen.leagueoflegendmanual.source.HeroEntity;
+import com.jaysen.leagueoflegendmanual.data.source.DaoMaster;
+import com.jaysen.leagueoflegendmanual.data.source.DaoSession;
+import com.jaysen.leagueoflegendmanual.data.source.HeroEntity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
