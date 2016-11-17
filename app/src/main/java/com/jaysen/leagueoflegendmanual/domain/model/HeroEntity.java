@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 @Entity
 public class HeroEntity implements Serializable {
-    public static final long serialVersionUID = UUID.randomUUID().node();
+    public static final long serialVersionUID = 10020140L;
     @Id(autoincrement = true)
     public long   id;
     public String avatarUrl;
