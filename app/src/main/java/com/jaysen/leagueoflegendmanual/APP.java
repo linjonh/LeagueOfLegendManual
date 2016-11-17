@@ -2,8 +2,9 @@ package com.jaysen.leagueoflegendmanual;
 
 import android.app.Application;
 
-import com.jaysen.leagueoflegendmanual.data.source.DaoMaster;
-import com.jaysen.leagueoflegendmanual.data.source.DaoSession;
+
+import com.jaysen.leagueoflegendmanual.domain.model.DaoMaster;
+import com.jaysen.leagueoflegendmanual.domain.model.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
 

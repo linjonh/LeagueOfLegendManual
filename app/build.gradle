@@ -33,7 +33,10 @@ dependencies {
     //material design libs
     compile "com.android.support:design:$rootProject.ext.support_LibraryVersion"
     //retrofit net work request libs
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2_version"
+    compile ("com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2_version"){
+        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
+        exclude module: 'okhttp'
+    }
     //image load libs
     compile "com.facebook.fresco:fresco:$rootProject.fresco_LibraryVersion"
     //develop utils libs
@@ -48,4 +51,6 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.2'
     compile 'com.google.dagger:dagger:2.7'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
 }
