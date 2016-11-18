@@ -2,6 +2,7 @@ package com.jaysen.leagueoflegendmanual;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
+ * basic abstract domain layer useCase class.
  */
 
 public abstract class UseCase<Q extends UseCase.RequestParam, P extends UseCase.Response> {

@@ -1,22 +1,20 @@
-package com.jaysen.leagueoflegendmanual.data.source;
+package com.jaysen.leagueoflegendmanual.data.source.local;
 
 import android.support.annotation.NonNull;
+
+import com.jaysen.leagueoflegendmanual.data.source.BaseDataSource;
 
 import javax.inject.Inject;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
- * hero data repository
+ * TODO 1.use retrofit request pattern to request remote data and save data to local database.
  */
 
-public class HeroDataRepository implements BaseDataSource {
+public class LocalHeroDataSource implements BaseDataSource {
     @Inject
-    BaseDataSource mLocalHeroBaseDataSource;
-    @Inject
-    BaseDataSource mRemoteHeroBaseDataSource;
+    LocalHeroDataSource() {
 
-    @Inject
-    HeroDataRepository() {
     }
 
     @Override
@@ -33,4 +31,5 @@ public class HeroDataRepository implements BaseDataSource {
     public void refreshcache() {
 
     }
+
 }

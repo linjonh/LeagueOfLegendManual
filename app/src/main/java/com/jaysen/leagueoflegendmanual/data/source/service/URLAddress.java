@@ -6,5 +6,5 @@ package com.jaysen.leagueoflegendmanual.data.source.service;
 
 public class URLAddress {
 
-    public static final String LOL_DUOWAN_HOST="http://lol.duowan.com/";
+    public static final String LOL_DUOWAN_HOST = "http://lol.duowan.com/";
 }

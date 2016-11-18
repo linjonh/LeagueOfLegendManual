@@ -11,9 +11,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitHandler {
-    public static Retrofit newInstance(String baseUrl) {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-
+    public static Retrofit newInstance(String baseUrl,OkHttpClient okHttpClient) {
+        //retrofit adapter
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//response call adapter
