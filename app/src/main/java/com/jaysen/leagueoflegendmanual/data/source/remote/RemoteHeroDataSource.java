@@ -1,19 +1,21 @@
 package com.jaysen.leagueoflegendmanual.data.source.remote;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.APP;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.data.source.service.HeroService;
 import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
 
-import java.util.List;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -35,7 +37,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
         Preconditions.checkNotNull(callback);
         subscription = getService(HeroService.class)
                 .getHeroEntities()
-                .subscribe(new Subscriber<List<HeroEntity>>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
 
@@ -49,9 +51,9 @@ public class RemoteHeroDataSource extends AbsDataSource {
                     }
 
                     @Override
-                    public void onNext(List<HeroEntity> heroEntities) {
+                    public void onNext(String html) {
                         if (!isUnsubscribed()) {
-                            callback.onDataLoaded(heroEntities);
+                            callback.onDataLoaded(parseData(html));
                         }
                     }
                 });
@@ -62,5 +64,25 @@ public class RemoteHeroDataSource extends AbsDataSource {
         subscription.unsubscribe();
     }
 
-
+    private ArrayList<HeroEntity> parseData(String html) {
+        Document              document       = Jsoup.parse(html);
+        ArrayList<HeroEntity> heroEntityList = new ArrayList<>();
+        Preconditions.checkNotNull(document);
+        try {
+            Elements els = document.select(".champion_tooltip");
+            for (Element el : els) {
+                HeroEntity heroEntity = new HeroEntity();
+                heroEntity.avatarUrl = el.select("img").attr("src");
+                heroEntity.legendName = el.select(".champion_name").text();
+                heroEntity.legendTitle = el.select(".champion_title").text();
+                heroEntity.description = el.select("p").text();
+                heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").trim();
+//                System.out.println(heroEntity + "\n");
+                heroEntityList.add(heroEntity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return heroEntityList;
+    }
 }

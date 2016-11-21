@@ -3,7 +3,6 @@ package com.jaysen.leagueoflegendmanual.data.source;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.APP;
 import com.jaysen.leagueoflegendmanual.data.source.local.LocalHeroDataSource;
 import com.jaysen.leagueoflegendmanual.data.source.remote.RemoteHeroDataSource;
 import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
@@ -11,7 +10,6 @@ import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
@@ -23,7 +21,7 @@ public class HeroDataRepository extends AbsDataSource {
     LocalHeroDataSource  mLocalHeroBaseDataSource;
     @Inject
     RemoteHeroDataSource mRemoteHeroBaseDataSource;
-    private boolean isDirty;
+    private boolean isDirty = true;
 
     @Inject
     HeroDataRepository() {

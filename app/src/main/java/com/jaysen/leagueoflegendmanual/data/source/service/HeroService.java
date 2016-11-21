@@ -13,5 +13,5 @@ import rx.Observable;
 
 public interface HeroService {
     @GET("hero/")
-    Observable<List<HeroEntity>> getHeroEntities();
+    Observable<String> getHeroEntities();
 }
