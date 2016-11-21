@@ -1,6 +1,7 @@
 package com.jaysen.leagueoflegendmanual.data.source.local;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.jaysen.leagueoflegendmanual.APP;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
@@ -11,9 +12,12 @@ import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Subscriber;
 import rx.Subscription;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
@@ -23,16 +27,17 @@ import rx.Subscription;
 
 public class LocalHeroDataSource extends AbsDataSource {
     private Subscription subscription;
+
     @Inject
     DaoSession mDaoSession;
 
     @Inject
-    LocalHeroDataSource(APP app) {
-        super(app);
+    LocalHeroDataSource() {
     }
 
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
+        checkNotNull(callback);
         subscription = mDaoSession.getHeroEntityDao()
                 .rx()
                 .loadAll()
@@ -58,8 +63,29 @@ public class LocalHeroDataSource extends AbsDataSource {
                 });
     }
 
+
+    public void deleteAllLocalDataSource() {
+        mDaoSession.getHeroEntityDao().deleteAll();
+    }
+
+    @Override
+    public void refreshCache() {
+
+    }
+
     @Override
     public void unSubscribe() {
         subscription.unsubscribe();
+    }
+
+    @Override
+    public <T> void saveDataSource(T dataSets) {
+        List<HeroEntity> datas = (List<HeroEntity>) dataSets;
+        for (HeroEntity item : datas) {
+            long id = mDaoSession.getHeroEntityDao().insert(item);
+            if (BuildConfig.DEBUG) {
+                Log.d("HERO", "insert hero id: " + id);
+            }
+        }
     }
 }

@@ -21,15 +21,24 @@ public abstract class AbsDataSource implements BaseDataSource {
     @Inject
     Map<Class, String> mClassUrlMap;
 
-    public AbsDataSource(APP app) {
-        app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
+    public AbsDataSource() {
     }
 
     @Override
-    public <T> T getService(Class<T> tClass) {
+    public <D> D getService(Class<D> tClass) {
         //required for remote data source,but not required for local data source.
         String url = mClassUrlMap.get(tClass);
         return RetrofitHandler.newInstance(url, mOkHttpClient).create(tClass);
+    }
+
+    @Override
+    public <T> void saveDataSource(T dataSets) {
+        //stub
+    }
+
+    @Override
+    public void deleteAllLocalDataSource() {
+        //stub
     }
 
     @Override

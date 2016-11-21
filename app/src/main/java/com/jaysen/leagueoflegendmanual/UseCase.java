@@ -28,7 +28,7 @@ public abstract class UseCase<Q extends UseCase.RequestParam, P extends UseCase.
         return mRequestParam;
     }
 
-    void run() {
+    public void run() {
         executeUseCase(mRequestParam);
     }
 

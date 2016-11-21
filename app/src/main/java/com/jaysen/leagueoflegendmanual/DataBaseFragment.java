@@ -3,10 +3,21 @@ package com.jaysen.leagueoflegendmanual;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.common.base.Preconditions;
+import com.jaysen.leagueoflegendmanual.HeroInfos.HeroFragmentPresenter;
+import com.jaysen.leagueoflegendmanual.dagger.DataModule;
+import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 
 /**
@@ -17,7 +28,7 @@ import android.view.ViewGroup;
  * Use the {@link DataBaseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DataBaseFragment extends Fragment {
+public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,6 +78,20 @@ public class DataBaseFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_data_base, container, false);
     }
 
+    @Inject
+    HeroFragmentPresenter mHeroFragmentPresenter;
+
+    @Override
+
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        APP app = (APP) getActivity().getApplication();
+        app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
+        Preconditions.checkNotNull(mHeroFragmentPresenter);
+        mHeroFragmentPresenter.setmView(this);
+        mHeroFragmentPresenter.loadData();
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -89,6 +114,19 @@ public class DataBaseFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onLoadSuccess(List<HeroEntity> data) {
+        Preconditions.checkNotNull(getView());
+        ((TextView) getView().findViewById(R.id.textView)).setText(data.toString());
+
+    }
+
+    @Override
+    public void onLoadFailed() {
+        Preconditions.checkNotNull(getView());
+        ((TextView) getView().findViewById(R.id.textView)).setText("onLoadFailed");
     }
 
     /**

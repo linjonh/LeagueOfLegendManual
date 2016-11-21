@@ -1,6 +1,7 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
 import com.jaysen.leagueoflegendmanual.APP;
+import com.jaysen.leagueoflegendmanual.data.source.BaseDataSource;
 import com.jaysen.leagueoflegendmanual.data.source.service.HeroService;
 import com.jaysen.leagueoflegendmanual.data.source.service.URLAddress;
 import com.jaysen.leagueoflegendmanual.domain.model.DaoMaster;
@@ -11,6 +12,7 @@ import org.greenrobot.greendao.database.Database;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -22,8 +24,6 @@ import okhttp3.OkHttpClient;
  */
 @Module
 public class DataModule {
-
-
     @Provides
     public DaoSession provideDaoSession(APP app) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(app, "hero-db");

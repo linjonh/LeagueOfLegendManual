@@ -23,7 +23,11 @@ public interface BaseDataSource {
     void refreshCache();
 
     /**
-     * for rx observable pattern to unSubscribe when end rx lifecycle.
+     * for rx observable pattern to unSubscribe
      */
     void unSubscribe();
+
+    <T> void saveDataSource(T dataSets);
+
+    void deleteAllLocalDataSource();
 }

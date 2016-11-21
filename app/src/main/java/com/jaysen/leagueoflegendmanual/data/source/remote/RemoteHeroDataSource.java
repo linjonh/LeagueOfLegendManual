@@ -1,7 +1,9 @@
 package com.jaysen.leagueoflegendmanual.data.source.remote;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.APP;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.data.source.AbsDataSource;
@@ -11,6 +13,7 @@ import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import rx.Subscriber;
 import rx.Subscription;
@@ -24,12 +27,12 @@ public class RemoteHeroDataSource extends AbsDataSource {
     private Subscription subscription;
 
     @Inject
-    public RemoteHeroDataSource(APP app) {
-        super(app);
+    public RemoteHeroDataSource() {
     }
 
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
+        Preconditions.checkNotNull(callback);
         subscription = getService(HeroService.class)
                 .getHeroEntities()
                 .subscribe(new Subscriber<List<HeroEntity>>() {
@@ -58,4 +61,6 @@ public class RemoteHeroDataSource extends AbsDataSource {
     public void unSubscribe() {
         subscription.unsubscribe();
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
+import com.jaysen.leagueoflegendmanual.DataBaseFragment;
 import com.jaysen.leagueoflegendmanual.data.source.AbsDataSource;
 
 import javax.inject.Singleton;
@@ -13,6 +14,8 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {DataModule.class})
 public interface DataSourceComponent {
     void inject(AbsDataSource source);
+
+    void inject(DataBaseFragment dataBaseFragment);
 
     @Subcomponent.Builder
     interface Builder {

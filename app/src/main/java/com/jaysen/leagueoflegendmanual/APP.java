@@ -2,6 +2,7 @@ package com.jaysen.leagueoflegendmanual;
 
 import android.app.Application;
 
+import com.jaysen.leagueoflegendmanual.dagger.AppModule;
 import com.jaysen.leagueoflegendmanual.dagger.ApplicationComponent;
 import com.jaysen.leagueoflegendmanual.dagger.DaggerApplicationComponent;
 
@@ -20,7 +21,7 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationComponent = DaggerApplicationComponent.create();
+        applicationComponent = DaggerApplicationComponent.builder().appModule(new AppModule(this)).build();
         applicationComponent.inject(this);
     }
 
