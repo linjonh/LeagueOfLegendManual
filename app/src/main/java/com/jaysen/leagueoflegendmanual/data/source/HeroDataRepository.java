@@ -2,6 +2,8 @@ package com.jaysen.leagueoflegendmanual.data.source;
 
 import android.support.annotation.NonNull;
 
+import com.jaysen.leagueoflegendmanual.APP;
+
 import javax.inject.Inject;
 
 /**
@@ -9,20 +11,17 @@ import javax.inject.Inject;
  * hero data repository
  */
 
-public class HeroDataRepository implements BaseDataSource {
+public class HeroDataRepository extends AbsDataSource {
     @Inject
     BaseDataSource mLocalHeroBaseDataSource;
     @Inject
     BaseDataSource mRemoteHeroBaseDataSource;
 
     @Inject
-    HeroDataRepository() {
+    HeroDataRepository(APP app) {
+        super(app);
     }
 
-    @Override
-    public <T> T getService(Class<T> tClass) {
-        return null;
-    }
 
     @Override
     public void getDataSource(@NonNull LoadDataCallback callback) {
@@ -30,7 +29,13 @@ public class HeroDataRepository implements BaseDataSource {
     }
 
     @Override
-    public void refreshcache() {
+    public void refreshCache() {
 
+    }
+
+    @Override
+    public void unSubscribe() {
+        mLocalHeroBaseDataSource.unSubscribe();
+        mRemoteHeroBaseDataSource.unSubscribe();
     }
 }

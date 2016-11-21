@@ -1,17 +1,14 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
-import android.app.Application;
-
-import javax.inject.Singleton;
+import com.jaysen.leagueoflegendmanual.APP;
 
 import dagger.Component;
 
 /**
- * Created by jaysen.lin@foxmail.com on 2016/11/18.
+ * Created by jaysen.lin@foxmail.com on 2016/11/21.
  */
-
-@Singleton
-@Component(modules = {ApplicationModule.class})
+@Component(modules = {AppModule.class})
 public interface ApplicationComponent {
-    void inject(Application app);
+    void inject(APP app);
+    DataSourceComponent.Builder getDataSourceBuilder();
 }

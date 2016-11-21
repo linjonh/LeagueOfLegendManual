@@ -18,7 +18,12 @@ public interface BaseDataSource {
 
     <T> T getService(Class<T> tClass);
 
-    void getDataSource(@NonNull LoadDataCallback callback);
+    <D> void getDataSource(@NonNull LoadDataCallback<D> callback);
 
-    void refreshcache();
+    void refreshCache();
+
+    /**
+     * for rx observable pattern to unSubscribe when end rx lifecycle.
+     */
+    void unSubscribe();
 }
