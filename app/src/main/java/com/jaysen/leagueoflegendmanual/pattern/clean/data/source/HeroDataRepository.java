@@ -66,10 +66,15 @@ public class HeroDataRepository extends AbsDataSource {
     private void getRemoteData(@NonNull final LoadDataCallback callback) {
         mRemoteHeroBaseDataSource.getDataSource(new LoadDataCallback<List<HeroEntity>>() {
             @Override
-            public void onDataLoaded(List<HeroEntity> data) {
+            public void onDataLoaded(final List<HeroEntity> data) {
                 // TODO: 2016/11/21 add other delete local data logic and update cache and loac database
-                mLocalHeroBaseDataSource.deleteAllLocalDataSource();
-                mLocalHeroBaseDataSource.saveDataSource(data);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLocalHeroBaseDataSource.deleteAllLocalDataSource();
+                        mLocalHeroBaseDataSource.saveDataSource(data);
+                    }
+                }).start();
                 callback.onDataLoaded(data);
             }
 

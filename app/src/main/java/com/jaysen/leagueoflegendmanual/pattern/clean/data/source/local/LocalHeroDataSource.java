@@ -66,7 +66,11 @@ public class LocalHeroDataSource extends AbsDataSource {
 
 
     public void deleteAllLocalDataSource() {
-        mDaoSession.getHeroEntityDao().deleteAll();
+        try {
+            mDaoSession.getHeroEntityDao().deleteAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,9 +88,13 @@ public class LocalHeroDataSource extends AbsDataSource {
         List<HeroEntity> datas = (List<HeroEntity>) dataSets;
 //        mDaoSession.getHeroEntityDao().insertInTx(datas);
         for (HeroEntity item : datas) {
-            long id = mDaoSession.getHeroEntityDao().insert(item);
-            if (BuildConfig.DEBUG) {
-                Log.d("HERO", "insert hero id: " + id);
+            try {
+                long id = mDaoSession.getHeroEntityDao().insert(item);
+                if (BuildConfig.DEBUG) {
+                    Log.d("HERO", "insert hero id: " + id);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     }

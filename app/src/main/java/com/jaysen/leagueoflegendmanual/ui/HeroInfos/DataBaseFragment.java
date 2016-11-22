@@ -1,25 +1,35 @@
 package com.jaysen.leagueoflegendmanual.ui.HeroInfos;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.ui.APP;
-import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
 import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.dagger.DataModule;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
+import com.jaysen.leagueoflegendmanual.ui.APP;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -30,17 +40,22 @@ import javax.inject.Inject;
  * Use the {@link DataBaseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>> {
+public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>>, SwipeRefreshLayout.OnRefreshListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private String                        mParam1;
+    private String                        mParam2;
     private OnFragmentInteractionListener mListener;
+    private Unbinder                      unbinder;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.hero_list)
+    RecyclerView       mRecyclerView;
+    private HeroListAdapter mAdapter;
 
     public DataBaseFragment() {
         // Required empty public constructor
@@ -67,6 +82,7 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -76,8 +92,9 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_data_base, container, false);
+        View view = inflater.inflate(R.layout.fragment_data_base, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Inject
@@ -90,7 +107,13 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
         APP app = (APP) getActivity().getApplication();
         app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
         Preconditions.checkNotNull(mHeroFragmentPresenter);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
+        mAdapter = new HeroListAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mHeroFragmentPresenter.setmView(this);
+        mSwipeRefreshLayout.setRefreshing(true);
         mHeroFragmentPresenter.loadData();
     }
 
@@ -119,16 +142,44 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
     }
 
     @Override
-    public void onLoadSuccess(List<HeroEntity> data) {
-        Preconditions.checkNotNull(getView());
-        ((TextView) getView().findViewById(R.id.textView)).setText(data.toString());
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_hero_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.force_update:
+                mSwipeRefreshLayout.setRefreshing(true);
+                mHeroFragmentPresenter.mUseCaseHero.refreshCache();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onLoadSuccess(List<HeroEntity> data) {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        mAdapter.setmHeroEntities(data);
+    }
+
+
+    @Override
     public void onLoadFailed() {
-        Preconditions.checkNotNull(getView());
-        ((TextView) getView().findViewById(R.id.textView)).setText("onLoadFailed");
+    }
+
+    @Override
+    public void onRefresh() {
+        mHeroFragmentPresenter.loadData();
     }
 
     /**

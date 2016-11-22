@@ -2,6 +2,7 @@ package com.jaysen.leagueoflegendmanual.ui;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.jaysen.leagueoflegendmanual.dagger.AppModule;
 import com.jaysen.leagueoflegendmanual.dagger.ApplicationComponent;
 import com.jaysen.leagueoflegendmanual.dagger.DaggerApplicationComponent;
@@ -23,6 +24,7 @@ public class APP extends Application {
         super.onCreate();
         applicationComponent = DaggerApplicationComponent.builder().appModule(new AppModule(this)).build();
         applicationComponent.inject(this);
+        Fresco.initialize(this);
     }
 
 

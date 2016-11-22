@@ -30,19 +30,24 @@ public class UseCaseHero extends UseCase<UseCaseHero.RequestParam, UseCaseHero.R
     UseCaseHero() {
     }
 
+    public void refreshCache() {
+        mDataRepository.refreshCache();
+        run();
+    }
+
     @Override
     public void executeUseCase(RequestParam requestParam) {
         mDataRepository.getDataSource(new BaseDataSource.LoadDataCallback<List<HeroEntity>>() {
             @Override
             public void onDataLoaded(List<HeroEntity> data) {
-                Log.i("UseCaseHero",Thread.currentThread().getName());
+                Log.i("UseCaseHero", Thread.currentThread().getName());
                 Observable.just(data)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<List<HeroEntity>>() {
                             @Override
                             public void call(List<HeroEntity> heroEntities) {
-                                Log.i("UseCaseHero just",Thread.currentThread().getName());
+                                Log.i("UseCaseHero just", Thread.currentThread().getName());
                                 Response response = new Response(heroEntities);
                                 getmUseCaseCallBack().onSuccess(response);
                             }
