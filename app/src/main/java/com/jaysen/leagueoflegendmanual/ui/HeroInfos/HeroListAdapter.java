@@ -2,6 +2,7 @@ package com.jaysen.leagueoflegendmanual.ui.HeroInfos;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroVi
 
     @Override
     public HeroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.item_hero_layout, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_hero_layout, parent, false);
         return new HeroViewHolder(view);
     }
 
