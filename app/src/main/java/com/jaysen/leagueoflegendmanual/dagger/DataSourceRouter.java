@@ -5,6 +5,9 @@ import javax.inject.Provider;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/21.
+ *
+ * @see ApplicationComponent{@link ApplicationComponent}
+ * @deprecated
  */
 
 public class DataSourceRouter {

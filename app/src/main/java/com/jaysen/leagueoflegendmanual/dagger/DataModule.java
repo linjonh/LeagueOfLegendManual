@@ -1,18 +1,17 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
-import com.jaysen.leagueoflegendmanual.APP;
-import com.jaysen.leagueoflegendmanual.data.source.BaseDataSource;
-import com.jaysen.leagueoflegendmanual.data.source.service.HeroService;
-import com.jaysen.leagueoflegendmanual.data.source.service.URLAddress;
-import com.jaysen.leagueoflegendmanual.domain.model.DaoMaster;
-import com.jaysen.leagueoflegendmanual.domain.model.DaoSession;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoMaster;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
+import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.util.HttpLoggingInterceptor;
 
 import org.greenrobot.greendao.database.Database;
 
 import java.util.Hashtable;
 import java.util.Map;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,6 +20,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/21.
+ * data source provide module
  */
 @Module
 public class DataModule {
@@ -41,8 +41,11 @@ public class DataModule {
     @Provides
     @Singleton
     public OkHttpClient provideClient() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient
                 .Builder()
+                .addInterceptor(interceptor)
                 .build();
     }
 }

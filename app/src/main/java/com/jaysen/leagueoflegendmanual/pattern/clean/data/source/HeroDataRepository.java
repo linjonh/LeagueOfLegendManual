@@ -1,11 +1,11 @@
-package com.jaysen.leagueoflegendmanual.data.source;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source;
 
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.data.source.local.LocalHeroDataSource;
-import com.jaysen.leagueoflegendmanual.data.source.remote.RemoteHeroDataSource;
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.local.LocalHeroDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote.RemoteHeroDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class HeroDataRepository extends AbsDataSource {
     LocalHeroDataSource  mLocalHeroBaseDataSource;
     @Inject
     RemoteHeroDataSource mRemoteHeroBaseDataSource;
-    private boolean isDirty = true;
+    private boolean isCacheDirty;
 
     @Inject
     HeroDataRepository() {
@@ -35,14 +35,18 @@ public class HeroDataRepository extends AbsDataSource {
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         Preconditions.checkNotNull(callback);
-        if (isDirty) {
+        if (isCacheDirty) {
             getRemoteData(callback);
         } else {
             mLocalHeroBaseDataSource.getDataSource(new LoadDataCallback<List<HeroEntity>>() {
                 @Override
                 public void onDataLoaded(List<HeroEntity> data) {
                     // TODO: 2016/11/21 add other update logic and cache
-                    callback.onDataLoaded(data);
+                    if (data == null || data.size() == 0) {
+                        getRemoteData(callback);
+                    } else {
+                        callback.onDataLoaded(data);
+                    }
                 }
 
                 @Override
@@ -81,7 +85,7 @@ public class HeroDataRepository extends AbsDataSource {
      */
     @Override
     public void refreshCache() {
-        isDirty = true;
+        isCacheDirty = true;
     }
 
     @Override

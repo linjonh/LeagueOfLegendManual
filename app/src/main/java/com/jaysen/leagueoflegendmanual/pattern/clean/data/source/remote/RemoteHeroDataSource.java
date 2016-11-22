@@ -1,12 +1,13 @@
-package com.jaysen.leagueoflegendmanual.data.source.remote;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
-import com.jaysen.leagueoflegendmanual.data.source.AbsDataSource;
-import com.jaysen.leagueoflegendmanual.data.source.service.HeroService;
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
@@ -37,6 +39,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
         Preconditions.checkNotNull(callback);
         subscription = getService(HeroService.class)
                 .getHeroEntities()
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
@@ -52,6 +55,8 @@ public class RemoteHeroDataSource extends AbsDataSource {
 
                     @Override
                     public void onNext(String html) {
+//                        Log.d("Remote onenxt", html);
+                        Log.i("RemoteHeroDataSource",Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(parseData(html));
                         }
@@ -72,6 +77,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
             Elements els = document.select(".champion_tooltip");
             for (Element el : els) {
                 HeroEntity heroEntity = new HeroEntity();
+                heroEntity.id = null;
                 heroEntity.avatarUrl = el.select("img").attr("src");
                 heroEntity.legendName = el.select(".champion_name").text();
                 heroEntity.legendTitle = el.select(".champion_title").text();

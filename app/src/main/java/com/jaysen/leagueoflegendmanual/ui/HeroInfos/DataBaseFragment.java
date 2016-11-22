@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual;
+package com.jaysen.leagueoflegendmanual.ui.HeroInfos;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.HeroInfos.HeroFragmentPresenter;
+import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
+import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.dagger.DataModule;
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import java.util.List;
 

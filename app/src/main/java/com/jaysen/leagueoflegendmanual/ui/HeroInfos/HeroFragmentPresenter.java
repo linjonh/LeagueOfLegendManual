@@ -1,10 +1,10 @@
-package com.jaysen.leagueoflegendmanual.HeroInfos;
+package com.jaysen.leagueoflegendmanual.ui.HeroInfos;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.Presenter;
-import com.jaysen.leagueoflegendmanual.UseCase;
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
-import com.jaysen.leagueoflegendmanual.domain.usecase.UseCaseHero;
+import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
+import com.jaysen.leagueoflegendmanual.pattern.clean.UseCase;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.usecase.UseCaseHero;
 
 import java.util.List;
 

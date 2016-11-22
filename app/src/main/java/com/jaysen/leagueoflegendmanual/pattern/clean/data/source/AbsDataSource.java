@@ -1,8 +1,6 @@
-package com.jaysen.leagueoflegendmanual.data.source;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source;
 
-import com.jaysen.leagueoflegendmanual.APP;
-import com.jaysen.leagueoflegendmanual.dagger.DataModule;
-import com.jaysen.leagueoflegendmanual.data.source.service.RetrofitHandler;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.RetrofitHandler;
 
 import java.util.Map;
 

@@ -1,21 +1,20 @@
-package com.jaysen.leagueoflegendmanual.data.source.local;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source.local;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.jaysen.leagueoflegendmanual.APP;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
-import com.jaysen.leagueoflegendmanual.data.source.AbsDataSource;
-import com.jaysen.leagueoflegendmanual.domain.model.DaoSession;
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import rx.Subscriber;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,6 +40,7 @@ public class LocalHeroDataSource extends AbsDataSource {
         subscription = mDaoSession.getHeroEntityDao()
                 .rx()
                 .loadAll()
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<HeroEntity>>() {
                     @Override
                     public void onCompleted() {
@@ -56,6 +56,7 @@ public class LocalHeroDataSource extends AbsDataSource {
 
                     @Override
                     public void onNext(List<HeroEntity> heroEntities) {
+                        Log.i("LocalHeroDataSource",Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(heroEntities);
                         }
@@ -81,6 +82,7 @@ public class LocalHeroDataSource extends AbsDataSource {
     @Override
     public <T> void saveDataSource(T dataSets) {
         List<HeroEntity> datas = (List<HeroEntity>) dataSets;
+//        mDaoSession.getHeroEntityDao().insertInTx(datas);
         for (HeroEntity item : datas) {
             long id = mDaoSession.getHeroEntityDao().insert(item);
             if (BuildConfig.DEBUG) {

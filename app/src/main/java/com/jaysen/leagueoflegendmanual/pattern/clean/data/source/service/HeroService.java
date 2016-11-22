@@ -1,8 +1,4 @@
-package com.jaysen.leagueoflegendmanual.data.source.service;
-
-import com.jaysen.leagueoflegendmanual.domain.model.HeroEntity;
-
-import java.util.List;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service;
 
 import retrofit2.http.GET;
 import rx.Observable;

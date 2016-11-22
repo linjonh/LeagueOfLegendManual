@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual;
+package com.jaysen.leagueoflegendmanual.pattern.clean;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.

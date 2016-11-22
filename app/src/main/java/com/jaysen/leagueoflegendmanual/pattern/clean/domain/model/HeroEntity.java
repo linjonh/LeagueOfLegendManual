@@ -1,11 +1,11 @@
-package com.jaysen.leagueoflegendmanual.domain.model;
+package com.jaysen.leagueoflegendmanual.pattern.clean.domain.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/14.
@@ -15,16 +15,17 @@ import java.util.UUID;
 public class HeroEntity implements Serializable {
     public static final long serialVersionUID = 10020140L;
     @Id(autoincrement = true)
-    public long   id;
+    public Long   id;
     public String avatarUrl;
+    @Unique
     public String legendName;
     public String legendTitle;
     public String description;
     public String tags;
 
-    @Generated(hash = 1492366395)
-    public HeroEntity(long id, String avatarUrl, String legendName,
-                      String legendTitle, String description, String tags) {
+    @Generated(hash = 501934137)
+    public HeroEntity(Long id, String avatarUrl, String legendName,
+            String legendTitle, String description, String tags) {
         this.id = id;
         this.avatarUrl = avatarUrl;
         this.legendName = legendName;
@@ -46,7 +47,7 @@ public class HeroEntity implements Serializable {
                 + ",avatarUrl: " + avatarUrl + "]";
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
@@ -92,5 +93,9 @@ public class HeroEntity implements Serializable {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

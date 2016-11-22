@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.jaysen.leagueoflegendmanual"
         minSdkVersion 14
@@ -27,12 +27,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions{
+    lintOptions {
         ignoreWarnings true
         abortOnError false
     }
 }
-
+greendao {
+    schemaVersion 1
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -66,4 +68,8 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile('com.trello:rxlifecycle-android:1.0') {
+        exclude group: "com.google.code.findbugs"
+    }
 }

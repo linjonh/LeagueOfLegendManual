@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual;
+package com.jaysen.leagueoflegendmanual.pattern.mvp;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/21.

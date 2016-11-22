@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual;
+package com.jaysen.leagueoflegendmanual.ui;
 
 import android.app.Application;
 

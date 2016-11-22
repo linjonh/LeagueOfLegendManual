@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual.data.source.service;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/17.

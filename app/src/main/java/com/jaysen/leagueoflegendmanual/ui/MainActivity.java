@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual;
+package com.jaysen.leagueoflegendmanual.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.jaysen.leagueoflegendmanual.ui.HeroInfos.DataBaseFragment;
+import com.jaysen.leagueoflegendmanual.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,DataBaseFragment.OnFragmentInteractionListener {

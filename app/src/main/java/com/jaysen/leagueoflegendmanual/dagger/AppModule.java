@@ -1,6 +1,6 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
-import com.jaysen.leagueoflegendmanual.APP;
+import com.jaysen.leagueoflegendmanual.ui.APP;
 
 import dagger.Module;
 import dagger.Provides;
