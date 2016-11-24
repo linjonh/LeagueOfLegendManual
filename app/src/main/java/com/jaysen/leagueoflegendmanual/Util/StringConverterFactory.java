@@ -1,6 +1,7 @@
 package com.jaysen.leagueoflegendmanual.util;
 
 import android.util.Log;
+import android.util.LogPrinter;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

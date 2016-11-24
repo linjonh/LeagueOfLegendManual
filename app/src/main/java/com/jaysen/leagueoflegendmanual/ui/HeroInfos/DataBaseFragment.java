@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,7 +40,9 @@ import butterknife.Unbinder;
  * Use the {@link DataBaseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>>, SwipeRefreshLayout.OnRefreshListener {
+public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>>,
+        SwipeRefreshLayout.OnRefreshListener,
+        HeroListAdapter.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -110,8 +112,9 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
         mAdapter = new HeroListAdapter();
+        mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mHeroFragmentPresenter.setmView(this);
         mSwipeRefreshLayout.setRefreshing(true);
         mHeroFragmentPresenter.loadData();
@@ -180,6 +183,11 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
     @Override
     public void onRefresh() {
         mHeroFragmentPresenter.loadData();
+    }
+
+    @Override
+    public void onItemClick(HeroEntity itemData) {
+
     }
 
     /**

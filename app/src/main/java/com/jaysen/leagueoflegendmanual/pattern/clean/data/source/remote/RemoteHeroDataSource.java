@@ -56,7 +56,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
                     @Override
                     public void onNext(String html) {
 //                        Log.d("Remote onenxt", html);
-                        Log.i("RemoteHeroDataSource",Thread.currentThread().getName());
+                        Log.i("RemoteHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(parseData(html));
                         }
@@ -78,11 +78,11 @@ public class RemoteHeroDataSource extends AbsDataSource {
             for (Element el : els) {
                 HeroEntity heroEntity = new HeroEntity();
                 heroEntity.id = null;
-                heroEntity.avatarUrl = el.select("img").attr("src");
-                heroEntity.legendName = el.select(".champion_name").text();
-                heroEntity.legendTitle = el.select(".champion_title").text();
-                heroEntity.description = el.select("p").text();
-                heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").trim();
+                heroEntity.avatarUrl = el.select("img").attr("src").trim();
+                heroEntity.legendName = el.select(".champion_name").text().trim();
+                heroEntity.legendTitle = el.select(".champion_title").text().trim();
+                heroEntity.description = el.select("p").text().trim();
+                heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").replace("Tags:", "").trim();
 //                System.out.println(heroEntity + "\n");
                 heroEntityList.add(heroEntity);
             }

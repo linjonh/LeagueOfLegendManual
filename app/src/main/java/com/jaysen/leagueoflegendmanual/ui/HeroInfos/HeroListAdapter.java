@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
@@ -23,7 +24,8 @@ import butterknife.ButterKnife;
  * Created by jaysen.lin@foxmail.com on 2016/11/22.
  */
 
-public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroViewHolder> {
+public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroViewHolder> implements
+        View.OnClickListener {
 
 
     public void setmHeroEntities(List<HeroEntity> mHeroEntities) {
@@ -46,11 +48,13 @@ public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroVi
 
     @Override
     public void onBindViewHolder(HeroViewHolder holder, int position) {
-        holder.name.setText(getItem(position).getLegendName());
-        holder.title.setText(getItem(position).getLegendTitle());
+        holder.title.setText(getItem(position).getLegendTitle() + " " + getItem(position).getLegendName());
         holder.tag.setText(getItem(position).getTags());
-        holder.description.setText(getItem(position).getDescription());
+//        holder.description.setText(getItem(position).getDescription());
+        Preconditions.checkNotNull(holder.iconAvatar);
         holder.iconAvatar.setImageURI(getItem(position).getAvatarUrl());
+        holder.itemView.setTag(getItem(position));
+        holder.itemView.setOnClickListener(this);
     }
 
     private HeroEntity getItem(int position) {
@@ -62,18 +66,39 @@ public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroVi
         return mHeroEntities.size();
     }
 
+    private long startClickTime = 0;
+
+    @Override
+    public void onClick(View view) {
+        long tmp = System.currentTimeMillis();
+        if (tmp - startClickTime > 500) {//item点击间隔大于500毫秒在响应事件
+            startClickTime = tmp;
+            if (mListener != null) {
+                mListener.onItemClick((HeroEntity) view.getTag());
+            }
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mListener) {
+        this.mListener = mListener;
+    }
+
+    private OnItemClickListener mListener;
+
+    interface OnItemClickListener {
+        void onItemClick(HeroEntity itemData);
+    }
+
     static class HeroViewHolder extends RecyclerView.ViewHolder {
         @Nullable
         @BindView(R.id.icon_avatar)
         SimpleDraweeView iconAvatar;
-        @BindView(R.id.name)
-        TextView         name;
         @BindView(R.id.title)
         TextView         title;
         @BindView(R.id.tag)
         TextView         tag;
-        @BindView(R.id.description)
-        TextView         description;
+   /*     @BindView(R.id.description)
+        TextView         description;*/
 
         public HeroViewHolder(View itemView) {
             super(itemView);
