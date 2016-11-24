@@ -4,6 +4,9 @@ package com.jaysen.leagueoflegendmanual.util;
  * RC4 encrypt algorithm
  */
 public class RC4 {
+
+    private static final int VECTOR_LENGTH = 256;//0x00~0xFF一个字节长度。
+
     /**
      * @param data byte[] data
      * @param key  string key
@@ -132,9 +135,9 @@ public class RC4 {
             return null;
         }
         byte[] b_key   = aKey.getBytes();
-        byte   state[] = new byte[256];
+        byte   state[] = new byte[VECTOR_LENGTH];
 
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < VECTOR_LENGTH; i++) {
             state[i] = (byte) i;
         }
         int x = 0;
@@ -142,7 +145,7 @@ public class RC4 {
         if (b_key.length == 0) {
             return null;
         }
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < VECTOR_LENGTH; i++) {
             x = (x + 1) % b_key.length;
             y = ((b_key[x] & 0xff) + (state[i] & 0xff) + y) & 0xff;
             swap(state, i, y);
