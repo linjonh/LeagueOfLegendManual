@@ -94,50 +94,56 @@ public class ExampleUnitTest {
                 .build();
         try {
             Response response = okHttpClient.newCall(request).execute();
-            System.out.println(response.body().string().replace("QZOutputJson=","").replace(";",""));
+            System.out.println(response.body().string().replace("QZOutputJson=", "").replace(";", ""));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void base64(){
-        String base64str="52hVhBIiCRoAc1oagqBjJA==";
-        System.out.println(new String(Base64.decode(base64str,0)));
+    public void base64() {
+        String base64str = "52hVhBIiCRoAc1oagqBjJA==";
+        System.out.println(new String(Base64.decode(base64str, 0)));
     }
 
     @Test
-    public void cryptoRC4(){
-        String mPrivatekey="jaysen";
-        String txt="jaysen.lin";
-        String es= RC4.encry_RC4_string(txt,mPrivatekey);
-        System.out.println("encode:"+es);
-        String ds=RC4.decry_RC4(es,mPrivatekey);
-        System.out.println("decode:"+ds);
+    public void cryptoRC4() {
+        String mPrivatekey = "jaysen";
+        String txt         = "jaysen";
+        String es          = RC4.encry_RC4_string(txt, mPrivatekey);
+        System.out.println("encoded:" + es);
+        String encodedString2 = RC4.encry_RC4_string(es, "second mix");
+        System.out.println("encoded 2:" + encodedString2);
+        String decodedString2 = RC4.decry_RC4(encodedString2, "second mix");
+        String ds             = RC4.decry_RC4(decodedString2, mPrivatekey);
+        System.out.println("decodedString2:" + decodedString2);
+        System.out.println("decode:" + ds);
+
 
     }
 
     @Test
-    public void parseHex(){
-        byte[] string=new byte[4];
-        string[0]= Byte.parseByte("-28");
-        string[1]= Byte.parseByte("-67");
-        string[2]= Byte.parseByte("-96");
+    public void parseHex() {
+        byte[] string = new byte[4];
+        string[0] = Byte.parseByte("-28");
+        string[1] = Byte.parseByte("-67");
+        string[2] = Byte.parseByte("-96");
 //        string[3]= Byte.parseByte("-27");
-        String txt=new String(string);
+        String txt = new String(string);
         System.out.println(txt);
     }
 
-    @Test public void testByte(){
-        String a= "你好";
+    @Test
+    public void testByte() {
+        String a = "你好";
         System.out.println("a.length() = [" + a.length() + "]");
         System.out.println("char = [" + a.charAt(0) + "]");
-        System.out.println("int = [" +  (int)a.charAt(0)+ "]");
-        System.out.println("Hex = [" + Integer.toHexString((int)a.charAt(0)) + "]");
-        char b='a';
-        byte[] bytes=String.valueOf(b).getBytes();
+        System.out.println("int = [" + (int) a.charAt(0) + "]");
+        System.out.println("Hex = [" + Integer.toHexString((int) a.charAt(0)) + "]");
+        char   b     = 'a';
+        byte[] bytes = String.valueOf(b).getBytes();
         for (int i = 0; i < bytes.length; i++) {
-            System.out.println("i:"+i+" = [" + bytes[i] + "]");
+            System.out.println("i:" + i + " = [" + bytes[i] + "]");
         }
         System.out.println("byteString = [" + new String(bytes) + "]");
     }

@@ -41,9 +41,9 @@ public class RC4 {
             return null;
         }
         byte b_data[] = data.getBytes();
-        for (int i = 0; i < b_data.length; i++) {
-            System.out.println("b_data[" + i + "] = " + Integer.toHexString(b_data[i]) + ", key = [" + key + "]");
-        }
+//        for (int i = 0; i < b_data.length; i++) {
+//            System.out.println("b_data[" + i + "] = " + Integer.toHexString(b_data[i]) + ", key = [" + key + "]");
+//        }
         return RC4Base(b_data, key);
     }
 
@@ -80,7 +80,7 @@ public class RC4 {
         String str = "";
         for (int i = 0; i < s.length(); i++) {
             int ch = (int) s.charAt(i);
-            System.out.println("ch = [" + s.charAt(i) + "]");
+//            System.out.println("ch = [" + s.charAt(i) + "]");
             String s4 = Integer.toHexString(ch & 0xFF);
 //            System.out.println("s = [" + s + "]");
 //            System.out.println("s4= [" + s4+ "]");
