@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no" ?>
+<root>
+
+    <fp2p>2</fp2p>
+
+    <dltype>1</dltype>
+
+    <exem>0</exem>
+
+    <hs>0</hs>
+
+    <ls>0</ls>
+
+    <preview>1859</preview>
+
+    <tm>1479901351</tm>
+
+    <fl>
+
+        <cnt>3</cnt>
+
+        <fi>
+
+            <id>10703</id>
+
+            <name>sd</name>
+
+            <lmt>0</lmt>
+
+            <sb>1</sb>
+
+            <cname>标清;(270P)</cname>
+
+            <fs>65977309</fs>
+
+            <sl>0</sl>
+
+            <br>64</br>
+        </fi>
+
+        <fi>
+
+            <name>shd</name>
+
+            <lmt>0</lmt>
+
+            <sb>1</sb>
+
+            <cname>超清;(720P)</cname>
+
+            <fs>234797207</fs>
+
+            <sl>1</sl>
+
+            <br>1500</br>
+
+            <id>10701</id>
+        </fi>
+
+        <fi>
+
+            <sb>1</sb>
+
+            <cname>高清;(480P)</cname>
+
+            <fs>115744570</fs>
+
+            <sl>0</sl>
+
+            <br>500</br>
+
+            <id>10712</id>
+
+            <name>hd</name>
+
+            <lmt>0</lmt>
+        </fi>
+    </fl>
+
+    <s>o</s>
+
+    <sfl>
+
+        <cnt>0</cnt>
+    </sfl>
+
+    <vl>
+
+        <cnt>1</cnt>
+
+        <vi>
+
+            <br>122</br>
+
+            <dsb>0</dsb>
+
+            <fclip>1</fclip>
+
+            <fn>j0340rabsfg.p701.mp4</fn>
+
+            <dm>1</dm>
+
+            <enc>0</enc>
+
+            <pl>
+
+                <cnt>2</cnt>
+
+                <pd>
+
+                    <c>10</c>
+
+                    <h>45</h>
+
+                    <w>80</w>
+
+                    <r>10</r>
+
+                    <fn>q1</fn>
+
+                    <fmt>40001</fmt>
+
+                    <url>http://video.qpic.cn/video_caps/0/</url>
+
+                    <cd>10</cd>
+                </pd>
+
+                <pd>
+
+                    <h>90</h>
+
+                    <w>160</w>
+
+                    <r>5</r>
+
+                    <fn>q2</fn>
+
+                    <fmt>40002</fmt>
+
+                    <url>http://video.qpic.cn/video_caps/0/</url>
+
+                    <cd>10</cd>
+
+                    <c>5</c>
+                </pd>
+            </pl>
+
+            <ul>
+
+                <ui>
+
+                    <vt>200</vt>
+
+                    <dt>2</dt>
+
+                    <dtc>10</dtc>
+
+                    <url>http://180.153.90.29/vhot2.qqvideo.tc.qq.com/</url>
+                </ui>
+
+                <ui>
+
+                    <dt>2</dt>
+
+                    <dtc>10</dtc>
+
+                    <url>http://180.153.90.30/vhot2.qqvideo.tc.qq.com/</url>
+
+                    <vt>200</vt>
+                </ui>
+
+                <ui>
+
+                    <vt>200</vt>
+
+                    <dt>2</dt>
+
+                    <dtc>10</dtc>
+
+                    <url>http://180.153.90.15/vhot2.qqvideo.tc.qq.com/</url>
+                </ui>
+
+                <ui>
+
+                    <dtc>10</dtc>
+
+                    <url>http://video.dispatch.tc.qq.com/93184166/</url>
+
+                    <vt>0</vt>
+
+                    <dt>2</dt>
+                </ui>
+            </ul>
+
+            <vid>j0340rabsfg</vid>
+
+            <st>2</st>
+
+            <logo>1</logo>
+
+            <hevc>0</hevc>
+
+            <cl>
+
+                <fc>6</fc>
+
+                <ci>
+
+                    <idx>1</idx>
+
+                    <cs>33365715</cs>
+
+                    <cd>300.032</cd>
+
+                    <cmd5>4884b522d882cae83e3fa9da0efec0a7</cmd5>
+
+                    <keyid>j0340rabsfg.10701.1</keyid>
+                </ci>
+
+                <ci>
+
+                    <cmd5>c1fd6ab0c185f280cb46637c7a64a6be</cmd5>
+
+                    <keyid>j0340rabsfg.10701.2</keyid>
+
+                    <idx>2</idx>
+
+                    <cs>44017440</cs>
+
+                    <cd>300</cd>
+                </ci>
+
+                <ci>
+
+                    <cs>46857758</cs>
+
+                    <cd>300</cd>
+
+                    <cmd5>6560f23ec8598f9c8698b748ef7e39d4</cmd5>
+
+                    <keyid>j0340rabsfg.10701.3</keyid>
+
+                    <idx>3</idx>
+                </ci>
+
+                <ci>
+
+                    <cd>300</cd>
+
+                    <cmd5>40a05b59ace26c6b05cd4df324b71965</cmd5>
+
+                    <keyid>j0340rabsfg.10701.4</keyid>
+
+                    <idx>4</idx>
+
+                    <cs>46216678</cs>
+                </ci>
+
+                <ci>
+
+                    <keyid>j0340rabsfg.10701.5</keyid>
+
+                    <idx>5</idx>
+
+                    <cs>48793059</cs>
+
+                    <cd>300.032</cd>
+
+                    <cmd5>a739a3bac1fe033036e782701608eab0</cmd5>
+                </ci>
+
+                <ci>
+
+                    <idx>6</idx>
+
+                    <cs>15826312</cs>
+
+                    <cd>359.380</cd>
+
+                    <cmd5>a74cfd8de4a5e16787497cf5208acfb4</cmd5>
+
+                    <keyid>j0340rabsfg.10701.6</keyid>
+                </ci>
+            </cl>
+
+            <vh>720</vh>
+
+            <drm>0</drm>
+
+            <level>0</level>
+
+            <fmd5>adc3dbce1605b7fd363789587d507ff7</fmd5>
+
+            <vw>1280</vw>
+
+            <fvkey>
+                84D3846A690991D2B23C2E78EDE53FD712389BC545928E8A0E58FA3977DFC847860D829893C73426D6C77CE1DB81DB6F71ED45BDC2F1E819B9F44655BB0DEEF407137641A9AB2C06974816DEED6F8FA0979CD6230FFA98946A9EF295DBC2F9D42921739890C3A6F0DE9BD44911439A98</fvkey>
+
+            <lnk>j0340rabsfg</lnk>
+
+            <ch>0</ch>
+
+            <fs>234797207</fs>
+
+            <iflag>0</iflag>
+
+            <ct>21600</ct>
+
+            <share>1</share>
+
+            <ti>好尸战争机器4抢鲜试玩娱乐解说EP14老友重聚</ti>
+
+            <type>9</type>
+
+            <td>1859.41</td>
+
+            <fst>5</fst>
+
+            <vst>2</vst>
+
+            <videotype>6</videotype>
+
+            <targetid>1593656215</targetid>
+
+            <sp>0</sp>
+        </vi>
+    </vl>
+</root>
