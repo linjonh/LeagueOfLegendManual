@@ -50,7 +50,7 @@ public class ExampleUnitTest {
                 heroEntity.avatarUrl = el.select("img").attr("src");
                 heroEntity.legendName = el.select(".champion_name").text();
                 heroEntity.legendTitle = el.select(".champion_title").text();
-                heroEntity.description = el.select("p").text();
+//                heroEntity.description = el.select("p").text();
                 heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").trim();
 //                System.out.println(heroEntity + "\n");
                 heroEntityList.add(heroEntity);

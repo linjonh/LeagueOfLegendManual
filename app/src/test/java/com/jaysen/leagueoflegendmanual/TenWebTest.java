@@ -372,7 +372,7 @@ public class TenWebTest {
                 JSONObject data = jsonObject.getJSONObject("data");
                 JSONArray skins = data.getJSONArray("skins");
                 for (int i = 0; i < skins.length(); i++) {
-                    final int k=i;
+                    final int k = i;
                     final String skinId = skins.getJSONObject(i).getString("id");
                     final String name = skins.getJSONObject(i).getString("name");
 
@@ -429,8 +429,39 @@ public class TenWebTest {
 
     @Test
     public void testGithubPageSource() throws IOException {
-       String content= getHttpContent("http://www.playappstation.com/gamecenter/hero.json");
-        System.out.println("content: "+content);
+        String content = getHttpContent("http://www.playappstation.com/gamecenter/hero.json");
+        System.out.println("content: " + content);
     }
 
+    //召唤师技能图片
+    public static final String summoner_URL = "http://ossweb-img.qq.com/images/lol/img/spell/";//+image.full
+    //召唤师技能介绍图片
+    public static final String summoner_desc_URL = "http://ossweb-img.qq.com/images/lol/web201310/summoner/";//'+d.key+'.jpg
+
+    private byte[] downloadImage(String url) throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        return okHttpClient.newCall(new Request.Builder().url(url).build()).execute().body().bytes();
+    }
+
+    @Test
+    public void testSummoner() throws IOException, JSONException {
+        String content = getHttpContent("http://www.playappstation.com/gamecenter/summoner.json");
+
+        JSONObject jsonObject = new JSONObject(content);
+        JSONObject data = jsonObject.getJSONObject("data");
+        Iterator<String> keys = data.keys();
+        while (keys.hasNext()) {
+            JSONObject skillItem = data.getJSONObject(keys.next());
+            String descImageId = skillItem.getString("key");
+            String skillImgName = skillItem.getJSONObject("image").getString("full");
+
+            File to = new File("D:\\hero\\game_data\\img\\summoner\\" + skillImgName);
+            File descFile = new File("D:\\hero\\game_data\\img\\summoner\\" + descImageId + ".jpg");
+            Files.createParentDirs(to);
+            Files.write(downloadImage(summoner_URL + skillImgName), to);
+            Files.write(downloadImage(summoner_desc_URL + descImageId + ".jpg"), descFile);
+
+        }
+
+    }
 }

@@ -15,34 +15,33 @@ import java.io.Serializable;
 public class HeroEntity implements Serializable {
     public static final long serialVersionUID = 10020140L;
     @Id(autoincrement = true)
-    public Long   id;
+    public Long id;
     public String avatarUrl;
+    public String nameId;//english name id.
     @Unique
     public String legendName;
     public String legendTitle;
-    public String description;
     public String tags;
-
-    @Generated(hash = 501934137)
-    public HeroEntity(Long id, String avatarUrl, String legendName,
-            String legendTitle, String description, String tags) {
-        this.id = id;
-        this.avatarUrl = avatarUrl;
-        this.legendName = legendName;
-        this.legendTitle = legendTitle;
-        this.description = description;
-        this.tags = tags;
-    }
 
     @Generated(hash = 412546348)
     public HeroEntity() {
+    }
+
+    @Generated(hash = 143419842)
+    public HeroEntity(Long id, String avatarUrl, String nameId, String legendName,
+            String legendTitle, String tags) {
+        this.id = id;
+        this.avatarUrl = avatarUrl;
+        this.nameId = nameId;
+        this.legendName = legendName;
+        this.legendTitle = legendTitle;
+        this.tags = tags;
     }
 
     @Override
     public String toString() {
         return "Hero:[name: " + legendName
                 + ",title: " + legendTitle
-                + ",description: " + description
                 + ",tags: " + tags
                 + ",avatarUrl: " + avatarUrl + "]";
     }
@@ -79,13 +78,6 @@ public class HeroEntity implements Serializable {
         this.legendTitle = legendTitle;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getTags() {
         return this.tags;
@@ -97,5 +89,13 @@ public class HeroEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNameId() {
+        return this.nameId;
+    }
+
+    public void setNameId(String nameId) {
+        this.nameId = nameId;
     }
 }

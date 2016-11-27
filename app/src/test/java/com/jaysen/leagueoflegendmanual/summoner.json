@@ -1,0 +1,246 @@
+{
+  "version": "6.1.1",
+  "data": {
+    "SummonerBarrier": {
+      "id": "SummonerBarrier",
+      "name": "屏障",
+      "description": "为你的英雄套上护盾，吸收115-455（取决于英雄等级）点伤害，持续2秒。",
+      "maxrank": 1,
+      "key": "21",
+      "image": {
+        "full": "SummonerBarrier.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerBoost": {
+      "id": "SummonerBoost",
+      "name": "净化",
+      "description": "移除身上的所有限制效果和召唤师技能的减益效果，并且若在接下来的3秒里再次被施加限制效果时，新效果的持续时间会减少65%。",
+      "maxrank": 1,
+      "key": "1",
+      "image": {
+        "full": "SummonerBoost.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 48,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerClairvoyance": {
+      "id": "SummonerClairvoyance",
+      "name": "洞察",
+      "description": "将地图上任意一块区域暴露给你的队伍，持续5秒。",
+      "maxrank": 1,
+      "key": "2",
+      "image": {
+        "full": "SummonerClairvoyance.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 96,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerDot": {
+      "id": "SummonerDot",
+      "name": "引燃",
+      "description": "引燃是对单体敌方目标施放的持续性伤害技能，在5秒的持续时间里造成70-410（取决于英雄等级）真实伤害，获得目标的视野，并减少目标所受的治疗和回复效果。",
+      "maxrank": 1,
+      "key": "14",
+      "image": {
+        "full": "SummonerDot.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 144,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerExhaust": {
+      "id": "SummonerExhaust",
+      "name": "虚弱",
+      "description": "虚弱目标敌方英雄，降低目标英雄30%的移动速度和攻击速度，以及10护甲与魔法抗性，并且他们所造成的伤害减少40%，持续2.5秒。",
+      "maxrank": 1,
+      "key": "3",
+      "image": {
+        "full": "SummonerExhaust.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 192,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerFlash": {
+      "id": "SummonerFlash",
+      "name": "闪现",
+      "description": "使英雄朝着你的指针所停的区域瞬间传送一小段距离。",
+      "maxrank": 1,
+      "key": "4",
+      "image": {
+        "full": "SummonerFlash.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 240,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerHaste": {
+      "id": "SummonerHaste",
+      "name": "幽灵疾步",
+      "description": "你的英雄在移动时会无视单位的碰撞体积，移动速度增加27%，持续10秒。",
+      "maxrank": 1,
+      "key": "6",
+      "image": {
+        "full": "SummonerHaste.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 288,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerHeal": {
+      "id": "SummonerHeal",
+      "name": "治疗术",
+      "description": "为你和目标友军英雄回复95-345（取决于英雄等级）生命值，并为你和目标友军英雄提供30%移动速度加成，持续1秒。若目标近期已受到过其它治疗术的影响，则治疗术对目标产生的治疗效果减半。",
+      "maxrank": 1,
+      "key": "7",
+      "image": {
+        "full": "SummonerHeal.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 336,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerMana": {
+      "id": "SummonerMana",
+      "name": "清晰术",
+      "description": "为你的英雄和周围的友军回复40%的最大法力值。",
+      "maxrank": 1,
+      "key": "13",
+      "image": {
+        "full": "SummonerMana.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 384,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerOdinGarrison": {
+      "id": "SummonerOdinGarrison",
+      "name": "卫戍部队",
+      "description": "我方防御塔：回复速度得到巨幅提高，持续8秒。敌方防御塔：减少80%的攻击力，持续8秒。",
+      "maxrank": 1,
+      "key": "17",
+      "image": {
+        "full": "SummonerOdinGarrison.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 432,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerPoroRecall": {
+      "id": "SummonerPoroRecall",
+      "name": "护驾！",
+      "description": "快速位移到魄罗之王旁边。",
+      "maxrank": 1,
+      "key": "30",
+      "image": {
+        "full": "SummonerPoroRecall.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 0,
+        "y": 48,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerPoroThrow": {
+      "id": "SummonerPoroThrow",
+      "name": "魄罗投掷",
+      "description": "把一个魄罗投向你的敌人。如果它命中了一名敌人，那么你接下来就可以快速位移到被命中的敌人旁边。",
+      "maxrank": 1,
+      "key": "31",
+      "image": {
+        "full": "SummonerPoroThrow.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 48,
+        "y": 48,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerSmite": {
+      "id": "SummonerSmite",
+      "name": "惩戒",
+      "description": "对目标史诗野怪、大型野怪或敌方小兵造成390-1000（取决于英雄等级）点真实伤害。",
+      "maxrank": 1,
+      "key": "11",
+      "image": {
+        "full": "SummonerSmite.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 96,
+        "y": 48,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerSnowball": {
+      "id": "SummonerSnowball",
+      "name": "标记",
+      "description": "沿直线扔出一个雪球。如果雪球命中了一个敌人，那么这个敌人会被【标记】，并且你的英雄接下来可以快速突进到被【标记】的目标旁边。",
+      "maxrank": 1,
+      "key": "32",
+      "image": {
+        "full": "SummonerSnowball.png",
+        "sprite": "spell13.png",
+        "group": "spell",
+        "x": 384,
+        "y": 96,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "SummonerTeleport": {
+      "id": "SummonerTeleport",
+      "name": "传送",
+      "description": "在引导3.5秒后，将英雄传送到友方建筑物、小兵或守卫旁边。",
+      "maxrank": 1,
+      "key": "12",
+      "image": {
+        "full": "SummonerTeleport.png",
+        "sprite": "spell0.png",
+        "group": "spell",
+        "x": 144,
+        "y": 48,
+        "w": 48,
+        "h": 48
+      }
+    }
+  },
+  "updated": "2016-01-19"
+}

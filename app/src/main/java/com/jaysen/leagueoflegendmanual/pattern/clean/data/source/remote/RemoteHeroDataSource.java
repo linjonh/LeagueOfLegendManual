@@ -58,7 +58,8 @@ public class RemoteHeroDataSource extends AbsDataSource {
 //                        Log.d("Remote onenxt", html);
                         Log.i("RemoteHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
-                            callback.onDataLoaded(parseData(html));
+//                            callback.onDataLoaded(parseData(html));
+//                            callback.onDataLoaded();
                         }
                     }
                 });
@@ -69,6 +70,11 @@ public class RemoteHeroDataSource extends AbsDataSource {
         subscription.unsubscribe();
     }
 
+    /**
+     * duowan web data
+     * @param html
+     * @return
+     */
     private ArrayList<HeroEntity> parseData(String html) {
         Document              document       = Jsoup.parse(html);
         ArrayList<HeroEntity> heroEntityList = new ArrayList<>();
@@ -81,7 +87,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
                 heroEntity.avatarUrl = el.select("img").attr("src").trim();
                 heroEntity.legendName = el.select(".champion_name").text().trim();
                 heroEntity.legendTitle = el.select(".champion_title").text().trim();
-                heroEntity.description = el.select("p").text().trim();
+//                heroEntity.description = el.select("p").text().trim();
                 heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").replace("Tags:", "").trim();
 //                System.out.println(heroEntity + "\n");
                 heroEntityList.add(heroEntity);
