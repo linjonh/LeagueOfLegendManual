@@ -13,4 +13,31 @@
         <item>男性</item>
         <item>女性</item>
     </string-array>
+    <string-array name="skin_test_big">
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1000.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1001.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1002.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1003.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1004.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1005.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1006.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1007.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1008.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1009.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/big1010.jpg</item>
+    </string-array>
+    <string-array name="skin_test_small">
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1000.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1001.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1002.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1003.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1004.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1005.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1006.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1007.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1008.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1009.jpg</item>
+        <item>http://www.playappstation.com/gamecenter/img/skin/small1010.jpg</item>
+    </string-array>
+
 </resources>

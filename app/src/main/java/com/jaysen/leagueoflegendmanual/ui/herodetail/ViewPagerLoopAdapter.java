@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
 
 import java.util.ArrayList;
@@ -17,20 +18,24 @@ import java.util.List;
 public class ViewPagerLoopAdapter extends PagerAdapter implements View.OnClickListener {
     public void setmDataList(List<String> mDataList) {
         this.mDataList = mDataList;
+        notifyDataSetChanged();
     }
 
     private List<String> mDataList = new ArrayList<>();
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_skin_layout, container, false);
+        View             view             = LayoutInflater.from(container.getContext()).inflate(R.layout.item_skin_layout, container, false);
+        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.skinBigDraweeView);
+        simpleDraweeView.setImageURI(getItemData(position));
+        container.addView(view);
         view.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeViewAt(position);
+        container.removeView((View) object);
     }
 
     public String getItemData(int pos) {
