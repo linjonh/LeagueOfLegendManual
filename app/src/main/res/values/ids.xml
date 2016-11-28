@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="id_ally_tip" type="id"/>
+    <item name="id_attribute_info" type="id"/>
+    <item name="id_enemy_tip" type="id"/>
+    <item name="id_level_tip_label" type="id"/>
+    <item name="id_level_tip_effect" type="id"/>
+    <item name="id_skins" type="id"/>
+    <item name="id_spells" type="id"/>
+    <item name="id_equipment" type="id"/>
+    <item name="id_hero_detail" type="id"/>
+    <item name="id_hero" type="id"/>
+    <item name="id_summoner_skill" type="id"/>
+</resources>
