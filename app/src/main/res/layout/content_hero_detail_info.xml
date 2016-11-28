@@ -172,11 +172,13 @@
         android:text="技能介绍"
         android:textSize="16sp"
         android:textStyle="bold"/>
-        <android.support.v7.widget.RecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/skillRCV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
@@ -185,11 +187,13 @@
         android:text="推荐装备(召唤师峡谷)"
         android:textSize="16sp"
         android:textStyle="bold"/>
-        <android.support.v7.widget.RecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recommendRCV1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
@@ -198,11 +202,13 @@
         android:text="推荐装备(极地大乱斗)"
         android:textSize="16sp"
         android:textStyle="bold"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recommendRCV2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recommendRCV2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
