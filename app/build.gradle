@@ -12,6 +12,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     defaultConfig {
+        vectorDrawables.useSupportLibrary true
         applicationId "com.jaysen.leagueoflegendmanual"
         minSdkVersion 14
         targetSdkVersion 25

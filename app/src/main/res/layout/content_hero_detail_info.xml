@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_hero_detail_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.jaysen.leagueoflegendmanual.ui.herodetail.HeroDetailInfoActivity"
+    tools:showIn="@layout/activity_hero_detail_info">
+
+    <FrameLayout
+        android:id="@+id/skinLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPageLoop"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/gradient_bg">
+
+        </android.support.v4.view.ViewPager>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/loopIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+    </FrameLayout>
+
+    <LinearLayout
+        style="@style/attribute_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/attackLayout"
+            style="@style/attribute_style"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/attackTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="物理攻击："/>
+
+            <ProgressBar
+                android:id="@+id/attackProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:max="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/defenseLayout"
+
+            style="@style/attribute_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/defenseTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="魔法攻击："/>
+
+            <ProgressBar
+                android:id="@+id/defenseProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:max="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/magicLayout"
+            style="@style/attribute_style"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/magicTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="防御能力："/>
+
+            <ProgressBar
+                android:id="@+id/magicProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:max="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/difficultyLayout"
+            style="@style/attribute_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/difficultyTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上手难度："/>
+
+            <ProgressBar
+                android:id="@+id/difficultyProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:max="10"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/line"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="背景故事"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="150dp"
+        android:padding="5dp"
+        android:text="@string/desc_lorem"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="技能介绍"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/skillRCV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="推荐装备(召唤师峡谷)"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/recommendRCV1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="推荐装备(极地大乱斗)"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recommendRCV2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="使用技巧"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/allytipTitleTv"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:text="@string/ally_usage"/>
+
+    <TextView
+        android:id="@+id/allytipTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/enemytipTitleTv"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:text="@string/enemy_usage"
+        />
+
+    <TextView
+        android:id="@+id/enemytipTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        />
+</LinearLayout>
