@@ -39,37 +39,14 @@ public class Spells implements Serializable {
      * ]
      * },
      */
-    @ToMany(joinProperties = {
-            @JoinProperty(name = "legendNameId", referencedName = "heroId")
-    })
-    public            List<LeveltipLabel>  leveltipLabel;
-    @ToMany(joinProperties = {
-            @JoinProperty(name = "legendNameId", referencedName = "heroId")
-    })
-    public            List<LeveltipEffect> leveltipEffect;
-    public            String               resource;//消耗法力值
-    @ToMany(joinProperties = {
-            @JoinProperty(name = "legendNameId", referencedName = "heroId")
-    })
-    public            List<Allytips>       allytips;//当你使用该英雄时技能提示
-    @ToMany(joinProperties = {
-            @JoinProperty(name = "legendNameId", referencedName = "heroId")
-    })
-    public            List<Enemytips>      enemytips;//敌人使用英雄时技能提示
-    /**
-     * Used to resolve relations
-     */
-    @Generated(hash = 2040040024)
-    private transient DaoSession           daoSession;
-    /**
-     * Used for active entity operations.
-     */
-    @Generated(hash = 654227704)
-    private transient SpellsDao            myDao;
+    public            String          leveltipLabel;//用$隔开
+    public            String          leveltipEffect;//用$隔开
+    public            String          resource;//消耗法力值
 
-    @Generated(hash = 849588792)
+    @Generated(hash = 319677011)
     public Spells(Long id, String legendNameId, String nameId, String name,
-                  String description, String imageName, String tooltip, String resource) {
+            String description, String imageName, String tooltip, String leveltipLabel,
+            String leveltipEffect, String resource) {
         this.id = id;
         this.legendNameId = legendNameId;
         this.nameId = nameId;
@@ -77,6 +54,8 @@ public class Spells implements Serializable {
         this.description = description;
         this.imageName = imageName;
         this.tooltip = tooltip;
+        this.leveltipLabel = leveltipLabel;
+        this.leveltipEffect = leveltipEffect;
         this.resource = resource;
     }
 
@@ -148,173 +127,20 @@ public class Spells implements Serializable {
         this.resource = resource;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 2007455396)
-    public List<LeveltipLabel> getLeveltipLabel() {
-        if (leveltipLabel == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            LeveltipLabelDao targetDao = daoSession.getLeveltipLabelDao();
-            List<LeveltipLabel> leveltipLabelNew = targetDao
-                    ._querySpells_LeveltipLabel(legendNameId);
-            synchronized (this) {
-                if (leveltipLabel == null) {
-                    leveltipLabel = leveltipLabelNew;
-                }
-            }
-        }
-        return leveltipLabel;
+    public void setLeveltipLabel(String leveltipLabel) {
+        this.leveltipLabel = leveltipLabel;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 926232143)
-    public synchronized void resetLeveltipLabel() {
-        leveltipLabel = null;
+    public void setLeveltipEffect(String leveltipEffect) {
+        this.leveltipEffect = leveltipEffect;
     }
 
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 759644939)
-    public List<LeveltipEffect> getLeveltipEffect() {
-        if (leveltipEffect == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            LeveltipEffectDao targetDao = daoSession.getLeveltipEffectDao();
-            List<LeveltipEffect> leveltipEffectNew = targetDao
-                    ._querySpells_LeveltipEffect(legendNameId);
-            synchronized (this) {
-                if (leveltipEffect == null) {
-                    leveltipEffect = leveltipEffectNew;
-                }
-            }
-        }
-        return leveltipEffect;
+    public String getLeveltipLabel() {
+        return this.leveltipLabel;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 85734300)
-    public synchronized void resetLeveltipEffect() {
-        leveltipEffect = null;
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 214677986)
-    public List<Allytips> getAllytips() {
-        if (allytips == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            AllytipsDao targetDao = daoSession.getAllytipsDao();
-            List<Allytips> allytipsNew = targetDao
-                    ._querySpells_Allytips(legendNameId);
-            synchronized (this) {
-                if (allytips == null) {
-                    allytips = allytipsNew;
-                }
-            }
-        }
-        return allytips;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 76741996)
-    public synchronized void resetAllytips() {
-        allytips = null;
-    }
-
-    /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
-     */
-    @Generated(hash = 1830344690)
-    public List<Enemytips> getEnemytips() {
-        if (enemytips == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            EnemytipsDao targetDao = daoSession.getEnemytipsDao();
-            List<Enemytips> enemytipsNew = targetDao
-                    ._querySpells_Enemytips(legendNameId);
-            synchronized (this) {
-                if (enemytips == null) {
-                    enemytips = enemytipsNew;
-                }
-            }
-        }
-        return enemytips;
-    }
-
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
-    @Generated(hash = 1029214454)
-    public synchronized void resetEnemytips() {
-        enemytips = null;
-    }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 128553479)
-    public void delete() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.delete(this);
-    }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 1942392019)
-    public void refresh() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.refresh(this);
-    }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 713229351)
-    public void update() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.update(this);
-    }
-
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 486956905)
-    public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getSpellsDao() : null;
+    public String getLeveltipEffect() {
+        return this.leveltipEffect;
     }
 
 }

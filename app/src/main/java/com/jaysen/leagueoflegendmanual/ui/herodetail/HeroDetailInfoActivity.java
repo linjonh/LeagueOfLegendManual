@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -17,6 +18,7 @@ import android.widget.ViewSwitcher;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote.RemoteHeroDetailDataSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +33,8 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class HeroDetailInfoActivity extends AppCompatActivity implements
-                                                              ViewPager.OnPageChangeListener,
-                                                              View.OnClickListener {
+        ViewPager.OnPageChangeListener,
+        View.OnClickListener {
 
     @BindView(R.id.viewPageLoop)
     ViewPager            mLoopViewPager;
@@ -74,8 +76,11 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
     RecyclerView         recommendRCV2;
     @BindView(R.id.loadingViewSwitcher)
     ViewSwitcher         loadingViewSwitcher;
-    private ViewPagerLoopAdapter mViewPagerLoopAdapter;
-    private int                  scrollDx;
+    private ViewPagerLoopAdapter  mViewPagerLoopAdapter;
+    private int                   scrollDx;
+    private SkillIntroduceAdapter mSkillIntroduceAdapter;
+    private Reco1Adapter          mReco1Adapter;
+    private Reco1Adapter          mReco2Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +107,28 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         setSkinViewPagerIndicator();
         mDataList.addAll(strings);
         mViewPagerLoopAdapter.setmDataList(mDataList);
+
+        //skill intro
+        mSkillIntroduceAdapter = new SkillIntroduceAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        skillRCV.setLayoutManager(layoutManager);
+        skillRCV.setAdapter(mSkillIntroduceAdapter);
+        //recommend 1
+        mReco1Adapter = new Reco1Adapter();
+        recommendRCV1.setLayoutManager(layoutManager);
+        recommendRCV1.setAdapter(mReco1Adapter);
+
+        //recommend 2
+        mReco2Adapter = new Reco1Adapter();
+        recommendRCV2.setLayoutManager(layoutManager);
+        recommendRCV2.setAdapter(mReco2Adapter);
         scrollDx = getScrollDx();
         setmViewPageLoop();
+
+
+    }
+
+    private void loadData() {
     }
 
     private void setSkinViewPagerIndicator() {
@@ -127,8 +152,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         String[] indicatorStrings = getResources().getStringArray(R.array.skin_test_small);
         int      w                = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
         int      screenWidth      = getResources().getDisplayMetrics().widthPixels;
-        int      scrollPerDx      = (w * indicatorStrings.length - screenWidth) / indicatorStrings.length;
-        return scrollPerDx;
+        return (w * indicatorStrings.length - screenWidth) / indicatorStrings.length;
     }
 
 
@@ -155,7 +179,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         mLoopIndicator.getChildAt(position).setSelected(true);
         if (position == 0) {
             mLoopIndicator.getChildAt(mLoopIndicator.getChildCount() - 1).setSelected(false);
-        }else {
+        } else {
             mLoopIndicator.getChildAt(position - 1).setSelected(false);
 
         }

@@ -1,6 +1,9 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.EquipmentService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroDetailService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.SummonerService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoMaster;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
@@ -34,7 +37,10 @@ public class DataModule {
     @Provides
     public Map<Class, String> provideUrlMap() {
         Map<Class, String> classStringMap = new Hashtable<>();
-        classStringMap.put(HeroService.class, URLAddress.LOL_DUOWAN_HOST);
+        classStringMap.put(HeroService.class, URLAddress.LOL_HERO_LIST_URL);
+        classStringMap.put(HeroDetailService.class, URLAddress.LOL_HERO_DETAIL_URL);
+        classStringMap.put(SummonerService.class, URLAddress.LOL_summoner_URL);
+        classStringMap.put(EquipmentService.class, URLAddress.LOL_EQUIPMENT_URL);
         return classStringMap;
     }
 

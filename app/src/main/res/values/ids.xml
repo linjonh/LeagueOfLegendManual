@@ -11,4 +11,5 @@
     <item name="id_hero_detail" type="id"/>
     <item name="id_hero" type="id"/>
     <item name="id_summoner_skill" type="id"/>
+    <item name="id_recommend_equipment" type="id"/>
 </resources>
