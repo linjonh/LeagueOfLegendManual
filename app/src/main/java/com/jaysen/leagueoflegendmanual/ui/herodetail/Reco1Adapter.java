@@ -2,9 +2,11 @@ package com.jaysen.leagueoflegendmanual.ui.herodetail;
 
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
@@ -43,12 +45,18 @@ public class Reco1Adapter extends RecyclerView.Adapter<Reco1ViewHolder> {
 
     @Override
     public void onBindViewHolder(Reco1ViewHolder holder, int position) {
-        String[] ids = getItemData(position).getEquipmentIds().split(",");
+        String[] ids = getItemData(position).getEquipmentIds().split("\\$");
+        int      w   = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, holder.itemView.getContext().getResources().getDisplayMetrics());
+        int      mL  = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, holder.itemView.getContext().getResources().getDisplayMetrics());
+
         for (String id : ids) {
             SimpleDraweeView simpleDraweeView = new SimpleDraweeView(holder.itemView.getContext());
-            simpleDraweeView.setImageURI(URLAddress.EQUIPMENT_ImageDl_URL + id + ".png");
+            String           imageURI         = String.format(URLAddress.EQUIPMENT_ImageDl_URL, id);
+            simpleDraweeView.setImageURI(imageURI);
             simpleDraweeView.setAspectRatio(1f);
-            holder.equipmentIconLayout.addView(simpleDraweeView, new LinearLayoutCompat.LayoutParams(-2, -1));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(w, w);
+            params.setMargins(mL, 0, 0, 0);
+            holder.equipmentIconLayout.addView(simpleDraweeView, params);
         }
         holder.equipmentTitle.setText(getItemData(position).type);
     }

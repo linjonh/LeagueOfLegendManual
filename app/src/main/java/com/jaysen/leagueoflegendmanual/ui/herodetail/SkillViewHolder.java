@@ -18,6 +18,8 @@ public class SkillViewHolder extends RecyclerView.ViewHolder {
     SimpleDraweeView skillItemImg;
     @BindView(R.id.skillIntroTv)
     TextView         skillIntroTv;
+    @BindView(R.id.skillIntroTitleTv)
+    TextView         skillIntroTitleTv;
 
     public SkillViewHolder(View itemView) {
         super(itemView);

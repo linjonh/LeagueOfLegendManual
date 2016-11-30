@@ -28,20 +28,25 @@ public class UnicodeTransform {
      * unicode 转字符串
      */
     public static String unicode2String(String unicode) {
+        if (unicode.contains("\\u")) {
 
-        StringBuilder string = new StringBuilder();
+            StringBuilder string = new StringBuilder();
 
-        String[] hex = unicode.split("\\\\u");
+            String[] hex = unicode.split("\\\\u");
 
-        for (int i = 1; i < hex.length; i++) {
+            for (int i = 1; i < hex.length; i++) {
 
-            // 转换出每一个代码点
-            int data = Integer.parseInt(hex[i], 16);
+                // 转换出每一个代码点
+                int data = Integer.parseInt(hex[i], 16);
 
-            // 追加成string
-            string.append((char) data);
+                // 追加成string
+                string.append((char) data);
+            }
+
+            return string.toString();
+        } else {
+            return unicode;
         }
 
-        return string.toString();
     }
 }

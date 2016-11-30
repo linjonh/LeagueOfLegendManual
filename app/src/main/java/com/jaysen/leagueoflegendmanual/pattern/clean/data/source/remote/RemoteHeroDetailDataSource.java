@@ -188,8 +188,17 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
             JSONObject         item               = jsonArray.getJSONObject(i);
             equipmentRecommend.type = item.getString("type");
             equipmentRecommend.mode = mode;
-            JSONArray items = item.getJSONArray("items");
-            equipmentRecommend.equipmentIds = getAppandedString(items);
+            JSONArray     items    = item.getJSONArray("items");
+            StringBuilder itemsStr = new StringBuilder();
+
+            for (int j = 0; j < items.length(); j++) {
+                String id = items.getJSONObject(j).getString("id");
+                itemsStr.append(id);
+                if (j < items.length() - 1) {
+                    itemsStr.append("$");
+                }
+            }
+            equipmentRecommend.equipmentIds = itemsStr.toString();
             switch (index) {
                 case 0:
                     heroDetailInfoEntity.recommend1.add(equipmentRecommend);

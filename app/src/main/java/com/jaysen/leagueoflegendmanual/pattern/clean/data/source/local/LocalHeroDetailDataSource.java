@@ -101,7 +101,14 @@ public class LocalHeroDetailDataSource extends AbsDataSource {
     @Override
     public <T> void saveDataSource(T dataSets) {
         HeroDetailInfoEntity datas = (HeroDetailInfoEntity) dataSets;
-        mDaoSession.getHeroDetailInfoEntityDao().insertInTx(datas);
+        try {
+            long id = mDaoSession.getHeroDetailInfoEntityDao().insert(datas);
+            Log.d("HERO", "insert hero id: " + id);
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
 //        for (HeroEntity item : datas) {
 //            try {
 //                long id = mDaoSession.getHeroEntityDao().insert(item);

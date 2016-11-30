@@ -156,13 +156,12 @@
         />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/storyTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="150dp"
         android:padding="5dp"
-        android:text="@string/desc_lorem"
-        android:visibility="gone"
+        android:text=""
+        android:visibility="visible"
         />
 
     <TextView
@@ -177,7 +176,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/skillRCV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 
     <TextView

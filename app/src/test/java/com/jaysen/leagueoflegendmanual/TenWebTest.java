@@ -40,11 +40,11 @@ public class TenWebTest {
     /**
      * all hero list
      */
-    public static final String web_URL = "http://lol.qq.com/web201310/info-heros.shtml";
+    public static final String web_URL             = "http://lol.qq.com/web201310/info-heros.shtml";
     /**
      * hero detail info
      */
-    public static final String webHERO_Detail_URL = "http://lol.qq.com/web201310/info-defail.shtml";// +"?id=Ahri"
+    public static final String webHERO_Detail_URL  = "http://lol.qq.com/web201310/info-defail.shtml";// +"?id=Ahri"
     /**
      * hero avatar
      */
@@ -53,14 +53,14 @@ public class TenWebTest {
     /**
      * 皮肤
      */
-    public static final String bigskin_URL = "http://ossweb-img.qq.com/images/lol/web201310/skin/big";//+id+".jpg“
+    public static final String bigskin_URL   = "http://ossweb-img.qq.com/images/lol/web201310/skin/big";//+id+".jpg“
     public static final String smallskin_URL = "http://ossweb-img.qq.com/images/lol/web201310/skin/small";//+id+".jpg“
 
     /**
      * hero info json
      */
     public static final String heroJsJson_URL = "http://lol.qq.com/biz/hero/";// + heroid + ".js"; heroid为英文名eg:Ahri
-    public static final String heroItem_URL = "http://lol.qq.com/biz/hero/item.js";
+    public static final String heroItem_URL   = "http://lol.qq.com/biz/hero/item.js";
 
     @Test
     public void testHeroDetailWeb() {
@@ -91,11 +91,14 @@ public class TenWebTest {
      * download hero info js 文件保存到D盘的hero文件夹
      */
     @Test
-    public void testHeroInfo() {
+    public void testHeroInfo() throws IOException {
+        String content = getHttpContent("http://www.playappstation.com/gamecenter/hero.json");
+
         try {
-            StringBuilder stringBuffer = getStringBuilder(new File("D:\\ASProject\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\" +
-                    "championheroJs.json"));
-            JSONObject jsonObject = new JSONObject(stringBuffer.toString());
+//            StringBuilder stringBuffer = getStringBuilder(new File("D:\\ASProject\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\" +
+//                    "championheroJs.json"));
+//            JSONObject       jsonObject = new JSONObject(stringBuffer.toString());
+            JSONObject       jsonObject = new JSONObject(content.trim());
             final JSONObject keysObject = jsonObject.getJSONObject("keys");
             //hero number keys JSONObject
             final Iterator<String> keys = keysObject.keys();
@@ -105,8 +108,8 @@ public class TenWebTest {
 
             final OkHttpClient okHttpClient = new OkHttpClient();
 
-            ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8, 3L, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
-            final CountDownLatch countDownLatch = new CountDownLatch(keysObject.length());
+            ThreadPoolExecutor   threadPoolExecutor = new ThreadPoolExecutor(4, 8, 3L, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+            final CountDownLatch countDownLatch     = new CountDownLatch(keysObject.length());
             while (keys.hasNext()) {
 //                threadPoolExecutor.execute(new Runnable() {
 //                    @Override
@@ -117,23 +120,23 @@ public class TenWebTest {
                     String next = keys.next();
 
                     System.out.println(Thread.currentThread().getName() + " thread id:" + Thread.currentThread().getId() + " next:" + next);
-                    String heroNameId = keysObject.getString(next);
-                    Request request = new Request.Builder().url(heroJsJson_URL + heroNameId + ".js").build();
-                    Response response = okHttpClient.newCall(request).execute();
-                    String heroInfoStringBody = response.body().string();
-                    byte[] bytes = heroInfoStringBody.getBytes();
-                    String pathname = "D:/hero/" + heroNameId + ".js";
-                    File heroInfoJsFile = new File(pathname);
+                    String   heroNameId         = keysObject.getString(next);
+                    Request  request            = new Request.Builder().url(heroJsJson_URL + heroNameId + ".js").build();
+                    Response response           = okHttpClient.newCall(request).execute();
+                    String   heroInfoStringBody = response.body().string();
+                    byte[]   bytes              = heroInfoStringBody.getBytes();
+                    String   pathname           = "D:/hero/" + heroNameId + ".js";
+                    File     heroInfoJsFile     = new File(pathname);
                     Files.createParentDirs(heroInfoJsFile);
                     Files.write(bytes, heroInfoJsFile);
 
                     //avatar download
-                    JSONObject heroItem = heroData.getJSONObject(heroNameId);
-                    String avatarName = heroItem.getJSONObject("image").getString("full");
-                    Request avatarRequest = new Request.Builder().url(HeroAVATAR_BASE_URL + avatarName).build();
-                    Response avatarResponse = okHttpClient.newCall(avatarRequest).execute();
-                    byte[] imgBytes = avatarResponse.body().bytes();
-                    File to = new File("D:/hero/" + avatarName);
+                    JSONObject heroItem       = heroData.getJSONObject(heroNameId);
+                    String     avatarName     = heroItem.getJSONObject("image").getString("full");
+                    Request    avatarRequest  = new Request.Builder().url(HeroAVATAR_BASE_URL + avatarName).build();
+                    Response   avatarResponse = okHttpClient.newCall(avatarRequest).execute();
+                    byte[]     imgBytes       = avatarResponse.body().bytes();
+                    File       to             = new File("D:/hero/" + avatarName);
                     Files.createParentDirs(to);
                     Files.write(imgBytes, to);
 //                            }
@@ -150,7 +153,7 @@ public class TenWebTest {
             //waite while loop complete
 //            countDownLatch.await();
 //            threadPoolExecutor.shutdown();
-        } catch (IOException | JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -175,9 +178,9 @@ public class TenWebTest {
                 System.out.println("i:" + i + " name: " + name);
                 try {
                     StringBuilder stringBuffer = getStringBuilder(jsFiles[i]);
-                    String content = stringBuffer.toString();
-                    String str = name + "=";//Ahri=
-                    int equalIndex = content.lastIndexOf(str);
+                    String        content      = stringBuffer.toString();
+                    String        str          = name + "=";//Ahri=
+                    int           equalIndex   = content.lastIndexOf(str);
                     content = content.substring(equalIndex + str.length(), content.length() - 1);//delete the “;” end of file
                     Files.write(content, new File("D:/hero/" + jsFiles[i].getName().replace(".js", "") + ".json"), Charset.defaultCharset());
                 } catch (FileNotFoundException e) {
@@ -198,8 +201,8 @@ public class TenWebTest {
     @NonNull
     private StringBuilder getStringBuilder(File jsFile) throws IOException {
         BufferedReader bufferedReader = Files.newReader(jsFile, Charset.defaultCharset());
-        String tmp;
-        StringBuilder stringBuffer = new StringBuilder();
+        String         tmp;
+        StringBuilder  stringBuffer   = new StringBuilder();
         while ((tmp = bufferedReader.readLine()) != null) {
             stringBuffer.append(tmp);
         }
@@ -219,13 +222,13 @@ public class TenWebTest {
     public void testDownloadVodUrl() {
         String vodSrcFiledir = "D:\\ASProject\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\LOL_vod.json";
         try {
-            String jsonStr = getReadedFileString(vodSrcFiledir);
-            JSONObject jsonObject = new JSONObject(jsonStr);
-            JSONObject dataObject = jsonObject.getJSONObject("data");
-            Iterator<String> keys = dataObject.keys();
+            String           jsonStr    = getReadedFileString(vodSrcFiledir);
+            JSONObject       jsonObject = new JSONObject(jsonStr);
+            JSONObject       dataObject = jsonObject.getJSONObject("data");
+            Iterator<String> keys       = dataObject.keys();
             while (keys.hasNext()) {
                 JSONObject heroItem = dataObject.getJSONObject(keys.next());
-                String vodlink = heroItem.getString("vodlink");
+                String     vodlink  = heroItem.getString("vodlink");
 
 //                String encodeUrl = URLEncoder.encode(vodlink, "utf-8");
 //                System.out.println("encodeUrl: " + encodeUrl);
@@ -274,11 +277,11 @@ public class TenWebTest {
     @Test
     public void dlExe() {
 //        String url="http://fiddler2.com/r/?SYNTAXVIEWINSTALL";
-        String url = "http://v.youku.com/player/getRealM3U8/vid/XNDU1NjE4Nzg0/type/mp4/v.m3u8";
+        String       url          = "http://v.youku.com/player/getRealM3U8/vid/XNDU1NjE4Nzg0/type/mp4/v.m3u8";
         OkHttpClient okHttpClient = new OkHttpClient();
         try {
             byte[] data = okHttpClient.newCall(new Request.Builder().url(url).build()).execute().body().bytes();
-            File to = new File("D:/FFFFFFFFF/m3u.m3u");
+            File   to   = new File("D:/FFFFFFFFF/m3u.m3u");
             Files.createParentDirs(to);
             Files.write(data, to);
         } catch (IOException e) {
@@ -288,7 +291,7 @@ public class TenWebTest {
 
     //post
     public static final String getvInfo_URL = "http://vv.video.qq.com/getvinfo";
-    public static final String getvkey_URL = "http://vv.video.qq.com/getvkey";
+    public static final String getvkey_URL  = "http://vv.video.qq.com/getvkey";
 
     @Test
     public void testGetVkeyAndInfo() throws IOException {
@@ -298,7 +301,7 @@ public class TenWebTest {
 
     private Response getResponse(String vid) throws IOException {
         OkHttpClient okHttpClient = new OkHttpClient();
-        String clientKey = "cKey=LUtu8mrMwljXMHHVT5KouiXQjMKUWfOmavz1BzGD8m6%5FU6C1OPeUrr59g5hilRB3j4iDJHZ2R0Z0k3HCkBF7cIVwNfSa6GzALu3We9VZuYAyYcHRu2iyT1OaJ0QGX2ym%5FpTkHdM8Pr3knoy41jhEqaSgvqa2oeuoD9HuKFd82ZizFptdxiWjEzXh8zCcekC99dfyVbamAAszfyU6bWyfzfEvgDduFYYRugLYClWKPhxTi13Jq9FKEhBNUGEhVJ9Lp4jYSyHCeAhS5SQ7";
+        String       clientKey    = "cKey=LUtu8mrMwljXMHHVT5KouiXQjMKUWfOmavz1BzGD8m6%5FU6C1OPeUrr59g5hilRB3j4iDJHZ2R0Z0k3HCkBF7cIVwNfSa6GzALu3We9VZuYAyYcHRu2iyT1OaJ0QGX2ym%5FpTkHdM8Pr3knoy41jhEqaSgvqa2oeuoD9HuKFd82ZizFptdxiWjEzXh8zCcekC99dfyVbamAAszfyU6bWyfzfEvgDduFYYRugLYClWKPhxTi13Jq9FKEhBNUGEhVJ9Lp4jYSyHCeAhS5SQ7";
         String bodystring = "&otype=xml" + clientKey +
                 "&format=2" +
                 "&encryptVer=5%2E4" +
@@ -331,16 +334,16 @@ public class TenWebTest {
     public void downloadEquipmentImgs() throws IOException, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient();
 
-        String json = getReadedFileString("D:\\hero\\game_data\\item.json");
-        JSONObject jsonObject = new JSONObject(json);
-        JSONObject data = jsonObject.getJSONObject("data");
-        Iterator<String> keys = data.keys();
+        String           json       = getReadedFileString("D:\\hero\\game_data\\item.json");
+        JSONObject       jsonObject = new JSONObject(json);
+        JSONObject       data       = jsonObject.getJSONObject("data");
+        Iterator<String> keys       = data.keys();
         while (keys.hasNext()) {
-            JSONObject equip = data.getJSONObject(keys.next());
-            String imgName = equip.getJSONObject("image").getString("full");
-            Request request = new Request.Builder().url(itemImageDl_URL + imgName).build();
-            byte[] imgBytes = okHttpClient.newCall(request).execute().body().bytes();
-            File to = new File("D:\\hero\\game_data\\img\\item\\" + imgName);
+            JSONObject equip    = data.getJSONObject(keys.next());
+            String     imgName  = equip.getJSONObject("image").getString("full");
+            Request    request  = new Request.Builder().url(itemImageDl_URL + imgName).build();
+            byte[]     imgBytes = okHttpClient.newCall(request).execute().body().bytes();
+            File       to       = new File("D:\\hero\\game_data\\img\\item\\" + imgName);
             Files.createParentDirs(to);
             Files.write(imgBytes, to);
         }
@@ -352,10 +355,10 @@ public class TenWebTest {
                 .readTimeout(3, TimeUnit.SECONDS)
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .build();
-        File fileDir = new File("D:\\hero\\game_data\\heros");
-        File[] files = fileDir.listFiles();
+        File   fileDir = new File("D:\\hero\\game_data\\heros");
+        File[] files   = fileDir.listFiles();
         String json;
-        int j = 0;
+        int    j       = 0;
 
 
         for (File file : files) {
@@ -369,12 +372,12 @@ public class TenWebTest {
 
 
                 JSONObject jsonObject = new JSONObject(json);
-                JSONObject data = jsonObject.getJSONObject("data");
-                JSONArray skins = data.getJSONArray("skins");
+                JSONObject data       = jsonObject.getJSONObject("data");
+                JSONArray  skins      = data.getJSONArray("skins");
                 for (int i = 0; i < skins.length(); i++) {
-                    final int k = i;
+                    final int    k      = i;
                     final String skinId = skins.getJSONObject(i).getString("id");
-                    final String name = skins.getJSONObject(i).getString("name");
+                    final String name   = skins.getJSONObject(i).getString("name");
 
 
                     final File tobig = new File("D:\\hero\\game_data\\img\\skin\\big" + skinId + ".jpg");
@@ -434,7 +437,7 @@ public class TenWebTest {
     }
 
     //召唤师技能图片
-    public static final String summoner_URL = "http://ossweb-img.qq.com/images/lol/img/spell/";//+image.full
+    public static final String summoner_URL      = "http://ossweb-img.qq.com/images/lol/img/spell/";//+image.full
     //召唤师技能介绍图片
     public static final String summoner_desc_URL = "http://ossweb-img.qq.com/images/lol/web201310/summoner/";//'+d.key+'.jpg
 
@@ -447,15 +450,15 @@ public class TenWebTest {
     public void testSummoner() throws IOException, JSONException {
         String content = getHttpContent("http://www.playappstation.com/gamecenter/summoner.json");
 
-        JSONObject jsonObject = new JSONObject(content);
-        JSONObject data = jsonObject.getJSONObject("data");
-        Iterator<String> keys = data.keys();
+        JSONObject       jsonObject = new JSONObject(content);
+        JSONObject       data       = jsonObject.getJSONObject("data");
+        Iterator<String> keys       = data.keys();
         while (keys.hasNext()) {
-            JSONObject skillItem = data.getJSONObject(keys.next());
-            String descImageId = skillItem.getString("key");
-            String skillImgName = skillItem.getJSONObject("image").getString("full");
+            JSONObject skillItem    = data.getJSONObject(keys.next());
+            String     descImageId  = skillItem.getString("key");
+            String     skillImgName = skillItem.getJSONObject("image").getString("full");
 
-            File to = new File("D:\\hero\\game_data\\img\\summoner\\" + skillImgName);
+            File to       = new File("D:\\hero\\game_data\\img\\summoner\\" + skillImgName);
             File descFile = new File("D:\\hero\\game_data\\img\\summoner\\" + descImageId + ".jpg");
             Files.createParentDirs(to);
             Files.write(downloadImage(summoner_URL + skillImgName), to);
@@ -463,5 +466,45 @@ public class TenWebTest {
 
         }
 
+    }
+
+    public static final String SKILL_IMG_URL  = "http://ossweb-img.qq.com/images/lol/img/passive/";
+    public static final String SKILLs_IMG_URL = "http://ossweb-img.qq.com/images/lol/img/spell/";
+
+    @Test
+    public void testSkillDl() throws IOException, JSONException {
+        File   dir   = new File("D:/hero/heros");
+        File[] files = dir.listFiles();
+        for (int j = 0; j < files.length; j++) {
+            File       file             = files[j];
+            String     json             = getReadedFileString(file.getCanonicalPath());
+            JSONObject hero             = new JSONObject(json);
+            String     passiveImageName = hero.getJSONObject("data").getJSONObject("passive").getJSONObject("image").getString("full");
+            String     url              = SKILL_IMG_URL + passiveImageName;
+//            System.out.println("passive url：" + url);
+            byte[] passiveIMg = downloadImage(url);
+            File   to         = new File("D:/hero/img/skill/" + passiveImageName);
+            if (!to.exists()) {
+                Files.createParentDirs(to);
+                Files.write(passiveIMg, to);
+                System.out.println(String.format("%4d save passive: " + passiveImageName, j));
+            } else {
+                System.out.println("exist file:" + passiveImageName);
+            }
+            JSONArray jsonArray = hero.getJSONObject("data").getJSONArray("spells");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String skillImageName = jsonArray.getJSONObject(i).getJSONObject("image").getString("full");
+                String url1           = SKILLs_IMG_URL + skillImageName;
+//                System.out.println("skill url:" + url1);
+                byte[] skillIMG = downloadImage(url1);
+                File   tof      = new File("D:/hero/img/skill/" + skillImageName);
+                if (tof.exists()) {
+                    continue;
+                }
+                Files.createParentDirs(tof);
+                Files.write(skillIMG, tof);
+                System.out.println(String.format("%4d save skill: " + skillImageName, i));
+            }
+        }
     }
 }
