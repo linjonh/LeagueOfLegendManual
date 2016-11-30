@@ -3,7 +3,6 @@ package com.jaysen.leagueoflegendmanual.ui;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -89,7 +88,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HeroListFragment.newInstance("", "")).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, HeroListFragment.newInstance("", ""))
+                    .addToBackStack("gallery").commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
