@@ -8,6 +8,6 @@ import rx.Observable;
  */
 
 public interface HeroService {
-    @GET("hero/")
+    @GET("hero.json")
     Observable<String> getHeroEntities();
 }

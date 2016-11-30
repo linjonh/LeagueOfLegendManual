@@ -44,8 +44,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class HeroDetailInfoActivity extends AppCompatActivity implements
-        ViewPager.OnPageChangeListener,
-        View.OnClickListener, Presenter.View<HeroDetailInfoEntity> {
+                                                              ViewPager.OnPageChangeListener,
+                                                              View.OnClickListener,
+                                                              Presenter.View<HeroDetailInfoEntity> {
 
     private static final String TAG = HeroDetailInfoActivity.class.getSimpleName();
     @BindView(R.id.viewPageLoop)
@@ -106,6 +107,14 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            String title = getIntent().getStringExtra("title");
+            getSupportActionBar().setTitle(title);
+        }
         APP app = (APP) getApplication();
         app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
 
@@ -144,7 +153,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
         mHeroDetailPresenter.setMvpView(this);
         UseCaseHeroDetail.RequestParam mParam = new UseCaseHeroDetail.RequestParam();
-        mParam.heroNameId = "Ahri.json";
+        mParam.heroNameId = getIntent().getStringExtra("heroNameId") + ".json";
         mHeroDetailPresenter.setmParam(mParam);
         mHeroDetailPresenter.loadData();
 

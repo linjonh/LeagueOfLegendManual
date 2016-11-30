@@ -45,7 +45,7 @@ public class SkillIntroduceAdapter extends RecyclerView.Adapter<SkillViewHolder>
         String quick   = UnicodeTransform.unicode2String(getItemData(position).getName()) + getQuickShotcut(position);
         if (tooltip == null) {
             //passive
-            holder.skillIntroTv.setText(UnicodeTransform.unicode2String(getItemData(position).getDescription()));
+            holder.skillIntroTv.setText(Html.fromHtml(UnicodeTransform.unicode2String(getItemData(position).getDescription())));
         } else {
             //Q W E R skill
             holder.skillIntroTv.setText(Html.fromHtml(UnicodeTransform.unicode2String(tooltip)));
@@ -54,7 +54,7 @@ public class SkillIntroduceAdapter extends RecyclerView.Adapter<SkillViewHolder>
         holder.skillItemImg.setImageURI(String.format(URLAddress.HERO_SKILL_ImageDl_URL, getItemData(position).getImageName()));
     }
 
-    String getQuickShotcut(int position) {
+    private String getQuickShotcut(int position) {
         switch (position) {
             case 0:
                 return "  被动技能";

@@ -3,6 +3,7 @@ package com.jaysen.leagueoflegendmanual.ui;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -15,11 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jaysen.leagueoflegendmanual.ui.HeroInfos.DataBaseFragment;
 import com.jaysen.leagueoflegendmanual.R;
+import com.jaysen.leagueoflegendmanual.ui.HeroInfos.HeroListFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,DataBaseFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   HeroListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, DataBaseFragment.newInstance("", "")).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, HeroListFragment.newInstance("", "")).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -104,6 +106,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-        
+
     }
 }

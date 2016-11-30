@@ -1,6 +1,7 @@
 package com.jaysen.leagueoflegendmanual.ui.HeroInfos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.jaysen.leagueoflegendmanual.dagger.DataModule;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
 import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.ui.herodetail.HeroDetailInfoActivity;
 
 import java.util.List;
 
@@ -35,14 +37,14 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DataBaseFragment.OnFragmentInteractionListener} interface
+ * {@link HeroListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DataBaseFragment#newInstance} factory method to
+ * Use the {@link HeroListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DataBaseFragment extends Fragment implements Presenter.View<List<HeroEntity>>,
-        SwipeRefreshLayout.OnRefreshListener,
-        HeroListAdapter.OnItemClickListener {
+public class HeroListFragment extends Fragment implements Presenter.View<List<HeroEntity>>,
+                                                          SwipeRefreshLayout.OnRefreshListener,
+                                                          HeroListAdapter.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,7 +61,7 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
     RecyclerView       mRecyclerView;
     private HeroListAdapter mAdapter;
 
-    public DataBaseFragment() {
+    public HeroListFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +71,11 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DataBaseFragment.
+     * @return A new instance of fragment HeroListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DataBaseFragment newInstance(String param1, String param2) {
-        DataBaseFragment fragment = new DataBaseFragment();
+    public static HeroListFragment newInstance(String param1, String param2) {
+        HeroListFragment fragment = new HeroListFragment();
         Bundle           args     = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -187,7 +189,18 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
 
     @Override
     public void onItemClick(HeroEntity itemData) {
+        start(getContext(), itemData.nameId, itemData.legendName + "  " + itemData.legendTitle);
+    }
 
+    /**
+     * @param context    context
+     * @param heroNameId hero english name
+     */
+    public static void start(Context context, String heroNameId, String title) {
+        Intent starter = new Intent(context, HeroDetailInfoActivity.class);
+        starter.putExtra("heroNameId", heroNameId);
+        starter.putExtra("title", title);
+        context.startActivity(starter);
     }
 
     /**

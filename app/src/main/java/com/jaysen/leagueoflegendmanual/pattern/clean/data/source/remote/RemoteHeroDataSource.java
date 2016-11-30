@@ -8,13 +8,17 @@ import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.util.MyUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.inject.Inject;
 
@@ -54,11 +58,12 @@ public class RemoteHeroDataSource extends AbsDataSource {
                     }
 
                     @Override
-                    public void onNext(String html) {
+                    public void onNext(String json) {
 //                        Log.d("Remote onenxt", html);
                         Log.i("RemoteHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
-//                            callback.onDataLoaded(parseData(html));
+                            ArrayList<HeroEntity> data = parseHeroListJson(json);
+                            callback.onDataLoaded(data);
 //                            callback.onDataLoaded();
                         }
                     }
@@ -71,9 +76,50 @@ public class RemoteHeroDataSource extends AbsDataSource {
     }
 
     /**
+     * parse my web site
+     *
+     * @param json resource
+     * @return data list
+     */
+    private ArrayList<HeroEntity> parseHeroListJson(String json) {
+        ArrayList<HeroEntity> heroEntityList = new ArrayList<>();
+        try {
+            JSONObject       jsonObject = new JSONObject(json);
+            final JSONObject keysObject = jsonObject.getJSONObject("keys");
+            //hero number keys JSONObject
+            final Iterator<String> keys = keysObject.keys();
+            System.out.println("keys: " + keys);
+
+            final JSONObject heroData = jsonObject.getJSONObject("data");
+            while (keys.hasNext()) {
+                String     next       = keys.next();
+                String     heroNameId = keysObject.getString(next);
+                HeroEntity heroEntity = new HeroEntity();
+                //avatar download
+                JSONObject heroItem = heroData.getJSONObject(heroNameId);
+                heroEntity.legendName = heroItem.getString("name");
+                heroEntity.legendTitle = heroItem.getString("title");
+                JSONArray tags = heroItem.getJSONArray("tags");
+                heroEntity.tags = MyUtils.getAppandedString(tags);
+                heroEntity.nameId = heroNameId;
+                heroEntity.avatarUrl = heroItem.getJSONObject("image").getString("full");
+
+                heroEntityList.add(heroEntity);
+            }
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
+        return heroEntityList;
+    }
+
+    /**
      * duowan web data
-     * @param html
+     *
+     * @param html html document
      * @return
+     * @deprecated use {@link #parseHeroListJson(String)}
      */
     private ArrayList<HeroEntity> parseData(String html) {
         Document              document       = Jsoup.parse(html);

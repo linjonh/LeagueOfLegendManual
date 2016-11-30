@@ -13,6 +13,7 @@ import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.EquipmentRecommend;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Skins;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Spells;
+import com.jaysen.leagueoflegendmanual.util.MyUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -133,9 +134,9 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
                 JSONArray jsonArray = spellsObject.getJSONObject("leveltip").getJSONArray("label");
                 JSONArray effects   = spellsObject.getJSONObject("leveltip").getJSONArray("effect");
                 //leveltipLabel
-                spells.leveltipLabel = getAppandedString(jsonArray);
+                spells.leveltipLabel = MyUtils.getAppandedString(jsonArray);
                 //leveltipEffect
-                spells.leveltipEffect = getAppandedString(effects);
+                spells.leveltipEffect = MyUtils.getAppandedString(effects);
 
                 heroDetailInfoEntity.spellsList.add(spells);
             }
@@ -210,21 +211,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
         }
     }
 
-    /**
-     * @param items
-     * @return
-     * @throws JSONException
-     */
-    private String getAppandedString(JSONArray items) throws JSONException {
-        StringBuilder itemsStr = new StringBuilder();
-        for (int j = 0; j < items.length(); j++) {
-            itemsStr.append(items.getString(j));
-            if (j < items.length() - 1) {
-                itemsStr.append("$");
-            }
-        }
-        return itemsStr.toString();
-    }
+
 
     @Override
     public void unSubscribe() {

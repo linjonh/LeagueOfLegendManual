@@ -108,8 +108,8 @@ public class TenWebTest {
 
             final OkHttpClient okHttpClient = new OkHttpClient();
 
-            ThreadPoolExecutor   threadPoolExecutor = new ThreadPoolExecutor(4, 8, 3L, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
-            final CountDownLatch countDownLatch     = new CountDownLatch(keysObject.length());
+//            ThreadPoolExecutor   threadPoolExecutor = new ThreadPoolExecutor(4, 8, 3L, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+//            final CountDownLatch countDownLatch     = new CountDownLatch(keysObject.length());
             while (keys.hasNext()) {
 //                threadPoolExecutor.execute(new Runnable() {
 //                    @Override
@@ -144,7 +144,7 @@ public class TenWebTest {
                     e1.printStackTrace();
                 }
 
-                countDownLatch.countDown();
+//                countDownLatch.countDown();
 
 //                    }
 //                });

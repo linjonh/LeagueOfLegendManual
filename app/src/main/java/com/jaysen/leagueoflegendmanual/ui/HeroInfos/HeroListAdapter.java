@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.R;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  */
 
 public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroViewHolder> implements
-        View.OnClickListener {
+                                                                                          View.OnClickListener {
 
 
     public void setmHeroEntities(List<HeroEntity> mHeroEntities) {
@@ -49,10 +50,10 @@ public class HeroListAdapter extends RecyclerView.Adapter<HeroListAdapter.HeroVi
     @Override
     public void onBindViewHolder(HeroViewHolder holder, int position) {
         holder.title.setText(getItem(position).getLegendTitle() + " " + getItem(position).getLegendName());
-        holder.tag.setText(getItem(position).getTags());
+        holder.tag.setText(getItem(position).getTags().replace("$", "，"));
 //        holder.description.setText(getItem(position).getDescription());
         Preconditions.checkNotNull(holder.iconAvatar);
-        holder.iconAvatar.setImageURI(getItem(position).getAvatarUrl());
+        holder.iconAvatar.setImageURI(String.format(URLAddress.HERO_AVATAR_ImageDl_URL, getItem(position).getAvatarUrl()));
         holder.itemView.setTag(getItem(position));
         holder.itemView.setOnClickListener(this);
     }
