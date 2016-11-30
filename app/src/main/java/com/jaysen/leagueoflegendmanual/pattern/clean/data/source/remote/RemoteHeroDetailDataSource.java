@@ -7,7 +7,6 @@ import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroDetailService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Allytips;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.AttributeInfo;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Enemytips;
@@ -21,14 +20,22 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import rx.Subscriber;
 import rx.Subscription;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/29.
+ * 远程数据
  */
 
 public class RemoteHeroDetailDataSource extends AbsDataSource {
+    @Inject
+    RemoteHeroDetailDataSource() {
+
+    }
 
     private Subscription subscription;
 
@@ -44,6 +51,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
         Preconditions.checkNotNull(callback);
         subscription = getService(HeroDetailService.class)
                 .getHeroDetailInfo(heroNameID)
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
@@ -52,6 +60,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (BuildConfig.DEBUG) e.printStackTrace();
                         if (!isUnsubscribed()) {
                             callback.onDataNotAvailable();
                         }
@@ -66,19 +75,17 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
                 });
     }
 
-    private HeroEntity parseHeroDetailInfo(String json) {
-        HeroEntity           heroEntity = new HeroEntity();
-        HeroDetailInfoEntity heroDetailInfoEntity;
+    private HeroDetailInfoEntity parseHeroDetailInfo(String json) {
+        HeroDetailInfoEntity heroDetailInfoEntity = new HeroDetailInfoEntity();
         try {
             Preconditions.checkNotNull(json);
-            heroEntity = new HeroEntity();
             JSONObject jsonObject = new JSONObject(json);
             JSONObject data       = jsonObject.getJSONObject("data");
-            heroDetailInfoEntity = new HeroDetailInfoEntity();
             //avatar name title nameId tags description attributeInfo
-            heroEntity.nameId = data.getString("id");
-            heroEntity.legendName = data.getString("name");
-            heroEntity.legendTitle = data.getString("title");
+            heroDetailInfoEntity.nameId = data.getString("id");
+            heroDetailInfoEntity.avatarUrl = data.getJSONObject("image").getString("full");
+            heroDetailInfoEntity.legendName = data.getString("name");
+            heroDetailInfoEntity.legendTitle = data.getString("title");
             JSONArray     tags          = data.getJSONArray("tags");
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < tags.length(); i++) {
@@ -87,7 +94,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
                     stringBuilder.append("$");
                 }
             }
-            heroEntity.tags = stringBuilder.toString();
+            heroDetailInfoEntity.tags = stringBuilder.toString();
             heroDetailInfoEntity.description = data.getString("lore");
             AttributeInfo attributeInfo = new AttributeInfo();
             JSONObject    info          = data.getJSONObject("info");
@@ -158,13 +165,12 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
                 setRecommendEquipment(heroDetailInfoEntity, blocks, 0);
                 setRecommendEquipment(heroDetailInfoEntity, blocks, 1);
             }
-            heroEntity.heroDetailInfoEntity = heroDetailInfoEntity;
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace();
             }
         }
-        return heroEntity;
+        return heroDetailInfoEntity;
     }
 
     /**

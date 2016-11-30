@@ -115,7 +115,7 @@ public class DataBaseFragment extends Fragment implements Presenter.View<List<He
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mHeroFragmentPresenter.setmView(this);
+        mHeroFragmentPresenter.setMvpView(this);
         mSwipeRefreshLayout.setRefreshing(true);
         mHeroFragmentPresenter.loadData();
     }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Skins;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +18,18 @@ import java.util.List;
  */
 
 public class ViewPagerLoopAdapter extends PagerAdapter implements View.OnClickListener {
-    public void setmDataList(List<String> mDataList) {
+    public void setmDataList(List<Skins> mDataList) {
         this.mDataList = mDataList;
         notifyDataSetChanged();
     }
 
-    private List<String> mDataList = new ArrayList<>();
+    private List<Skins> mDataList = new ArrayList<>();
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View             view             = LayoutInflater.from(container.getContext()).inflate(R.layout.item_skin_layout, container, false);
         SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.skinBigDraweeView);
-        simpleDraweeView.setImageURI(getItemData(position));
+        simpleDraweeView.setImageURI(String.format(URLAddress.SKIN_BIG_ImageDl_URL, getItemData(position).getSkinId()));
         container.addView(view);
         view.setOnClickListener(this);
         return view;
@@ -38,7 +40,7 @@ public class ViewPagerLoopAdapter extends PagerAdapter implements View.OnClickLi
         container.removeView((View) object);
     }
 
-    public String getItemData(int pos) {
+    public Skins getItemData(int pos) {
         if (mDataList.isEmpty() || getCount() < pos) {
             return null;
         }

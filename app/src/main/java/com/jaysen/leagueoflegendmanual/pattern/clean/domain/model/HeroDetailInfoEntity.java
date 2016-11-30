@@ -29,38 +29,46 @@ import java.util.List;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/28.
+ * 英雄详情
  */
 
 @Entity
 public class HeroDetailInfoEntity implements Serializable {
     public static final long serialVersionUID = R.id.id_hero_detail;
     @Id(autoincrement = true)
-    public Long          id;//表id
-    public long          heroId;//外键表AttributeInfo id
+    public            Long                     id;//表id
+    public            long                     heroId;//外键表AttributeInfo id
     @Unique
-    public String        nameId;//english name id.
-    public String        description;//英雄背景介绍：对应lore字段
-
+    public            String                   nameId;//english name id.
+    public            String                   avatarUrl;
+    @Unique
+    public            String                   legendName;
+    public            String                   legendTitle;
+    public            String                   tags;
+    public            String                   description;//英雄背景介绍：对应lore字段
+    //皮肤标号和名称
     @ToMany(referencedJoinProperty = "heroId")
-    public List<Skins>   skinIdNames;//皮肤标号和名称
-
+    public            List<Skins>              skinIdNames;
+    //英雄属性：攻击防御，魔法，难度等
     @ToOne(joinProperty = "heroId")
-    public AttributeInfo attributeInfo;//英雄属性：攻击防御，魔法，难度等
-
+    public            AttributeInfo            attributeInfo;
+    //英雄技能，（被动技能、 Q、 W、 E、 R）
     @ToMany(joinProperties = {@JoinProperty(name = "nameId", referencedName = "legendNameId")})
-    public List<Spells>  spellsList;//英雄技能，（被动技能、 Q、 W、 E、 R）
-
+    public            List<Spells>             spellsList;
+    //当你使用该英雄时技能提示
     @ToMany(joinProperties = {@JoinProperty(name = "nameId", referencedName = "heroId")})
-    public List<Allytips>  allytips;//当你使用该英雄时技能提示
-
+    public            List<Allytips>           allytips;
+    //敌人使用英雄时技能提示
     @ToMany(joinProperties = {@JoinProperty(name = "nameId", referencedName = "heroId")})
-    public List<Enemytips> enemytips;//敌人使用英雄时技能提示
-
-    @ToMany(referencedJoinProperty = "heroId")//对应到该表的主键id long型
-    public            List<EquipmentRecommend> recommend1;//推荐装备召唤师峡谷
-
-    @ToMany(referencedJoinProperty = "heroId")//对应到该表的主键id
-    public            List<EquipmentRecommend> recommend2;//推荐装备极地大乱斗
+    public            List<Enemytips>          enemytips;
+    //对应到该表的主键id long型
+    //推荐装备召唤师峡谷
+    @ToMany(referencedJoinProperty = "heroId")
+    public            List<EquipmentRecommend> recommend1;
+    //对应到该表的主键id
+    //推荐装备极地大乱斗
+    @ToMany(referencedJoinProperty = "heroId")
+    public            List<EquipmentRecommend> recommend2;
     /**
      * Used to resolve relations
      */
@@ -79,11 +87,16 @@ public class HeroDetailInfoEntity implements Serializable {
     public HeroDetailInfoEntity() {
     }
 
-    @Generated(hash = 1923659369)
-    public HeroDetailInfoEntity(Long id, long heroId, String nameId, String description) {
+    @Generated(hash = 249200600)
+    public HeroDetailInfoEntity(Long id, long heroId, String nameId, String avatarUrl,
+            String legendName, String legendTitle, String tags, String description) {
         this.id = id;
         this.heroId = heroId;
         this.nameId = nameId;
+        this.avatarUrl = avatarUrl;
+        this.legendName = legendName;
+        this.legendTitle = legendTitle;
+        this.tags = tags;
         this.description = description;
     }
 
@@ -374,9 +387,39 @@ public class HeroDetailInfoEntity implements Serializable {
         enemytips = null;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    public String getAvatarUrl() {
+        return this.avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getLegendName() {
+        return this.legendName;
+    }
+
+    public void setLegendName(String legendName) {
+        this.legendName = legendName;
+    }
+
+    public String getLegendTitle() {
+        return this.legendTitle;
+    }
+
+    public void setLegendTitle(String legendTitle) {
+        this.legendTitle = legendTitle;
+    }
+
+    public String getTags() {
+        return this.tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1845362782)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

@@ -2,6 +2,7 @@ package com.jaysen.leagueoflegendmanual.dagger;
 
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.ui.HeroInfos.DataBaseFragment;
+import com.jaysen.leagueoflegendmanual.ui.herodetail.HeroDetailInfoActivity;
 
 import javax.inject.Singleton;
 
@@ -17,6 +18,8 @@ public interface DataSourceComponent {
     void inject(AbsDataSource source);
 
     void inject(DataBaseFragment dataBaseFragment);
+
+    void inject(HeroDetailInfoActivity heroDetailInfoActivity);
 
     @Subcomponent.Builder
     interface Builder {

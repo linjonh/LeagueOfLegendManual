@@ -8,34 +8,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote.RemoteHeroDetailDataSource;
+import com.jaysen.leagueoflegendmanual.dagger.DataModule;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Skins;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.usecase.UseCaseHeroDetail;
+import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
+import com.jaysen.leagueoflegendmanual.ui.APP;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class HeroDetailInfoActivity extends AppCompatActivity implements
         ViewPager.OnPageChangeListener,
-        View.OnClickListener {
+        View.OnClickListener, Presenter.View<HeroDetailInfoEntity> {
 
+    private static final String TAG = HeroDetailInfoActivity.class.getSimpleName();
     @BindView(R.id.viewPageLoop)
     ViewPager            mLoopViewPager;
     @BindView(R.id.loopIndicator)
@@ -82,6 +91,9 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
     private Reco1Adapter          mReco1Adapter;
     private Reco1Adapter          mReco2Adapter;
 
+    @Inject
+    HeroDetailPresenter mHeroDetailPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +101,8 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        APP app = (APP) getApplication();
+        app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -102,40 +116,39 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         mViewPagerLoopAdapter = new ViewPagerLoopAdapter();
         mLoopViewPager.setAdapter(mViewPagerLoopAdapter);
         mLoopViewPager.addOnPageChangeListener(this);
-        ArrayList<String> mDataList = new ArrayList<>();
-        List<String>      strings   = Arrays.asList(getResources().getStringArray(R.array.skin_test_big));
-        setSkinViewPagerIndicator();
-        mDataList.addAll(strings);
-        mViewPagerLoopAdapter.setmDataList(mDataList);
 
         //skill intro
         mSkillIntroduceAdapter = new SkillIntroduceAdapter();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager  = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         skillRCV.setLayoutManager(layoutManager);
         skillRCV.setAdapter(mSkillIntroduceAdapter);
         //recommend 1
         mReco1Adapter = new Reco1Adapter();
-        recommendRCV1.setLayoutManager(layoutManager);
+        recommendRCV1.setLayoutManager(layoutManager1);
         recommendRCV1.setAdapter(mReco1Adapter);
 
         //recommend 2
         mReco2Adapter = new Reco1Adapter();
-        recommendRCV2.setLayoutManager(layoutManager);
+        recommendRCV2.setLayoutManager(layoutManager2);
         recommendRCV2.setAdapter(mReco2Adapter);
         scrollDx = getScrollDx();
         setmViewPageLoop();
 
+        mHeroDetailPresenter.setMvpView(this);
+        UseCaseHeroDetail.RequestParam mParam = new UseCaseHeroDetail.RequestParam();
+        mParam.heroNameId = "Ahri.json";
+        mHeroDetailPresenter.setmParam(mParam);
+        mHeroDetailPresenter.loadData();
 
     }
 
-    private void loadData() {
-    }
 
-    private void setSkinViewPagerIndicator() {
-        String[] indicatorStrings = getResources().getStringArray(R.array.skin_test_small);
-        int      w                = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-        int      padding          = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
-        for (int i = 0; i < indicatorStrings.length; i++) {
+    private void setSkinViewPagerIndicator(List<Skins> indicators) {
+        int w       = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        for (int i = 0; i < indicators.size(); i++) {
             SimpleDraweeView simpleDraweeView = new SimpleDraweeView(this);
             simpleDraweeView.setAspectRatio(1);
             simpleDraweeView.setTag(i);
@@ -143,7 +156,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
             simpleDraweeView.setOnClickListener(this);
             simpleDraweeView.setBackgroundResource(R.drawable.selector_indicator);
             mLoopIndicator.addView(simpleDraweeView, new LinearLayout.LayoutParams(w, w));
-            simpleDraweeView.setImageURI(indicatorStrings[i]);
+            simpleDraweeView.setImageURI(String.format(URLAddress.SKIN_SMALL_ImageDl_URL, indicators.get(i).getSkinId()));
         }
     }
 
@@ -160,9 +173,19 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         Observable.interval(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
+                .subscribe(new Subscriber<Long>() {
                     @Override
-                    public void call(Long aLong) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
                         mLoopViewPager.setCurrentItem((int) (aLong % mViewPagerLoopAdapter.getCount()), true);
                     }
                 });
@@ -175,7 +198,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
     @Override
     public void onPageSelected(int position) {
-        // TODO: 2016/11/28 select small avatar indicator
+        // 2016/11/28 select small avatar indicator
         mLoopIndicator.getChildAt(position).setSelected(true);
         if (position == 0) {
             mLoopIndicator.getChildAt(mLoopIndicator.getChildCount() - 1).setSelected(false);
@@ -201,5 +224,23 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
             int pos = (int) v.getTag();
             mLoopViewPager.setCurrentItem(pos, true);
         }
+    }
+
+    @Override
+    public void onLoadSuccess(HeroDetailInfoEntity data) {
+        Log.d(TAG, "onLoadSuccess: ");
+        Toast.makeText(this, "onLoadSuccess", Toast.LENGTH_SHORT).show();
+        mViewPagerLoopAdapter.setmDataList(data.skinIdNames);
+        setSkinViewPagerIndicator(data.getSkinIdNames());
+        mReco1Adapter.setRecommends(data.getRecommend1());
+        mReco2Adapter.setRecommends(data.getRecommend2());
+        mSkillIntroduceAdapter.setmSpellsList(data.getSpellsList());
+    }
+
+    @Override
+    public void onLoadFailed() {
+        Log.d(TAG, "onLoadFailed: ");
+        Toast.makeText(this, "onLoadFailed", Toast.LENGTH_SHORT).show();
+
     }
 }

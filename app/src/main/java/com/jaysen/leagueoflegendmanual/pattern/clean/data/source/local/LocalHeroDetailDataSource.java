@@ -7,14 +7,15 @@ import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -25,30 +26,36 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * // TODO: 2016/11/18  2.update data from remote data source
  */
 
-public class LocalHeroDetatilDataSource extends AbsDataSource {
+public class LocalHeroDetailDataSource extends AbsDataSource {
     private Subscription subscription;
 
     @Inject
     DaoSession mDaoSession;
 
-    public void setmKey(Long mKey) {
-        this.mKey = mKey;
+    public void setNameId(String nameId) {
+        this.nameId = nameId;
     }
 
-    private Long mKey;
+    private String nameId;
 
     @Inject
-    LocalHeroDetatilDataSource() {
+    LocalHeroDetailDataSource() {
     }
 
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         checkNotNull(callback);
-        subscription = mDaoSession
-                .getHeroDetailInfoEntityDao()
-                .rx()
-                .load(mKey)
+        subscription = Observable.just(mDaoSession.getHeroDetailInfoEntityDao().queryRaw("WHERE NAME_ID=?", nameId))
                 .subscribeOn(Schedulers.io())
+                .map(new Func1<List<HeroDetailInfoEntity>, HeroDetailInfoEntity>() {
+                    @Override
+                    public HeroDetailInfoEntity call(List<HeroDetailInfoEntity> heroDetailInfoEntities) {
+                        if (heroDetailInfoEntities != null && heroDetailInfoEntities.size() > 0) {
+                            return heroDetailInfoEntities.get(0);
+                        }
+                        return null;
+                    }
+                })
                 .subscribe(new Subscriber<HeroDetailInfoEntity>() {
                     @Override
                     public void onCompleted() {
@@ -64,7 +71,7 @@ public class LocalHeroDetatilDataSource extends AbsDataSource {
 
                     @Override
                     public void onNext(HeroDetailInfoEntity heroEntities) {
-                        Log.i("LocalHeroDataSource",Thread.currentThread().getName());
+                        Log.i("LocalHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(heroEntities);
                         }
@@ -76,7 +83,7 @@ public class LocalHeroDetatilDataSource extends AbsDataSource {
     public void deleteAllLocalDataSource() {
         try {
             mDaoSession.getHeroEntityDao().deleteAll();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -93,8 +100,8 @@ public class LocalHeroDetatilDataSource extends AbsDataSource {
 
     @Override
     public <T> void saveDataSource(T dataSets) {
-//        HeroDetailInfoEntity datas = (HeroDetailInfoEntity) dataSets;
-//        mDaoSession.getHeroDetailInfoEntityDao().insertInTx(datas);
+        HeroDetailInfoEntity datas = (HeroDetailInfoEntity) dataSets;
+        mDaoSession.getHeroDetailInfoEntityDao().insertInTx(datas);
 //        for (HeroEntity item : datas) {
 //            try {
 //                long id = mDaoSession.getHeroEntityDao().insert(item);
