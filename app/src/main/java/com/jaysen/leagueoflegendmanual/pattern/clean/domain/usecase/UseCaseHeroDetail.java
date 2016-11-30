@@ -51,11 +51,21 @@ public class UseCaseHeroDetail extends
                 Observable.just(data)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<HeroDetailInfoEntity>() {
+                        .subscribe(new Subscriber<HeroDetailInfoEntity>() {
                             @Override
-                            public void call(HeroDetailInfoEntity heroEntity) {
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(HeroDetailInfoEntity heroDetailInfoEntity) {
                                 Log.i("UseCaseHeroDetail just", Thread.currentThread().getName());
-                                Response response = new Response(heroEntity);
+                                Response response = new Response(heroDetailInfoEntity);
                                 getmUseCaseCallBack().onSuccess(response);
                             }
                         });

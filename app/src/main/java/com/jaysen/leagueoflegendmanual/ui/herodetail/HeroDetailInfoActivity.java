@@ -3,6 +3,7 @@ package com.jaysen.leagueoflegendmanual.ui.herodetail;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,10 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -91,6 +94,8 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
     RecyclerView         recommendRCV2;
     @BindView(R.id.loadingViewSwitcher)
     ViewSwitcher         loadingViewSwitcher;
+    @BindView(R.id.contentScrollView)
+    ScrollView           contentScrollView;
     private ViewPagerLoopAdapter  mViewPagerLoopAdapter;
     private int                   scrollDx;
     private SkillIntroduceAdapter mSkillIntroduceAdapter;
@@ -124,6 +129,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                contentScrollView.smoothScrollTo(0, 0);
 
             }
         });
@@ -159,6 +165,13 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void setSkinViewPagerIndicator(List<Skins> indicators) {
         int w       = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
@@ -185,7 +198,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
 
     private void setmViewPageLoop() {
-        Observable.interval(2, TimeUnit.SECONDS)
+        Observable.interval(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Long>() {
@@ -263,6 +276,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
         mAllytipTv.setText(allyTips);
         mEnemytipTitleTv.setText(getString(R.string.enemy_usage, data.getLegendName()));
         mEnemytipTv.setText(getAppendedString(data.getEnemytips()));
+        loadingViewSwitcher.showNext();
     }
 
     @NonNull

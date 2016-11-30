@@ -26,7 +26,12 @@
         <activity
             android:name=".ui.herodetail.HeroDetailInfoActivity"
             android:label="@string/title_activity_hero_detail_info"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity"
+                />
         </activity>
     </application>
 

@@ -473,7 +473,7 @@ public class TenWebTest {
 
     @Test
     public void testSkillDl() throws IOException, JSONException {
-        File   dir   = new File("D:/hero/heros");
+        File   dir   = new File("D:\\hero\\game_data\\heros");
         File[] files = dir.listFiles();
         for (int j = 0; j < files.length; j++) {
             File       file             = files[j];
@@ -483,7 +483,7 @@ public class TenWebTest {
             String     url              = SKILL_IMG_URL + passiveImageName;
 //            System.out.println("passive url：" + url);
             byte[] passiveIMg = downloadImage(url);
-            File   to         = new File("D:/hero/img/skill/" + passiveImageName);
+            File   to         = new File("D:\\hero\\game_data/img/skill/" + passiveImageName);
             if (!to.exists()) {
                 Files.createParentDirs(to);
                 Files.write(passiveIMg, to);
@@ -497,7 +497,7 @@ public class TenWebTest {
                 String url1           = SKILLs_IMG_URL + skillImageName;
 //                System.out.println("skill url:" + url1);
                 byte[] skillIMG = downloadImage(url1);
-                File   tof      = new File("D:/hero/img/skill/" + skillImageName);
+                File   tof      = new File("D:\\hero\\game_data/img/skill/" + skillImageName);
                 if (tof.exists()) {
                     continue;
                 }
