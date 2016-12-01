@@ -24,7 +24,6 @@ import android.widget.ViewSwitcher;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jaysen.leagueoflegendmanual.R;
-import com.jaysen.leagueoflegendmanual.dagger.DataModule;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.URLAddress;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Allytips;
@@ -32,7 +31,7 @@ import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Skins;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.usecase.UseCaseHeroDetail;
 import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
-import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.ui.MyApplicationLike;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -47,9 +46,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class HeroDetailInfoActivity extends AppCompatActivity implements
-                                                              ViewPager.OnPageChangeListener,
-                                                              View.OnClickListener,
-                                                              Presenter.View<HeroDetailInfoEntity> {
+        ViewPager.OnPageChangeListener,
+        View.OnClickListener,
+        Presenter.View<HeroDetailInfoEntity> {
 
     private static final String TAG = HeroDetailInfoActivity.class.getSimpleName();
     @BindView(R.id.viewPageLoop)
@@ -120,8 +119,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
             String title = getIntent().getStringExtra("title");
             getSupportActionBar().setTitle(title);
         }
-        APP app = (APP) getApplication();
-        app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
+        MyApplicationLike.getDataSourceComponent().inject(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,9 +137,15 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
         //skill intro
         mSkillIntroduceAdapter = new SkillIntroduceAdapter();
-        LinearLyoutAtMostMrg layoutManager  = new LinearLyoutAtMostMrg(this, LinearLayoutManager.VERTICAL, false);
-        LinearLyoutAtMostMrg layoutManager1 = new LinearLyoutAtMostMrg(this, LinearLayoutManager.VERTICAL, false);
-        LinearLyoutAtMostMrg layoutManager2 = new LinearLyoutAtMostMrg(this, LinearLayoutManager.VERTICAL, false);
+        LinearLyoutAtMostMrg layoutManager = new LinearLyoutAtMostMrg(this,
+                                                                      LinearLayoutManager.VERTICAL,
+                                                                      false);
+        LinearLyoutAtMostMrg layoutManager1 = new LinearLyoutAtMostMrg(this,
+                                                                       LinearLayoutManager.VERTICAL,
+                                                                       false);
+        LinearLyoutAtMostMrg layoutManager2 = new LinearLyoutAtMostMrg(this,
+                                                                       LinearLayoutManager.VERTICAL,
+                                                                       false);
 
         skillRCV.setLayoutManager(layoutManager);
         skillRCV.setAdapter(mSkillIntroduceAdapter);
@@ -165,6 +169,7 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -174,8 +179,10 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
     }
 
     private void setSkinViewPagerIndicator(List<Skins> indicators) {
-        int w       = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
+                                                getResources().getDisplayMetrics());
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
+                                                      getResources().getDisplayMetrics());
         for (int i = 0; i < indicators.size(); i++) {
             SimpleDraweeView simpleDraweeView = new SimpleDraweeView(this);
             simpleDraweeView.setAspectRatio(1);
@@ -184,15 +191,17 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
             simpleDraweeView.setOnClickListener(this);
             simpleDraweeView.setBackgroundResource(R.drawable.selector_indicator);
             mLoopIndicator.addView(simpleDraweeView, new LinearLayout.LayoutParams(w, w));
-            simpleDraweeView.setImageURI(String.format(URLAddress.SKIN_SMALL_ImageDl_URL, indicators.get(i).getSkinId()));
+            simpleDraweeView.setImageURI(String.format(URLAddress.SKIN_SMALL_ImageDl_URL,
+                                                       indicators.get(i).getSkinId()));
         }
     }
 
     @NonNull
     private int getScrollDx() {
         String[] indicatorStrings = getResources().getStringArray(R.array.skin_test_small);
-        int      w                = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
-        int      screenWidth      = getResources().getDisplayMetrics().widthPixels;
+        int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
+                                                getResources().getDisplayMetrics());
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
         return (w * indicatorStrings.length - screenWidth) / indicatorStrings.length;
     }
 
@@ -214,7 +223,8 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
 
                     @Override
                     public void onNext(Long aLong) {
-                        mLoopViewPager.setCurrentItem((int) (aLong % mViewPagerLoopAdapter.getCount()), true);
+                        mLoopViewPager.setCurrentItem(
+                                (int) (aLong % mViewPagerLoopAdapter.getCount()), true);
                     }
                 });
     }

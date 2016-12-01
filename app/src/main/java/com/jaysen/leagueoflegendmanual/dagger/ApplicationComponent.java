@@ -1,6 +1,6 @@
 package com.jaysen.leagueoflegendmanual.dagger;
 
-import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.ui.MyApplicationLike;
 
 import dagger.Component;
 
@@ -10,7 +10,7 @@ import dagger.Component;
  */
 @Component(modules = {AppModule.class})
 public interface ApplicationComponent {
-    void inject(APP app);
+    void inject(MyApplicationLike app);
 
     DataSourceComponent.Builder getDataSourceBuilder();
 //    DataSourceComponent getDataSourceComponent();//compile error

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test vod</title>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/core.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.slim.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.slim.min.js"></script>
+</head>
+
+<body>
+    <button id="start">打开10标签页</button>
+    <script type="text/javascript" src="http://lol.qq.com/web201310/js/herovideo.js"></script>
+    <script type="text/javascript" src="http://lol.qq.com/biz/hero/champion.js"></script>
+    <script type="text/javascript">
+    var index = 0;
+    var count = 0;
+
+    function listHero() {
+        console.log("listHero");
+        var champions = LOLherojs.champion.data;
+        var keys = LOLherojs.champion.keys;
+        for (var item in keys) {
+            var nameId = champions[keys[item]].id;
+            console.log("listHero:" + nameId);
+            count++;
+            index++;
+            lookVod(nameId);
+
+            if (count % 5 == 0) {
+                break;
+            }
+            console.log("listHero end");
+        }
+        count = 0;
+
+    }
+
+    function lookVod(nameId) {
+        var vods = LOLherojs.otherthings.data;
+        var vodlink = vods[nameId].vodlink;
+        console.log("lookVod:" + vodlink);
+
+        window.open(vodlink);
+    }
+    $("#start").click(listHero);
+    </script>
+</body>
+
+</html>

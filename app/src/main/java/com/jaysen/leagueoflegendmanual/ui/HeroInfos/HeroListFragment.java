@@ -19,10 +19,9 @@ import android.view.ViewGroup;
 
 import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.R;
-import com.jaysen.leagueoflegendmanual.dagger.DataModule;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
-import com.jaysen.leagueoflegendmanual.ui.APP;
+import com.jaysen.leagueoflegendmanual.ui.MyApplicationLike;
 import com.jaysen.leagueoflegendmanual.ui.herodetail.HeroDetailInfoActivity;
 
 import java.util.List;
@@ -43,8 +42,8 @@ import butterknife.Unbinder;
  * create an instance of this fragment.
  */
 public class HeroListFragment extends Fragment implements Presenter.View<List<HeroEntity>>,
-                                                          SwipeRefreshLayout.OnRefreshListener,
-                                                          HeroListAdapter.OnItemClickListener {
+        SwipeRefreshLayout.OnRefreshListener,
+        HeroListAdapter.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -94,8 +93,9 @@ public class HeroListFragment extends Fragment implements Presenter.View<List<He
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_data_base, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -108,8 +108,7 @@ public class HeroListFragment extends Fragment implements Presenter.View<List<He
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        APP app = (APP) getActivity().getApplication();
-        app.getApplicationComponent().getDataSourceBuilder().dataModule(new DataModule()).build().inject(this);
+        MyApplicationLike.getDataSourceComponent().inject(this);
         Preconditions.checkNotNull(mHeroFragmentPresenter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
@@ -136,7 +135,7 @@ public class HeroListFragment extends Fragment implements Presenter.View<List<He
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                                               + " must implement OnFragmentInteractionListener");
         }
     }
 
