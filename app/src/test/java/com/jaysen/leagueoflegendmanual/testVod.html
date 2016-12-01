@@ -16,35 +16,41 @@
     <script type="text/javascript" src="http://lol.qq.com/web201310/js/herovideo.js"></script>
     <script type="text/javascript" src="http://lol.qq.com/biz/hero/champion.js"></script>
     <script type="text/javascript">
-    var index = 0;
-    var count = 0;
-
     function listHero() {
-        console.log("listHero");
+        // console.log("listHero");
         var champions = LOLherojs.champion.data;
         var keys = LOLherojs.champion.keys;
-        for (var item in keys) {
-            var nameId = champions[keys[item]].id;
-            console.log("listHero:" + nameId);
-            count++;
-            index++;
-            lookVod(nameId);
-
-            if (count % 5 == 0) {
-                break;
+        var next = 43//43还未下载
+        var count = 133;
+        for (var item in champions) {
+            if (count > next) {
+                count--;
+                continue;
+            } else if (count > (next - 10)) {
+                console.log("count："+count);
+                var nameId = champions[item].id;
+                console.log(nameId);
+                count--;
+                lookVod(nameId);
             }
-            console.log("listHero end");
         }
+        // console.log("count：" + count);
+
         count = 0;
 
     }
 
     function lookVod(nameId) {
         var vods = LOLherojs.otherthings.data;
-        var vodlink = vods[nameId].vodlink;
-        console.log("lookVod:" + vodlink);
+        if (vods[nameId] != null) {
+            var vodlink = vods[nameId].vodlink;
+            console.log("lookVod:" + vodlink);
 
-        window.open(vodlink);
+            window.open(vodlink);
+        } else {
+            console.log("lookVod: nameId is null:" + nameId);
+        }
+
     }
     $("#start").click(listHero);
     </script>
