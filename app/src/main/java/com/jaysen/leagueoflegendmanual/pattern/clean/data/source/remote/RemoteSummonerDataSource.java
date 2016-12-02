@@ -7,9 +7,7 @@ import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.CommonService;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.EquipmentEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.SummonerSkillEntity;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.VodEntity;
 
 import org.json.JSONObject;
 
@@ -38,7 +36,7 @@ public class RemoteSummonerDataSource extends AbsDataSource {
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         Preconditions.checkNotNull(callback);
         subscription = getService(CommonService.class)
-                .getVods()
+                .getSummonerList()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
                     @Override
@@ -59,7 +57,7 @@ public class RemoteSummonerDataSource extends AbsDataSource {
 //                        Log.d("Remote onenxt", html);
                         Log.i("RemoteHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
-                            ArrayList<SummonerSkillEntity> data = parseVodsJson(json);
+                            ArrayList<SummonerSkillEntity> data = parseSummonerJson(json);
                             callback.onDataLoaded(data);
 //                            callback.onDataLoaded();
                         }
@@ -67,7 +65,7 @@ public class RemoteSummonerDataSource extends AbsDataSource {
                 });
     }
 
-    private ArrayList<SummonerSkillEntity> parseVodsJson(String json) {
+    private ArrayList<SummonerSkillEntity> parseSummonerJson(String json) {
         //  2016/12/3
         ArrayList<SummonerSkillEntity> vodEntities = new ArrayList<>();
         try {

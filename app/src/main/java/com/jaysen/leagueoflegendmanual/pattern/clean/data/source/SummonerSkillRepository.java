@@ -3,9 +3,9 @@ package com.jaysen.leagueoflegendmanual.pattern.clean.data.source;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Preconditions;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.local.LocalEquipmentDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote.RemoteEquipmentDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.local.LocalSummonerDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.remote.RemoteSummonerDataSource;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.SummonerSkillEntity;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import javax.inject.Inject;
 
 public class SummonerSkillRepository extends AbsDataSource {
     @Inject
-    LocalEquipmentDataSource  mLocalEquipmentDataSource;
+    LocalSummonerDataSource  mLocalSummonerDataSource;
     @Inject
-    RemoteEquipmentDataSource mRemoteEquipmentDataSource;
+    RemoteSummonerDataSource mRemoteSummonerDataSource;
     private boolean isCacheDirty;
 
     @Inject
@@ -38,9 +38,9 @@ public class SummonerSkillRepository extends AbsDataSource {
         if (isCacheDirty) {
             getRemoteData(callback);
         } else {
-            mLocalEquipmentDataSource.getDataSource(new LoadDataCallback<List<HeroEntity>>() {
+            mLocalSummonerDataSource.getDataSource(new LoadDataCallback<List<SummonerSkillEntity>>() {
                 @Override
-                public void onDataLoaded(List<HeroEntity> data) {
+                public void onDataLoaded(List<SummonerSkillEntity> data) {
                     // TODO: 2016/11/21 add other update logic and cache
                     if (data == null || data.size() == 0) {
                         getRemoteData(callback);
@@ -64,15 +64,15 @@ public class SummonerSkillRepository extends AbsDataSource {
      * @param callback
      */
     private void getRemoteData(@NonNull final LoadDataCallback callback) {
-        mRemoteEquipmentDataSource.getDataSource(new LoadDataCallback<List<HeroEntity>>() {
+        mRemoteSummonerDataSource.getDataSource(new LoadDataCallback<List<SummonerSkillEntity>>() {
             @Override
-            public void onDataLoaded(final List<HeroEntity> data) {
+            public void onDataLoaded(final List<SummonerSkillEntity> data) {
                 // 2016/11/21 add other delete local data logic and update cache and loac database
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        mLocalEquipmentDataSource.deleteAllLocalDataSource();
-                        mLocalEquipmentDataSource.saveDataSource(data);
+                        mLocalSummonerDataSource.deleteAllLocalDataSource();
+                        mLocalSummonerDataSource.saveDataSource(data);
                     }
                 }).start();
                 callback.onDataLoaded(data);
@@ -95,7 +95,7 @@ public class SummonerSkillRepository extends AbsDataSource {
 
     @Override
     public void unSubscribe() {
-        mLocalEquipmentDataSource.unSubscribe();
-        mRemoteEquipmentDataSource.unSubscribe();
+        mLocalSummonerDataSource.unSubscribe();
+        mRemoteSummonerDataSource.unSubscribe();
     }
 }
