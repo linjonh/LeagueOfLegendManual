@@ -153,7 +153,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
             JSONArray enemytips = data.getJSONArray("enemytips");
             for (int i = 0; i < enemytips.length(); i++) {
                 Enemytips tipItem = new Enemytips();
-                tipItem.tip = allytips.getString(i);
+                tipItem.tip = enemytips.getString(i);
                 heroDetailInfoEntity.enemytips.add(tipItem);
             }
 

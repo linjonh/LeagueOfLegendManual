@@ -8,9 +8,9 @@ import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.CommonService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.EquipmentEntity;
-import com.jaysen.leagueoflegendmanual.util.MyUtils;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.SummonerSkillEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.VodEntity;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -27,18 +27,18 @@ import rx.schedulers.Schedulers;
  * TODO 1.use retrofit request pattern to request remote data and save data to local database.
  */
 
-public class RemoteEquipmentDataSource extends AbsDataSource {
+public class RemoteSummonerDataSource extends AbsDataSource {
     private Subscription subscription;
 
     @Inject
-    public RemoteEquipmentDataSource() {
+    public RemoteSummonerDataSource() {
     }
 
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         Preconditions.checkNotNull(callback);
         subscription = getService(CommonService.class)
-                .getEquipmentsList()
+                .getVods()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
                     @Override
@@ -59,53 +59,38 @@ public class RemoteEquipmentDataSource extends AbsDataSource {
 //                        Log.d("Remote onenxt", html);
                         Log.i("RemoteHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
-                            ArrayList<EquipmentEntity> data = parseEquipments(json);
+                            ArrayList<SummonerSkillEntity> data = parseVodsJson(json);
                             callback.onDataLoaded(data);
 //                            callback.onDataLoaded();
                         }
                     }
-
-
                 });
     }
 
-    private ArrayList<EquipmentEntity> parseEquipments(String json) {
-        //  2016/12/2
-        ArrayList<EquipmentEntity> entities = new ArrayList<>();
+    private ArrayList<SummonerSkillEntity> parseVodsJson(String json) {
+        //  2016/12/3
+        ArrayList<SummonerSkillEntity> vodEntities = new ArrayList<>();
         try {
             JSONObject       jsonObject = new JSONObject(json);
             JSONObject       data       = jsonObject.getJSONObject("data");
             Iterator<String> keys       = data.keys();
             while (keys.hasNext()) {
-                String          key             = keys.next();
-                JSONObject      item            = data.getJSONObject(key);
-                EquipmentEntity equipmentEntity = new EquipmentEntity();
-                equipmentEntity.setName(item.getString("name"));
-                equipmentEntity.setEquipmentId(key);
-                equipmentEntity.setDescription(item.getString("description"));
-                equipmentEntity.setPlaintext(item.getString("plaintext"));
-                JSONObject gold = item.getJSONObject("gold");
-                equipmentEntity.setGoldBase(gold.getInt("base"));
-                equipmentEntity.setGoldSell(gold.getInt("sell"));
-                equipmentEntity.setGoldTotal(gold.getInt("total"));
-                equipmentEntity.setTags(MyUtils.getAppandedString(item.getJSONArray("tags")));
-                equipmentEntity.setImage(item.getJSONObject("image").getString("full"));
-                if (item.has("into")) {
-                    JSONArray into = item.getJSONArray("into");
-                    equipmentEntity.setInto(MyUtils.getAppandedString(into));
-                }
-                if (item.has("from")) {
-                    JSONArray from = item.getJSONArray("from");
-                    equipmentEntity.setFrom(MyUtils.getAppandedString(from));
-                }
-                entities.add(equipmentEntity);
+                String              key             = keys.next();
+                JSONObject          item            = data.getJSONObject(key);
+                SummonerSkillEntity entity          = new SummonerSkillEntity();
+                entity.setName(item.getString("name"));
+                entity.setNameId(key);
+                entity.setDescription(item.getString("description"));
+                entity.setImage(item.getJSONObject("image").getString("full"));
+
+                vodEntities.add(entity);
             }
         } catch (Exception e) {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace();
             }
         }
-        return entities;
+        return vodEntities;
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.filter.Filter;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.Filter;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.EquipmentEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
@@ -102,7 +102,11 @@ public class LocalEquipmentDataSource extends AbsDataSource implements Filter<Eq
 
     }
 
-
+    /**
+     * for hero detail interface click equipment item
+     * @param nameId
+     * @param callback
+     */
     @Override
     public void filter(String nameId, @Nullable final LoadDataCallback<EquipmentEntity> callback) {
         checkNotNull(nameId);

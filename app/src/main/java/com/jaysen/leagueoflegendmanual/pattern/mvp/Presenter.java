@@ -27,7 +27,7 @@ public abstract class Presenter<MvpView extends Presenter.View, ReqParam extends
 
     public abstract void loadData();
 
-    public View getMvpView() {
+    public MvpView getMvpView() {
         return mView;
     }
 

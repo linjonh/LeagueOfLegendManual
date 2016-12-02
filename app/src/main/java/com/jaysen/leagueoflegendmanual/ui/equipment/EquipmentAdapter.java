@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  */
 
 public class EquipmentAdapter extends
-        AbsRCVAdapter<EquipmentAdapter.EquipmentViewHolder, EquipmentEntity> {
+                              AbsRCVAdapter<EquipmentAdapter.EquipmentViewHolder, EquipmentEntity> {
 
     @Override
     public EquipmentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

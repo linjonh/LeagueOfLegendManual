@@ -10,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.EquipmentEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.usecase.UseCaseEquipment;
 import com.jaysen.leagueoflegendmanual.pattern.mvp.Presenter;
 import com.jaysen.leagueoflegendmanual.ui.MyApplicationLike;
 
@@ -99,12 +101,14 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
 
     @Override
     public void onLoadSuccess(List<EquipmentEntity> data) {
+        Toast.makeText(this.getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
+
         mAdapter.setmDataSets(data);
     }
 
     @Override
     public void onLoadFailed() {
-
+        Toast.makeText(this.getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -123,7 +127,7 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
     }
 
     @Inject
-    Presenter mPresenter;
+    EquipmentPresenter mPresenter;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -132,6 +136,8 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
         equipmentRCV.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mAdapter = new EquipmentAdapter();
         equipmentRCV.setAdapter(mAdapter);
+        mPresenter.setMvpView(this);
+        mPresenter.setmParam(new UseCaseEquipment.RequestParam());
         mPresenter.loadData();
     }
 }

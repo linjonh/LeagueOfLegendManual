@@ -14,10 +14,15 @@ import javax.inject.Inject;
  * Created by jaysen.lin@foxmail.com on 2016/12/2.
  */
 
-public class EquipentPresenter extends
-        Presenter<Presenter.View<List<EquipmentEntity>>, UseCaseEquipment.RequestParam> {
+public class EquipmentPresenter extends
+                                Presenter<Presenter.View<List<EquipmentEntity>>, UseCaseEquipment.RequestParam> {
     @Inject
     UseCaseEquipment mUseCaseEquipment;
+
+    @Inject
+    public EquipmentPresenter() {
+        //no instance
+    }
 
     @Override
     public void loadData() {

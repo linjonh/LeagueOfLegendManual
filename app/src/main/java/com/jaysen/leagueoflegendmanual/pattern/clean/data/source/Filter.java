@@ -1,4 +1,4 @@
-package com.jaysen.leagueoflegendmanual.pattern.clean.data.source.filter;
+package com.jaysen.leagueoflegendmanual.pattern.clean.data.source;
 
 import android.support.annotation.Nullable;
 

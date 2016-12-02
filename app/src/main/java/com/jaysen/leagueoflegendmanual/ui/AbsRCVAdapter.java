@@ -18,6 +18,7 @@ public abstract class AbsRCVAdapter<VH extends RecyclerView.ViewHolder, DATA> ex
 
     public void setmDataSets(List<DATA> mDataSets) {
         this.mDataSets = mDataSets;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,7 +59,7 @@ public abstract class AbsRCVAdapter<VH extends RecyclerView.ViewHolder, DATA> ex
 
     private OnItemClickListener<Object> mListener;
 
-    interface OnItemClickListener<DATA> {
+    public interface OnItemClickListener<DATA> {
         void onItemClick(DATA itemData);
     }
 

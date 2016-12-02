@@ -7,16 +7,9 @@ import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.CommonService;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.VodEntity;
-import com.jaysen.leagueoflegendmanual.util.MyUtils;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -73,8 +66,28 @@ public class RemoteVodDataSource extends AbsDataSource {
     }
 
     private ArrayList<VodEntity> parseVodsJson(String json) {
-        // TODO: 2016/12/2  
-        return null;
+        // TODO: 2016/12/2
+        ArrayList<VodEntity> vodEntities = new ArrayList<>();
+        try {
+            JSONObject       jsonObject = new JSONObject(json);
+            JSONObject       data       = jsonObject.getJSONObject("data");
+            Iterator<String> keys       = data.keys();
+            while (keys.hasNext()) {
+                String     key       = keys.next();
+                JSONObject item      = data.getJSONObject(key);
+                VodEntity  vodEntity = new VodEntity();
+                vodEntity.heroNameId = item.getString("id");
+                vodEntity.heroName = item.getString("name");
+                vodEntity.heroTitle = item.getString("title");
+                vodEntity.vodlink = item.getString("vodlink");
+                vodEntities.add(vodEntity);
+            }
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
+        return vodEntities;
     }
 
     @Override

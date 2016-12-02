@@ -21,26 +21,26 @@
         android:orientation="vertical">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/equipmentIconIv"
+            android:id="@+id/summonerIconIv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/equipmentTitleTv"
+            android:layout_above="@+id/summonerTitleTv"
             android:layout_centerHorizontal="true"
-            app:viewAspectRatio="1"
             app:actualImageScaleType="fitXY"
             app:placeholderImage="@mipmap/ic_launcher"
-            app:placeholderImageScaleType="fitXY"/>
+            app:placeholderImageScaleType="fitXY"
+            app:viewAspectRatio="1"/>
 
         <TextView
-            android:id="@+id/equipmentTitleTv"
+            android:id="@+id/summonerTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:maxLines="1"
-            android:layout_marginTop="5dp"
             android:singleLine="true"
             android:text=""/>
     </RelativeLayout>

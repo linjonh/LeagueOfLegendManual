@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.ui.HeroInfos.HeroListFragment;
 import com.jaysen.leagueoflegendmanual.ui.equipment.EquipmentFragment;
+import com.jaysen.leagueoflegendmanual.ui.summoner.SummonerPresenter;
+import com.jaysen.leagueoflegendmanual.ui.summoner.SummonerSkillFragment;
 import com.jaysen.leagueoflegendmanual.ui.vod.VodFragment;
 
 import butterknife.BindView;
@@ -21,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
         implements HeroListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener,
-        RadioGroup.OnCheckedChangeListener {
+                   RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.mainViewPager)
     ViewPager  mainViewPager;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         if (getActionBar() != null) {
             getActionBar().setTitle("英雄联盟手册");
         }
-        if (getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("英雄联盟手册");
         }
         MainViewPagerAdapter mAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                 case 1:
                     return HeroListFragment.newInstance();
                 case 2:
-                    return EquipmentFragment.newInstance();
+                    return new SummonerSkillFragment();
                 case 3:
                     return new VodFragment();
             }

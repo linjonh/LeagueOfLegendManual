@@ -4,6 +4,7 @@ import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.ui.HeroInfos.HeroListFragment;
 import com.jaysen.leagueoflegendmanual.ui.equipment.EquipmentFragment;
 import com.jaysen.leagueoflegendmanual.ui.herodetail.HeroDetailInfoActivity;
+import com.jaysen.leagueoflegendmanual.ui.summoner.SummonerSkillFragment;
 
 import javax.inject.Singleton;
 
@@ -23,6 +24,8 @@ public interface DataSourceComponent {
     void inject(HeroDetailInfoActivity heroDetailInfoActivity);
 
     void inject(EquipmentFragment equipmentFragment);
+
+    void inject(SummonerSkillFragment summonerSkillFragment);
 
     @Subcomponent.Builder
     interface Builder {
