@@ -2,60 +2,53 @@ package com.jaysen.leagueoflegendmanual.ui;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.RadioGroup;
 
 import com.jaysen.leagueoflegendmanual.R;
 import com.jaysen.leagueoflegendmanual.ui.HeroInfos.HeroListFragment;
+import com.jaysen.leagueoflegendmanual.ui.equipment.EquipmentFragment;
+import com.jaysen.leagueoflegendmanual.ui.vod.VodFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-                   HeroListFragment.OnFragmentInteractionListener {
+        implements HeroListFragment.OnFragmentInteractionListener, ViewPager.OnPageChangeListener,
+        RadioGroup.OnCheckedChangeListener {
+
+    @BindView(R.id.mainViewPager)
+    ViewPager  mainViewPager;
+    @BindView(R.id.navBottomRG)
+    RadioGroup navBottomRG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        ButterKnife.bind(this);
+        if (getActionBar() != null) {
+            getActionBar().setTitle("英雄联盟手册");
+        }
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setTitle("英雄联盟手册");
+        }
+        MainViewPagerAdapter mAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        mainViewPager.setAdapter(mAdapter);
+        mainViewPager.addOnPageChangeListener(this);
+        mainViewPager.setOffscreenPageLimit(4);
+        navBottomRG.setOnCheckedChangeListener(this);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 
     @Override
@@ -79,33 +72,76 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, HeroListFragment.newInstance("", ""))
-                    .addToBackStack("gallery").commit();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //stub
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        navBottomRG.getChildAt(position).performClick();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        //stub
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.id_equipment:
+                mainViewPager.setCurrentItem(0);
+                break;
+            case R.id.id_hero:
+                mainViewPager.setCurrentItem(1);
+
+                break;
+            case R.id.id_summoner_skill:
+                mainViewPager.setCurrentItem(2);
+
+                break;
+            case R.id.id_vod:
+                mainViewPager.setCurrentItem(3);
+
+                break;
+        }
+    }
+
+    /**
+     * Created by jaysen.lin@foxmail.com on 2016/12/2.
+     */
+
+    public static class MainViewPagerAdapter extends FragmentPagerAdapter {
+
+        public MainViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return EquipmentFragment.newInstance("", "");
+                case 1:
+                    return HeroListFragment.newInstance("", "");
+                case 2:
+                    return EquipmentFragment.newInstance("", "");
+                case 3:
+                    return new VodFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
     }
 }

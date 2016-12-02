@@ -3,7 +3,6 @@ package com.jaysen.leagueoflegendmanual.ui.herodetail;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -173,7 +172,8 @@ public class HeroDetailInfoActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+//            NavUtils.navigateUpFromSameTask(this);
+            this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

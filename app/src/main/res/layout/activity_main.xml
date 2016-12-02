@@ -1,26 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:layout_height="match_parent">
 
-    <include
-        layout="@layout/app_bar_main"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"/>
+        android:layout_above="@+id/navBottomRG">
 
-</android.support.v4.widget.DrawerLayout>
+    </android.support.v4.view.ViewPager>
+
+    <RadioGroup
+        android:id="@+id/navBottomRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@id/id_equipment"
+            style="@style/navBottomRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:gravity="center"
+            android:text="装备"/>
+
+        <RadioButton
+            android:id="@id/id_hero"
+            style="@style/navBottomRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:gravity="center"
+            android:text="英雄"/>
+
+        <RadioButton
+            android:id="@id/id_summoner_skill"
+            style="@style/navBottomRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:gravity="center"
+            android:text="技能"/>
+
+        <RadioButton
+            android:id="@id/id_vod"
+            style="@style/navBottomRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:gravity="center"
+            android:text="视频"/>
+    </RadioGroup>
+</RelativeLayout>

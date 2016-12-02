@@ -12,4 +12,5 @@
     <item name="id_hero" type="id"/>
     <item name="id_summoner_skill" type="id"/>
     <item name="id_recommend_equipment" type="id"/>
+    <item name="id_vod" type="id"/>
 </resources>
