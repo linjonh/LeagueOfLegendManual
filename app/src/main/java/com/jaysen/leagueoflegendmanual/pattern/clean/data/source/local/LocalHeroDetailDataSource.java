@@ -45,7 +45,7 @@ public class LocalHeroDetailDataSource extends AbsDataSource {
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         checkNotNull(callback);
-        subscription = Observable.just(mDaoSession.getHeroDetailInfoEntityDao().queryRaw("WHERE NAME_ID=?", nameId))
+        subscription = Observable.just(mDaoSession.getHeroDetailInfoEntityDao().queryRaw(" WHERE NAME_ID='?' ", nameId))
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<List<HeroDetailInfoEntity>, HeroDetailInfoEntity>() {
                     @Override
@@ -66,7 +66,9 @@ public class LocalHeroDetailDataSource extends AbsDataSource {
                     public void onError(Throwable e) {
                         if (BuildConfig.DEBUG)
                             e.printStackTrace();
-                        callback.onDataNotAvailable();
+                        if (!isUnsubscribed())
+
+                            callback.onDataNotAvailable();
                     }
 
                     @Override
@@ -109,15 +111,6 @@ public class LocalHeroDetailDataSource extends AbsDataSource {
                 e.printStackTrace();
             }
         }
-//        for (HeroEntity item : datas) {
-//            try {
-//                long id = mDaoSession.getHeroEntityDao().insert(item);
-//                if (BuildConfig.DEBUG) {
-//                    Log.d("HERO", "insert hero id: " + id);
-//                }
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
+
     }
 }

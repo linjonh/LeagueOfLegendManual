@@ -25,4 +25,17 @@
         <item name="android:padding">5dp</item>
         <item name="android:drawablePadding">5dp</item>
     </style>
+
+    <style name="CardView.layoutStyle">
+        <item name="app:cardBackgroundColor">@color/cardview_light_background</item>
+        <item name="app:cardCornerRadius">5dp</item>
+        <item name="app:cardElevation">5dp</item>
+        <item name="app:cardPreventCornerOverlap">true</item>
+        <item name="app:cardUseCompatPadding">true</item>
+        <item name=" app:contentPadding">10dp</item>
+        <item name="app:layout_collapseMode">parallax</item>
+        <item name="app:layout_collapseParallaxMultiplier">@android:integer/config_mediumAnimTime
+        </item>
+        <item name="app:theme">@style/AppTheme</item>
+    </style>
 </resources>

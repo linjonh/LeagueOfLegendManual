@@ -6,7 +6,7 @@ import android.util.Log;
 import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.CommonService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
 import com.jaysen.leagueoflegendmanual.util.MyUtils;
 
@@ -41,7 +41,7 @@ public class RemoteHeroDataSource extends AbsDataSource {
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         Preconditions.checkNotNull(callback);
-        subscription = getService(HeroService.class)
+        subscription = getService(CommonService.class)
                 .getHeroEntities()
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
@@ -54,7 +54,8 @@ public class RemoteHeroDataSource extends AbsDataSource {
                     public void onError(Throwable e) {
                         if (BuildConfig.DEBUG)
                             e.printStackTrace();
-                        callback.onDataNotAvailable();
+                        if (!isUnsubscribed())
+                            callback.onDataNotAvailable();
                     }
 
                     @Override
@@ -134,7 +135,9 @@ public class RemoteHeroDataSource extends AbsDataSource {
                 heroEntity.legendName = el.select(".champion_name").text().trim();
                 heroEntity.legendTitle = el.select(".champion_title").text().trim();
 //                heroEntity.description = el.select("p").text().trim();
-                heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:", "").replace("Tags:", "").trim();
+                heroEntity.tags = el.select(".champion_tooltip_tags").text().replace("tags:",
+                                                                                     "").replace(
+                        "Tags:", "").trim();
 //                System.out.println(heroEntity + "\n");
                 heroEntityList.add(heroEntity);
             }

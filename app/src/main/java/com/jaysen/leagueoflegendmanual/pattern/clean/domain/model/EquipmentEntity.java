@@ -5,6 +5,8 @@ import com.jaysen.leagueoflegendmanual.R;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
 
@@ -16,27 +18,34 @@ public class EquipmentEntity implements Serializable {
     public static final long serialVersionUID = R.id.id_equipment;
     @Id(autoincrement = true)
     public  Long    id;
+    @Unique
+    @Property(nameInDb = "EQ_ID")
     private String  equipmentId;//装备索引Id
     private String  name;
     private String  description;
     private String  plaintext;
     private String  image;
+    private String  into;
+    private String  from;
     private String  tags;
     private int     goldBase;
     private int     goldTotal;
     private int     goldSell;
     private boolean purchasable;
 
-    @Generated(hash = 385871563)
+    @Generated(hash = 185766276)
     public EquipmentEntity(Long id, String equipmentId, String name,
-                           String description, String plaintext, String image, String tags,
-                           int goldBase, int goldTotal, int goldSell, boolean purchasable) {
+            String description, String plaintext, String image, String into,
+            String from, String tags, int goldBase, int goldTotal, int goldSell,
+            boolean purchasable) {
         this.id = id;
         this.equipmentId = equipmentId;
         this.name = name;
         this.description = description;
         this.plaintext = plaintext;
         this.image = image;
+        this.into = into;
+        this.from = from;
         this.tags = tags;
         this.goldBase = goldBase;
         this.goldTotal = goldTotal;
@@ -134,5 +143,21 @@ public class EquipmentEntity implements Serializable {
 
     public void setPurchasable(boolean purchasable) {
         this.purchasable = purchasable;
+    }
+
+    public String getInto() {
+        return this.into;
+    }
+
+    public void setInto(String into) {
+        this.into = into;
+    }
+
+    public String getFrom() {
+        return this.from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 }

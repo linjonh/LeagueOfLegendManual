@@ -5,6 +5,7 @@ import com.jaysen.leagueoflegendmanual.R;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ public class SummonerSkillEntity implements Serializable {
     public static final long serialVersionUID = R.id.id_summoner_skill;
     @Id
     private Long   id;
+    @Unique
     private String nameId;//召唤师英文名；
     private String name;
     private String description;

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.HeroDetailService;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.service.CommonService;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.Allytips;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.herodetailinfo.AttributeInfo;
@@ -50,7 +50,7 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         Preconditions.checkNotNull(heroNameID);
         Preconditions.checkNotNull(callback);
-        subscription = getService(HeroDetailService.class)
+        subscription = getService(CommonService.class)
                 .getHeroDetailInfo(heroNameID)
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
@@ -180,7 +180,9 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
      * @param index
      * @throws JSONException
      */
-    private void setRecommendEquipment(HeroDetailInfoEntity heroDetailInfoEntity, JSONArray blocks, int index) throws JSONException {
+    private void setRecommendEquipment(
+            HeroDetailInfoEntity heroDetailInfoEntity, JSONArray blocks,
+            int index) throws JSONException {
         JSONObject jsonObject = blocks.getJSONObject(index);
         String     mode       = jsonObject.getString("mode");
         JSONArray  jsonArray  = jsonObject.getJSONArray("recommended");
@@ -210,7 +212,6 @@ public class RemoteHeroDetailDataSource extends AbsDataSource {
             }
         }
     }
-
 
 
     @Override

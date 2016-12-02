@@ -67,12 +67,12 @@ public class UseCaseHero extends UseCase<UseCaseHero.RequestParam, UseCaseHero.R
 
                             @Override
                             public void onError(Throwable e) {
-
+                                //// STOPSHIP: 2016/12/2
                             }
 
                             @Override
                             public void onNext(Object o) {
-
+                                //// STOPSHIP: 2016/12/2
                             }
                         });
             }

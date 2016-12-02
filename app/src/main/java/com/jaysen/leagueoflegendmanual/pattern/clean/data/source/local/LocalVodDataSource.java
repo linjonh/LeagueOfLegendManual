@@ -6,7 +6,7 @@ import android.util.Log;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.VodEntity;
 
 import java.util.List;
 
@@ -24,24 +24,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * // TODO: 2016/11/18  2.update data from remote data source
  */
 
-public class LocalHeroDataSource extends AbsDataSource {
+public class LocalVodDataSource extends AbsDataSource {
     private Subscription subscription;
 
     @Inject
     DaoSession mDaoSession;
 
     @Inject
-    LocalHeroDataSource() {
+    LocalVodDataSource() {
     }
 
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         checkNotNull(callback);
-        subscription = mDaoSession.getHeroEntityDao()
+        subscription = mDaoSession.getVodEntityDao()
                 .rx()
                 .loadAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<HeroEntity>>() {
+                .subscribe(new Subscriber<List<VodEntity>>() {
                     @Override
                     public void onCompleted() {
 
@@ -56,8 +56,8 @@ public class LocalHeroDataSource extends AbsDataSource {
                     }
 
                     @Override
-                    public void onNext(List<HeroEntity> heroEntities) {
-                        Log.i("LocalHeroDataSource",Thread.currentThread().getName());
+                    public void onNext(List<VodEntity> heroEntities) {
+                        Log.i("LocalHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(heroEntities);
                         }
@@ -68,8 +68,8 @@ public class LocalHeroDataSource extends AbsDataSource {
 
     public void deleteAllLocalDataSource() {
         try {
-            mDaoSession.getHeroEntityDao().deleteAll();
-        }catch (Exception e){
+            mDaoSession.getVodEntityDao().deleteAll();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -86,17 +86,11 @@ public class LocalHeroDataSource extends AbsDataSource {
 
     @Override
     public <T> void saveDataSource(T dataSets) {
-        List<HeroEntity> datas = (List<HeroEntity>) dataSets;
-//        mDaoSession.getHeroEntityDao().insertInTx(datas);
-        for (HeroEntity item : datas) {
-            try {
-                long id = mDaoSession.getHeroEntityDao().insert(item);
-                if (BuildConfig.DEBUG) {
-                    Log.d("HERO", "insert hero id: " + id);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+        List<VodEntity> datas = (List<VodEntity>) dataSets;
+        try {
+            mDaoSession.getVodEntityDao().insertInTx(datas);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

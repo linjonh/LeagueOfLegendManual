@@ -128,11 +128,11 @@ public class MainActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return EquipmentFragment.newInstance("", "");
+                    return EquipmentFragment.newInstance();
                 case 1:
-                    return HeroListFragment.newInstance("", "");
+                    return HeroListFragment.newInstance();
                 case 2:
-                    return EquipmentFragment.newInstance("", "");
+                    return EquipmentFragment.newInstance();
                 case 3:
                     return new VodFragment();
             }

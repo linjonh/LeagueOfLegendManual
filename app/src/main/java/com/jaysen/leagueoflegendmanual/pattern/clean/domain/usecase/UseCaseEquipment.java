@@ -2,11 +2,14 @@ package com.jaysen.leagueoflegendmanual.pattern.clean.domain.usecase;
 
 import android.util.Log;
 
-import com.google.common.base.Preconditions;
 import com.jaysen.leagueoflegendmanual.pattern.clean.UseCase;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.BaseDataSource;
-import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.HeroDetailDataRepository;
-import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroDetailInfoEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.EquipmentRepository;
+import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.HeroDataRepository;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.EquipmentEntity;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.HeroEntity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,22 +21,19 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/11/16.
- * 详情useCase
  */
 
-public class UseCaseHeroDetail extends
-        UseCase<UseCaseHeroDetail.RequestParam, UseCaseHeroDetail.Response> {
+public class UseCaseEquipment extends
+        UseCase<UseCaseEquipment.RequestParam, UseCaseEquipment.Response> {
+
+    public static final String TAG = "UseCaseEquipment";
+    @Inject
+    EquipmentRepository mDataRepository;
 
     @Inject
-    HeroDetailDataRepository mDataRepository;
-
-    @Inject
-    UseCaseHeroDetail() {
+    UseCaseEquipment() {
     }
 
-    /**
-     * used for has been set requestParam situations.
-     */
     public void refreshCache() {
         mDataRepository.refreshCache();
         run();
@@ -41,31 +41,18 @@ public class UseCaseHeroDetail extends
 
     @Override
     public void executeUseCase(RequestParam requestParam) {
-        Preconditions.checkNotNull(requestParam);
-        Preconditions.checkNotNull(requestParam.heroNameId);
-        mDataRepository.setQueryHeroNameID(requestParam.heroNameId);
-        mDataRepository.getDataSource(new BaseDataSource.LoadDataCallback<HeroDetailInfoEntity>() {
+        mDataRepository.getDataSource(new BaseDataSource.LoadDataCallback<List<EquipmentEntity>>() {
             @Override
-            public void onDataLoaded(HeroDetailInfoEntity data) {
-                Log.i("UseCaseHeroDetail", Thread.currentThread().getName());
+            public void onDataLoaded(List<EquipmentEntity> data) {
+                Log.i(TAG, Thread.currentThread().getName());
                 Observable.just(data)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<HeroDetailInfoEntity>() {
+                        .subscribe(new Action1<List<EquipmentEntity>>() {
                             @Override
-                            public void onCompleted() {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(HeroDetailInfoEntity heroDetailInfoEntity) {
-                                Log.i("UseCaseHeroDetail just", Thread.currentThread().getName());
-                                Response response = new Response(heroDetailInfoEntity);
+                            public void call(List<EquipmentEntity> entities) {
+                                Log.i(TAG + " just", Thread.currentThread().getName());
+                                Response response = new Response(entities);
                                 getmUseCaseCallBack().onSuccess(response);
                             }
                         });
@@ -84,12 +71,12 @@ public class UseCaseHeroDetail extends
 
                             @Override
                             public void onError(Throwable e) {
-
+                                //stub
                             }
 
                             @Override
                             public void onNext(Object o) {
-
+                                //stub
                             }
                         });
             }
@@ -97,18 +84,19 @@ public class UseCaseHeroDetail extends
     }
 
     public static final class RequestParam implements UseCase.RequestParam {
-        public String heroNameId;
+
     }
 
     public static final class Response implements UseCase.Response {
-        public HeroDetailInfoEntity getHeroDetailEntity() {
-            return heroDetailEntities;
+
+        public List<EquipmentEntity> getEquipmentEntities() {
+            return equipmentEntities;
         }
 
-        HeroDetailInfoEntity heroDetailEntities;
+        List<EquipmentEntity> equipmentEntities;
 
-        Response(HeroDetailInfoEntity heroEntity) {
-            this.heroDetailEntities = heroEntity;
+        Response(List<EquipmentEntity> entities) {
+            this.equipmentEntities = entities;
         }
     }
 }
