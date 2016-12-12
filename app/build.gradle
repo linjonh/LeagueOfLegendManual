@@ -10,8 +10,8 @@ android {
             storePassword 'linjonh1990'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion rootProject.ext.compileSDK
+    buildToolsVersion rootProject.ext.btv
     defaultConfig {
         vectorDrawables.useSupportLibrary true
         applicationId "com.jaysen.leagueoflegendmanual"

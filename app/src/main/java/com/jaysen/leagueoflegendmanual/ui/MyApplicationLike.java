@@ -72,6 +72,7 @@ public class MyApplicationLike extends DefaultApplicationLike {
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .appModule(new AppModule(this))
+
                 .build();
         applicationComponent.inject(this);
         Fresco.initialize(getApplication());
