@@ -28,8 +28,8 @@
             android:layout_centerHorizontal="true"
             app:viewAspectRatio="1"
             app:actualImageScaleType="fitXY"
-            app:placeholderImage="@mipmap/ic_launcher"
-            app:placeholderImageScaleType="fitXY"/>
+            app:placeholderImage="@drawable/background_logo"
+            app:placeholderImageScaleType="centerInside"/>
 
         <TextView
             android:id="@+id/equipmentTitleTv"

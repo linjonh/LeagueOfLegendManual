@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by jaysen.lin@foxmail.com on 2016/12/2.
+ * abstract RecycleAdapter:1. abstract data set, 2.and click event 3.viewHolder
  */
 
 public abstract class AbsRCVAdapter<VH extends RecyclerView.ViewHolder, DATA> extends

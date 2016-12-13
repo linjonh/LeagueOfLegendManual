@@ -35,6 +35,7 @@ public class SummonerAdapter extends AbsRCVAdapter<SummonerAdapter.VH, SummonerS
                 String.format(URLAddress.SUMMONER_ID_ImageDl_URL,
                         itemData.getImage()));
         viewHolder.summonerTitleTv.setText(itemData.getName());
+        viewHolder.itemView.setTag(itemData);
         viewHolder.itemView.setOnClickListener(this);
     }
 

@@ -1,10 +1,12 @@
 package com.jaysen.leagueoflegendmanual.ui.equipment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,12 +35,16 @@ import butterknife.ButterKnife;
  * Use the {@link EquipmentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EquipmentFragment extends Fragment implements Presenter.View<List<EquipmentEntity>> {
+public class EquipmentFragment extends Fragment implements Presenter.View<List<EquipmentEntity>>,
+        SwipeRefreshLayout.OnRefreshListener,
+        EquipmentAdapter.OnItemClickListener<Object> {
 
     @BindView(R.id.equipmentRCV)
-    RecyclerView equipmentRCV;
+    RecyclerView       equipmentRCV;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
     private OnFragmentInteractionListener mListener;
-    private EquipmentAdapter mAdapter;
+    private EquipmentAdapter              mAdapter;
 
     public EquipmentFragment() {
         // Required empty public constructor
@@ -102,13 +108,26 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
     @Override
     public void onLoadSuccess(List<EquipmentEntity> data) {
         Toast.makeText(this.getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
-
+        swipeRefreshLayout.setRefreshing(false);
         mAdapter.setmDataSets(data);
     }
 
     @Override
     public void onLoadFailed() {
         Toast.makeText(this.getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.loadData();
+    }
+
+    @Override
+    public void onItemClick(Object itemData) {
+        EquipmentEntity equipmentEntity = (EquipmentEntity) itemData;
+
+
     }
 
     /**
@@ -133,8 +152,12 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MyApplicationLike.getDataSourceComponent().inject(this);
+        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
+        swipeRefreshLayout.setOnRefreshListener(this);
         equipmentRCV.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mAdapter = new EquipmentAdapter();
+        mAdapter.setOnItemClickListener(this);
         equipmentRCV.setAdapter(mAdapter);
         mPresenter.setMvpView(this);
         mPresenter.setmParam(new UseCaseEquipment.RequestParam());

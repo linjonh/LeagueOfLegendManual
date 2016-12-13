@@ -79,6 +79,8 @@ public class RemoteSummonerDataSource extends AbsDataSource {
                 entity.setName(item.getString("name"));
                 entity.setNameId(key);
                 entity.setDescription(item.getString("description"));
+                entity.setKey(item.getString("key"));
+                entity.setMaxrank(item.getInt("maxrank"));
                 entity.setImage(item.getJSONObject("image").getString("full"));
 
                 vodEntities.add(entity);

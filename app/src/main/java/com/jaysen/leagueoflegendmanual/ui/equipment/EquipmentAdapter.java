@@ -39,6 +39,7 @@ public class EquipmentAdapter extends
                 String.format(URLAddress.EQUIPMENT_ImageDl_NO_EXTENTION_URL, itemData.getImage()));
 
         viewHolder.itemView.setOnClickListener(this);
+        viewHolder.itemView.setTag(itemData);
         viewHolder.equipmentTitleTv.setText(itemData.getName());
     }
 
