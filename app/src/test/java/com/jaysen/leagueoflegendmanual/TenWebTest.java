@@ -194,12 +194,12 @@ public class TenWebTest {
     }
 
     @NonNull
-    private StringBuilder getStringBuilder(String fileName) throws IOException {
+    private static StringBuilder getStringBuilder(String fileName) throws IOException {
         return getStringBuilder(new File(fileName));
     }
 
     @NonNull
-    private StringBuilder getStringBuilder(File jsFile) throws IOException {
+    private static StringBuilder getStringBuilder(File jsFile) throws IOException {
         BufferedReader bufferedReader = Files.newReader(jsFile, Charset.defaultCharset());
         String         tmp;
         StringBuilder  stringBuffer   = new StringBuilder();
@@ -209,7 +209,7 @@ public class TenWebTest {
         return stringBuffer;
     }
 
-    private String getReadedFileString(String fileName) throws IOException {
+    public static String getReadedFileString(String fileName) throws IOException {
         return getStringBuilder(fileName).toString();
     }
 

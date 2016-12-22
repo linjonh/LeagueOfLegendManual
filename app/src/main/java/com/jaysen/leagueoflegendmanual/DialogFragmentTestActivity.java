@@ -1,6 +1,5 @@
 package com.jaysen.leagueoflegendmanual;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import butterknife.BindView;
@@ -59,6 +57,13 @@ public class DialogFragmentTestActivity extends AppCompatActivity implements Vie
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            setWindowParam();
+//            setWindowParam1();
+
+        }
+
+        private void setWindowParam1() {
             WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
             attributes.gravity = Gravity.BOTTOM;
 //            void setFlags ( int flags,
@@ -73,21 +78,31 @@ public class DialogFragmentTestActivity extends AppCompatActivity implements Vie
                                                     getResources().getDisplayMetrics());
 
             attributes.height = h;//it doesn't works when window is floating mode
-
-//            attributes.type= WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
-//            getDialog().getWindow().getDecorView().setLayoutParams(new ViewGroup.LayoutParams(-1,h));
             getDialog().getWindow().setAttributes(attributes);
 
             getView().setMinimumWidth(
                     getResources().getDisplayMetrics().widthPixels);//it works when window is floating
             getView().setMinimumHeight(h);//it works when window is floating
-            InputMethodManager inputMethodManager= (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             /**
              * if window is floating mode , the input method will pan, if window is not floating mode input method will adjust resize.
-             */
+             */}
 
-            super.onActivityCreated(savedInstanceState);
+        private void setWindowParam() {
+            int h = (int) (getResources().getDisplayMetrics().heightPixels * 0.8f + 0.5f);
+            int w = getResources().getDisplayMetrics().widthPixels;
+            if (getDialog() != null && getDialog().getWindow() != null) {
+                WindowManager.LayoutParams attributes = getDialog().getWindow().getAttributes();
+                attributes.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+                attributes.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+                getDialog().getWindow().setAttributes(attributes);
+                getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                getDialog().getWindow().setLayout(w, h);
+            }
+            if (getView() != null) {
+                getView().setMinimumWidth(w);//it works when window is floating
+                getView().setMinimumHeight(h);//it works when window is floating
+            }
+//            PluLog.d("setWindowParam");
         }
-
     }
 }
