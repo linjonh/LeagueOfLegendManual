@@ -84,7 +84,7 @@ public class LocalHeroDetailDataSource extends AbsDataSource {
 
     public void deleteAllLocalDataSource() {
         try {
-            mDaoSession.getHeroEntityDao().deleteAll();
+            mDaoSession.getHeroDetailInfoEntityDao().deleteAll();
         } catch (Exception e) {
             e.printStackTrace();
         }

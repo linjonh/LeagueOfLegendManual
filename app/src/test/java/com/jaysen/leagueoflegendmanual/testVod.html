@@ -12,15 +12,20 @@
 </head>
 
 <body>
-    <button id="start">打开10标签页</button>
-    <script type="text/javascript" src="http://lol.qq.com/web201310/js/herovideo.js"></script>
-    <script type="text/javascript" src="http://lol.qq.com/biz/hero/champion.js"></script>
-    <script type="text/javascript">
+<button id="start">打开10标签页</button>
+<input type="number" id="num_next" value="133"/>
+<script type="text/javascript" src="http://lol.qq.com/web201310/js/herovideo.js"></script>
+<script type="text/javascript" src="http://lol.qq.com/biz/hero/champion.js"></script>
+<script type="text/javascript">
     function listHero() {
-        // console.log("listHero");
+    var next=$("#num_next").val();
+        if(next<=0){
+        return;
+         }
+         console.log("listHero");
+         console.log("next: "+next);
         var champions = LOLherojs.champion.data;
         var keys = LOLherojs.champion.keys;
-        var next = 3//33还未下载
         var count = 133;
         for (var item in champions) {
             if (count > next) {
@@ -34,10 +39,9 @@
                 lookVod(nameId);
             }
         }
-        // console.log("count：" + count);
-
+        $("#num_next").val(next - 10);
+        console.log("count：" + count);
         count = 0;
-
     }
 
     function lookVod(nameId) {
@@ -53,7 +57,10 @@
 
     }
     $("#start").click(listHero);
-    </script>
+
+
+
+</script>
 </body>
 
 </html>

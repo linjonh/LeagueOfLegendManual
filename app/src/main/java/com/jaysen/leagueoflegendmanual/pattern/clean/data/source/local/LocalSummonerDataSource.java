@@ -6,6 +6,7 @@ import android.util.Log;
 import com.jaysen.leagueoflegendmanual.BuildConfig;
 import com.jaysen.leagueoflegendmanual.pattern.clean.data.source.AbsDataSource;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.DaoSession;
+import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.SummonerSkillEntity;
 import com.jaysen.leagueoflegendmanual.pattern.clean.domain.model.VodEntity;
 
 import java.util.List;
@@ -37,11 +38,11 @@ public class LocalSummonerDataSource extends AbsDataSource {
     @Override
     public void getDataSource(@NonNull final LoadDataCallback callback) {
         checkNotNull(callback);
-        subscription = mDaoSession.getVodEntityDao()
+        subscription = mDaoSession.getSummonerSkillEntityDao()
                 .rx()
                 .loadAll()
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<VodEntity>>() {
+                .subscribe(new Subscriber<List<SummonerSkillEntity>>() {
                     @Override
                     public void onCompleted() {
 
@@ -56,7 +57,7 @@ public class LocalSummonerDataSource extends AbsDataSource {
                     }
 
                     @Override
-                    public void onNext(List<VodEntity> heroEntities) {
+                    public void onNext(List<SummonerSkillEntity> heroEntities) {
                         Log.i("LocalHeroDataSource", Thread.currentThread().getName());
                         if (!isUnsubscribed()) {
                             callback.onDataLoaded(heroEntities);
@@ -68,7 +69,7 @@ public class LocalSummonerDataSource extends AbsDataSource {
 
     public void deleteAllLocalDataSource() {
         try {
-            mDaoSession.getVodEntityDao().deleteAll();
+            mDaoSession.getSummonerSkillEntityDao().deleteAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,9 +87,9 @@ public class LocalSummonerDataSource extends AbsDataSource {
 
     @Override
     public <T> void saveDataSource(T dataSets) {
-        List<VodEntity> datas = (List<VodEntity>) dataSets;
+        List<SummonerSkillEntity> datas = (List<SummonerSkillEntity>) dataSets;
         try {
-            mDaoSession.getVodEntityDao().insertInTx(datas);
+            mDaoSession.getSummonerSkillEntityDao().insertInTx(datas);
         } catch (Exception e) {
             e.printStackTrace();
         }

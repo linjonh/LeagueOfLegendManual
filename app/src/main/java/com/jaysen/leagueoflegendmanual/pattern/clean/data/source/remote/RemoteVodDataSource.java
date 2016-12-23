@@ -66,11 +66,10 @@ public class RemoteVodDataSource extends AbsDataSource {
     }
 
     private ArrayList<VodEntity> parseVodsJson(String json) {
-        // TODO: 2016/12/2
+        //  2016/12/2
         ArrayList<VodEntity> vodEntities = new ArrayList<>();
         try {
-            JSONObject       jsonObject = new JSONObject(json);
-            JSONObject       data       = jsonObject.getJSONObject("data");
+            JSONObject       data = new JSONObject(json);
             Iterator<String> keys       = data.keys();
             while (keys.hasNext()) {
                 String     key       = keys.next();

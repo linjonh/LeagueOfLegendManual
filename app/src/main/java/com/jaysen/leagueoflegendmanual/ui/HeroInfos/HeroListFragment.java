@@ -165,6 +165,9 @@ public class HeroListFragment extends Fragment implements Presenter.View<List<He
 
     @Override
     public void onLoadFailed() {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

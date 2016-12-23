@@ -47,7 +47,7 @@ public class HeroDetailDataRepository extends AbsDataSource {
             mLocalHeroDetailDataSource.getDataSource(new LoadDataCallback<HeroDetailInfoEntity>() {
                 @Override
                 public void onDataLoaded(HeroDetailInfoEntity data) {
-                    // TODO: 2016/11/21 add other update logic and cache
+                    // 2016/11/21 add other update logic and cache
                     if (data == null) {
                         getRemoteData(callback);
                     } else {
@@ -76,7 +76,7 @@ public class HeroDetailDataRepository extends AbsDataSource {
         mRemoteHeroDetailDataSource.getDataSource(new LoadDataCallback<HeroDetailInfoEntity>() {
             @Override
             public void onDataLoaded(final HeroDetailInfoEntity data) {
-                // TODO: 2016/11/21 add other delete local data logic and update cache and loac database
+                // 2016/11/21 add other delete local data logic and update cache and loac database
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
