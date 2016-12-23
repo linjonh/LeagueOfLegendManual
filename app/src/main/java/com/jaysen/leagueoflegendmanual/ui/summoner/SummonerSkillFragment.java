@@ -107,16 +107,20 @@ public class SummonerSkillFragment extends Fragment implements AbsRCVAdapter.OnI
 
     @Override
     public void onLoadSuccess(List<SummonerSkillEntity> data) {
-        Toast.makeText(getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
-        swipeRefreshLayout.setRefreshing(false);
+//        Toast.makeText(getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
         mAdapter.setmDataSets(data);
 
     }
 
     @Override
     public void onLoadFailed() {
-        Toast.makeText(getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
-        swipeRefreshLayout.setRefreshing(false);
+//        Toast.makeText(getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

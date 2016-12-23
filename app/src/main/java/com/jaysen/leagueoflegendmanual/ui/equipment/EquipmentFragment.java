@@ -107,15 +107,19 @@ public class EquipmentFragment extends Fragment implements Presenter.View<List<E
 
     @Override
     public void onLoadSuccess(List<EquipmentEntity> data) {
-        Toast.makeText(this.getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
-        swipeRefreshLayout.setRefreshing(false);
+//        Toast.makeText(this.getContext(), "onLoadSuccess", Toast.LENGTH_SHORT).show();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
         mAdapter.setmDataSets(data);
     }
 
     @Override
     public void onLoadFailed() {
-        Toast.makeText(this.getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
-        swipeRefreshLayout.setRefreshing(false);
+//        Toast.makeText(this.getContext(), "onLoadFailed", Toast.LENGTH_SHORT).show();
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

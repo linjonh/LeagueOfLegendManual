@@ -31,6 +31,6 @@ public interface CommonService {
     @GET("summoner.json")
     Observable<String> getSummonerList();
 
-    @GET("vod")
+    @GET("vod/VodRealLink.json")
     Observable<String> getVods();
 }

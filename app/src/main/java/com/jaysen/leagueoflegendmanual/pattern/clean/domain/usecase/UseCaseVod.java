@@ -70,12 +70,12 @@ public class UseCaseVod extends UseCase<UseCaseVod.RequestParam, UseCaseVod.Resp
 
                             @Override
                             public void onError(Throwable e) {
-
+                                /* no-op */
                             }
 
                             @Override
                             public void onNext(Object o) {
-
+                                /* no-op */
                             }
                         });
             }
@@ -87,6 +87,10 @@ public class UseCaseVod extends UseCase<UseCaseVod.RequestParam, UseCaseVod.Resp
     }
 
     public static final class Response implements UseCase.Response {
+
+        public List<VodEntity> getEntities() {
+            return entities;
+        }
 
         List<VodEntity> entities;
 

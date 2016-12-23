@@ -98,7 +98,7 @@ public class TestVod30 {
             mapCount++;
         }
         File file = new File(
-                "D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\_vod2.json");
+                "D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\VodRealLink.json");
         Files.write(data.toString().getBytes(),file);
 
 

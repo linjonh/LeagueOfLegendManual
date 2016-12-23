@@ -93,5 +93,7 @@ dependencies {
     //tinker's main Android lib
     compile 'com.tencent.tinker:tinker-android-lib:1.7.5'
     compile 'com.android.support:recyclerview-v7:25.0.1'
+    //google exoplayer
+    compile 'com.google.android.exoplayer:exoplayer:r2.1.1'
 }
 
