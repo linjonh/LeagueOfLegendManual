@@ -52,7 +52,7 @@ public class PlayerActivity extends AppCompatActivity {
                 new AdaptiveVideoTrackSelection.Factory(BANDWIDTH_METER);
         trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector,
-                                                    new DefaultLoadControl());
+                new DefaultLoadControl());
         playerView.setPlayer(player);
         MediaSource mediaSource = buildMediaSource();
         player.prepare(mediaSource);
@@ -63,17 +63,16 @@ public class PlayerActivity extends AppCompatActivity {
         DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
 // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
-                                                                            Util.getUserAgent(this, "LOLManual"),
-                                                                            bandwidthMeter);
+                Util.getUserAgent(this, "LOLManual"),
+                bandwidthMeter);
 // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 // This is the MediaSource representing the media to be played.
 //        Uri vodLink = getIntent().getData();
-        Uri vodLink = Uri.parse(
-                "http://storage.googleapis.com/exoplayer-test-media-1/mkv/android-screens-lavf-56.36.100-aac-avc-main-1280x720.mkv");
+        Uri vodLink = Uri.parse("http://www.playappstation.com/gamecenter/vod/7EKnoDgO7t8.mp4");
         Log.i(TAG, "buildMediaSource: " + vodLink.toString());
         MediaSource videoSource = new ExtractorMediaSource(vodLink,
-                                                           dataSourceFactory, extractorsFactory, null, null);
+                dataSourceFactory, extractorsFactory, null, null);
 // Prepare the player with the source.
         return videoSource;
     }
