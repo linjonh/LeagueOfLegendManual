@@ -108,15 +108,15 @@ public class TestVod30 {
     }
 
     /**
-     *
-     * @param links need download source links to be mapped
-     * @param item hero item info
+     * @param links   need download source links to be mapped
+     * @param item    hero item info
      * @param vodlink hero video link （截取vid字符串）
      * @throws JSONException
      */
-    private void compareVid(ArrayList<String> links, JSONObject item, String vodlink) throws JSONException, IOException {
-        String tmpLink=vodlink+"\n";
-        int start = vodlink.indexOf("vid=");
+    private void compareVid(ArrayList<String> links, JSONObject item,
+            String vodlink) throws JSONException, IOException {
+        String tmpLink = vodlink + "\n";
+        int    start   = vodlink.indexOf("vid=");
         if (start == -1) {
             start = vodlink.indexOf("VideoIDS=");
         }
@@ -140,12 +140,15 @@ public class TestVod30 {
         if (hasLink) {
 //            item.put("directLink", false);
             System.out.println(tmpLink);
-            Files.append(tmpLink,new File("D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\needDlVedioLink.txt"), Charset.defaultCharset());
+            Files.append(tmpLink, new File(
+                                 "D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\needDlVedioLink.txt"),
+                         Charset.defaultCharset());
         }
     }
 
     /**
      * 列出已下载文件名保存到linksFiles.txt
+     *
      * @throws IOException
      */
     @Test
@@ -163,7 +166,8 @@ public class TestVod30 {
     }
 
     /**
-     *linksFIles已下载文件名字符串与_vod2.json 的hero item vodlink的vid 做比较，未匹配到的需要再下载，记录该vodlink到文件needDlAgainFilesNameList.txt
+     * linksFIles已下载文件名字符串与_vod2.json 的hero item vodlink的vid 做比较，未匹配到的需要再下载，记录该vodlink到文件needDlAgainFilesNameList.txt
+     *
      * @throws IOException
      * @throws JSONException
      */
@@ -206,5 +210,43 @@ public class TestVod30 {
         }
 
 
+    }
+
+    /**
+     * 创建我自己的视频库JSON
+     * @throws IOException
+     * @throws JSONException
+     */
+    @Test
+    public void createVodNamePathJson() throws IOException, JSONException {
+        File vodFile = new File(
+                "D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\_vod2.json");
+        String           json       = TenWebTest.getStringBuilder(vodFile).toString();
+        JSONObject       jsonObject = new JSONObject(json);
+        Iterator<String> keys       = jsonObject.keys();
+        while (keys.hasNext()) {
+            String     key  = keys.next();
+            JSONObject item = jsonObject.getJSONObject(key);
+            if (item.has("directLink")) {
+                continue;
+            }
+            String vodlink = item.getString("vodlink");
+            vodlink = parseVid(vodlink);
+            item.put("vodlink", vodlink);
+        }
+        Files.write(jsonObject.toString().getBytes(),new File("D:\\AndroidStudioProjects\\LeagueOfLegendManual\\app\\src\\test\\java\\com\\jaysen\\leagueoflegendmanual\\_my_vod.json"));
+    }
+
+    private String parseVid(String vodlink) {
+        int start = vodlink.indexOf("?");
+        if (start != -1) {
+            vodlink = vodlink.substring(0, start);
+            int end = vodlink.lastIndexOf("/");
+            if (end != -1) {
+                vodlink = vodlink.substring(end + 1);
+                System.out.println("vodlink = [" + vodlink + "]");
+            }
+        }
+        return vodlink;
     }
 }

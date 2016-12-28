@@ -199,7 +199,7 @@ public class TenWebTest {
     }
 
     @NonNull
-    private static StringBuilder getStringBuilder(File jsFile) throws IOException {
+    public static StringBuilder getStringBuilder(File jsFile) throws IOException {
         BufferedReader bufferedReader = Files.newReader(jsFile, Charset.defaultCharset());
         String         tmp;
         StringBuilder  stringBuffer   = new StringBuilder();
