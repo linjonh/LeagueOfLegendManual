@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +23,7 @@ import com.jaysen.leagueoflegendmanual.ui.MyApplicationLike;
 import com.jaysen.leagueoflegendmanual.ui.player.PlayerActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -69,7 +69,7 @@ public class VodFragment extends Fragment implements Presenter.View<List<VodEnti
         //set up list adapter
         vodAdapter = new VodAdapter();
         vodRCV.setAdapter(vodAdapter);
-        vodRCV.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false));
+        vodRCV.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         vodAdapter.setOnItemClickListener(this);
         //load data
         mVodPresenter.setmParam(new UseCaseVod.RequestParam());
@@ -96,8 +96,10 @@ public class VodFragment extends Fragment implements Presenter.View<List<VodEnti
     @Override
     public void onItemClick(Object itemData) {
         VodEntity vodEntity = (VodEntity) itemData;
-        Uri       uri       =Uri.parse(vodEntity.getVodlink());
-        Intent    intent    = new Intent(this.getContext(), PlayerActivity.class);
+        String uriString = String.format(Locale.CHINA, "http://www.playappstation.com/gamecenter/vod/%1$s",
+                                         vodEntity.getVodlink());
+        Uri    uri    = Uri.parse(uriString);
+        Intent intent = new Intent(this.getContext(), PlayerActivity.class);
         intent.setData(uri);
         startActivity(intent);
     }

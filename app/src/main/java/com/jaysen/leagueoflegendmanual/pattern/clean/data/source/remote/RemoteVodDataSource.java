@@ -70,11 +70,14 @@ public class RemoteVodDataSource extends AbsDataSource {
         ArrayList<VodEntity> vodEntities = new ArrayList<>();
         try {
             JSONObject       data = new JSONObject(json);
-            Iterator<String> keys       = data.keys();
+            Iterator<String> keys = data.keys();
             while (keys.hasNext()) {
-                String     key       = keys.next();
-                JSONObject item      = data.getJSONObject(key);
-                VodEntity  vodEntity = new VodEntity();
+                String     key  = keys.next();
+                JSONObject item = data.getJSONObject(key);
+                if (item.has("directLink")) {
+                    continue;
+                }
+                VodEntity vodEntity = new VodEntity();
                 vodEntity.heroNameId = item.getString("id");
                 vodEntity.heroName = item.getString("name");
                 vodEntity.heroTitle = item.getString("title");

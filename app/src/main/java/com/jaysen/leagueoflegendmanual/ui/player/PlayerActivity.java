@@ -68,8 +68,7 @@ public class PlayerActivity extends AppCompatActivity {
 // Produces Extractor instances for parsing the media data.
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 // This is the MediaSource representing the media to be played.
-//        Uri vodLink = getIntent().getData();
-        Uri vodLink = Uri.parse("http://www.playappstation.com/gamecenter/vod/7EKnoDgO7t8.mp4");
+        Uri vodLink = getIntent().getData();
         Log.i(TAG, "buildMediaSource: " + vodLink.toString());
         MediaSource videoSource = new ExtractorMediaSource(vodLink,
                 dataSourceFactory, extractorsFactory, null, null);
